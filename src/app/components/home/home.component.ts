@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.add(this.authService.auth$.subscribe(user => {
       this.ngZone.run(() => {
         this.user = user
+        console.log(this.user)
       })
     })) 
   }

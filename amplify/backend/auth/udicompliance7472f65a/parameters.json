@@ -54,7 +54,10 @@
     "hostedUIDomainName": "udi-compliance",
     "authProvidersUserPool": [],
     "hostedUIProviderMeta": "[]",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+        "Admins",
+        "Editors"
+    ],
     "parentStack": {
         "Ref": "AWS::StackId"
     },

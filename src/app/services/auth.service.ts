@@ -2,21 +2,16 @@ import { Injectable } from '@angular/core';
 import { Auth, Hub } from 'aws-amplify'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { User } from '../models/user'
 
-export interface AuthState {
-  isLoggedIn: boolean
-  username: string | null
-  id: string | null
-  email: string | null
-  name: string | null
-}
 
-const initialAuthState = {
+const initialAuthState: User = {
   isLoggedIn: false,
   username: null,
   id: null,
   email: null,
-  name: null
+  name: null,
+  groups: []
 }
 
 @Injectable({
@@ -24,8 +19,8 @@ const initialAuthState = {
 })
 export class AuthService {
 
-  private readonly _authState = new BehaviorSubject<AuthState>(initialAuthState)
-  auth$: Observable<AuthState> = this._authState.asObservable()
+  private readonly _authState = new BehaviorSubject<User>(initialAuthState)
+  auth$: Observable<User> = this._authState.asObservable()
   public loggedIn: boolean
 
   constructor() {
@@ -58,7 +53,8 @@ export class AuthService {
         id: data.username, 
         username: data.username, 
         email: data.attributes.email, 
-        name: data.attributes.name
+        name: data.attributes.name,
+        groups: data.signInUserSession.accessToken.payload["cognito:groups"] || []
       })
     } else {
       try {
@@ -69,7 +65,8 @@ export class AuthService {
             id: user.username, 
             username: user.username, 
             email: user.attributes.email, 
-            name: user.attributes.name
+            name: user.attributes.name,
+            groups: user.signInUserSession.accessToken.payload["cognito:groups"] || []
           })
         }
       } catch (err) {
