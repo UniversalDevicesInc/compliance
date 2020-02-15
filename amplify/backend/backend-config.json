@@ -1,0 +1,10 @@
+{
+	"auth": {
+		"udicompliance4795073f": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-udi-compliance-dev-194220-authRole",
+            "UnauthRoleArn": "arn:aws:iam::598460556050:role/amplify-udi-compliance-dev-194220-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::598460556050:role/amplify-udi-compliance-dev-194220-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-udi-compliance-dev-194220-deployment",
+            "UnauthRoleName": "amplify-udi-compliance-dev-194220-unauthRole",
+            "StackName": "amplify-udi-compliance-dev-194220",
+            "StackId": "arn:aws:cloudformation:us-east-1:598460556050:stack/amplify-udi-compliance-dev-194220/6b499540-4f94-11ea-b2a3-0a60596032c9",
+            "AmplifyAppId": "d3hq3j09l8t1y7"
+        },
+        "categories": {
+            "auth": {
+                "udicompliance4795073f": {}
+            }
+        }
+    }
+}
