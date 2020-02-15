@@ -1,10 +1,17 @@
 {
-	"auth": {
-		"udicompliance4795073f": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [],
-			"customAuth": false
-		}
-	}
+    "auth": {
+        "udicompliance7472f65a": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": []
+        }
+    },
+    "function": {},
+    "api": {},
+    "hosting": {
+        "S3AndCloudFront": {
+            "service": "S3AndCloudFront",
+            "providerPlugin": "awscloudformation"
+        }
+    }
 }

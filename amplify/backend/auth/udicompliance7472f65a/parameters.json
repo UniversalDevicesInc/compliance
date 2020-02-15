@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "udicompliance4795073f_identitypool_4795073f",
+    "identityPoolName": "udicompliance7472f65a_identitypool_7472f65a",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "udicom4795073f",
-    "userPoolName": "udicompliance4795073f_userpool_4795073f",
+    "resourceNameTruncated": "udicom7472f65a",
+    "userPoolName": "udicompliance7472f65a_userpool_7472f65a",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -18,7 +18,8 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email"
+        "email",
+        "name"
     ],
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
@@ -28,9 +29,9 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "udicom4795073f_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "udicom7472f65a_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "resourceName": "udicompliance4795073f",
+    "resourceName": "udicompliance7472f65a",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -44,10 +45,20 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "defaultSocial",
+    "hostedUI": true,
     "usernameAttributes": [
         "email"
     ],
+    "triggers": "{}",
+    "hostedUIDomainName": "udi-compliance",
+    "authProvidersUserPool": [],
+    "hostedUIProviderMeta": "[]",
     "userPoolGroupList": [],
-    "dependsOn": []
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "dependsOn": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/\",\"https://d9ety94q9fuxc.cloudfront.net/\"],\"LogoutURLs\":[\"http://localhost:4200/\",\"https://d9ety94q9fuxc.cloudfront.net/\"]}"
 }

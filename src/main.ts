@@ -6,7 +6,25 @@ import { environment } from './environments/environment';
 
 import Amplify from 'aws-amplify';
 import amplify from './aws-exports';
+
+const { host } = window.location;
+
+// Fix issues with multiple redirect urls.
+// Try to figure out which one to use...
+if (amplify.oauth.redirectSignIn.includes(',')) {
+  const filterHost = url => new URL(url).host === host;
+  amplify.oauth.redirectSignIn = amplify.oauth.redirectSignIn
+    .split(',')
+    .filter(filterHost)
+    .shift();
+    amplify.oauth.redirectSignOut = amplify.oauth.redirectSignOut
+    .split(',')
+    .filter(filterHost)
+    .shift();
+}
+
 Amplify.configure(amplify);
+
 
 if (environment.production) {
   enableProdMode();
