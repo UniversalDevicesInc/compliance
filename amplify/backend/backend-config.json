@@ -1,33 +1,53 @@
 {
-    "auth": {
-        "udicompliance7472f65a": {
-            "service": "Cognito",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": []
-        },
-        "userPoolGroups": {
-            "service": "Cognito-UserPool-Groups",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": [
-                {
-                    "category": "auth",
-                    "resourceName": "udicompliance7472f65a",
-                    "attributes": [
-                        "UserPoolId",
-                        "AppClientIDWeb",
-                        "AppClientID",
-                        "IdentityPoolId"
-                    ]
-                }
-            ]
-        }
-    },
-    "function": {},
-    "api": {},
-    "hosting": {
-        "S3AndCloudFront": {
-            "service": "S3AndCloudFront",
-            "providerPlugin": "awscloudformation"
-        }
-    }
+	"auth": {
+		"udicompliance7472f65a": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		},
+		"userPoolGroups": {
+			"service": "Cognito-UserPool-Groups",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "auth",
+					"resourceName": "udicompliance7472f65a",
+					"attributes": [
+						"UserPoolId",
+						"AppClientIDWeb",
+						"AppClientID",
+						"IdentityPoolId"
+					]
+				}
+			]
+		}
+	},
+	"function": {},
+	"api": {
+		"udicompliance": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [
+						{
+							"authenticationType": "AWS_IAM"
+						}
+					],
+					"defaultAuthentication": {
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authudicompliance7472f65a"
+						}
+					}
+				}
+			}
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation"
+		}
+	}
 }

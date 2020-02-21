@@ -20,10 +20,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private ngZone: NgZone
   ) {
-    this.subscription.add(this.authService.auth$.subscribe(user => {
+    this.subscription.add(this.authService.user$.subscribe(user => {
       this.ngZone.run(() => {
         this.user = user
-        console.log(this.user)
       })
     })) 
   }
@@ -35,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe()
   }
 
-  async signIn() {
+  async login() {
     await Auth.federatedSignIn()
   }
 

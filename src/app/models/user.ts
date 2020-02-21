@@ -1,5 +1,5 @@
 export class User {
-    isLoggedIn: boolean
+    loggedIn: boolean
     id: string
     username: string
     email: string

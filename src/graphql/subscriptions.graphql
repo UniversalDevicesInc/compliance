@@ -1,0 +1,2335 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateDomain {
+  onCreateDomain {
+    id
+    name
+    description
+    compliances {
+      items {
+        id
+        name
+        description
+        domainId
+        domain {
+          id
+          name
+          description
+          compliances {
+            nextToken
+          }
+        }
+        hint
+        state
+        author
+        lastModifiedBy
+        complianceLogs {
+          items {
+            id
+            comment
+            complianceId
+          }
+          nextToken
+        }
+        status {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnUpdateDomain {
+  onUpdateDomain {
+    id
+    name
+    description
+    compliances {
+      items {
+        id
+        name
+        description
+        domainId
+        domain {
+          id
+          name
+          description
+          compliances {
+            nextToken
+          }
+        }
+        hint
+        state
+        author
+        lastModifiedBy
+        complianceLogs {
+          items {
+            id
+            comment
+            complianceId
+          }
+          nextToken
+        }
+        status {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnDeleteDomain {
+  onDeleteDomain {
+    id
+    name
+    description
+    compliances {
+      items {
+        id
+        name
+        description
+        domainId
+        domain {
+          id
+          name
+          description
+          compliances {
+            nextToken
+          }
+        }
+        hint
+        state
+        author
+        lastModifiedBy
+        complianceLogs {
+          items {
+            id
+            comment
+            complianceId
+          }
+          nextToken
+        }
+        status {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnCreateCompliance {
+  onCreateCompliance {
+    id
+    name
+    description
+    domainId
+    domain {
+      id
+      name
+      description
+      compliances {
+        items {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        nextToken
+      }
+    }
+    hint
+    state
+    author
+    lastModifiedBy
+    complianceLogs {
+      items {
+        id
+        comment
+        complianceId
+      }
+      nextToken
+    }
+    status {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnUpdateCompliance {
+  onUpdateCompliance {
+    id
+    name
+    description
+    domainId
+    domain {
+      id
+      name
+      description
+      compliances {
+        items {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        nextToken
+      }
+    }
+    hint
+    state
+    author
+    lastModifiedBy
+    complianceLogs {
+      items {
+        id
+        comment
+        complianceId
+      }
+      nextToken
+    }
+    status {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnDeleteCompliance {
+  onDeleteCompliance {
+    id
+    name
+    description
+    domainId
+    domain {
+      id
+      name
+      description
+      compliances {
+        items {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        nextToken
+      }
+    }
+    hint
+    state
+    author
+    lastModifiedBy
+    complianceLogs {
+      items {
+        id
+        comment
+        complianceId
+      }
+      nextToken
+    }
+    status {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnCreateComplianceStatusLink {
+  onCreateComplianceStatusLink {
+    id
+    complianceId
+    statusId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    status {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+      editorId
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+subscription OnUpdateComplianceStatusLink {
+  onUpdateComplianceStatusLink {
+    id
+    complianceId
+    statusId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    status {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+      editorId
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+subscription OnDeleteComplianceStatusLink {
+  onDeleteComplianceStatusLink {
+    id
+    complianceId
+    statusId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    status {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+      editorId
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+subscription OnCreateStatus {
+  onCreateStatus {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+    editorId
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+subscription OnUpdateStatus {
+  onUpdateStatus {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+    editorId
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+subscription OnDeleteStatus {
+  onDeleteStatus {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+    editorId
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+subscription OnCreateComplianceCommandLink {
+  onCreateComplianceCommandLink {
+    id
+    complianceId
+    commandId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    command {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          command {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+      nls {
+        id
+        name
+        description
+        subValues
+      }
+      subValues
+    }
+  }
+}
+subscription OnUpdateComplianceCommandLink {
+  onUpdateComplianceCommandLink {
+    id
+    complianceId
+    commandId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    command {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          command {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+      nls {
+        id
+        name
+        description
+        subValues
+      }
+      subValues
+    }
+  }
+}
+subscription OnDeleteComplianceCommandLink {
+  onDeleteComplianceCommandLink {
+    id
+    complianceId
+    commandId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    command {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          command {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+      nls {
+        id
+        name
+        description
+        subValues
+      }
+      subValues
+    }
+  }
+}
+subscription OnCreateCommand {
+  onCreateCommand {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editor {
+            id
+            name
+            description
+          }
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subValues
+        }
+      }
+      nextToken
+    }
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subValues
+  }
+}
+subscription OnUpdateCommand {
+  onUpdateCommand {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editor {
+            id
+            name
+            description
+          }
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subValues
+        }
+      }
+      nextToken
+    }
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subValues
+  }
+}
+subscription OnDeleteCommand {
+  onDeleteCommand {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editor {
+            id
+            name
+            description
+          }
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subValues
+        }
+      }
+      nextToken
+    }
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subValues
+  }
+}
+subscription OnCreateEditor {
+  onCreateEditor {
+    id
+    name
+    description
+    status {
+      items {
+        id
+        name
+        description
+        compliance {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+        editorId
+        editor {
+          id
+          name
+          description
+          status {
+            nextToken
+          }
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnUpdateEditor {
+  onUpdateEditor {
+    id
+    name
+    description
+    status {
+      items {
+        id
+        name
+        description
+        compliance {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+        editorId
+        editor {
+          id
+          name
+          description
+          status {
+            nextToken
+          }
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnDeleteEditor {
+  onDeleteEditor {
+    id
+    name
+    description
+    status {
+      items {
+        id
+        name
+        description
+        compliance {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+        editorId
+        editor {
+          id
+          name
+          description
+          status {
+            nextToken
+          }
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnCreateEditorRange {
+  onCreateEditorRange {
+    id
+    name
+    description
+    editorId
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subset
+    min
+    max
+    step
+    uomId
+    uom {
+      id
+      name
+      description
+      subValues
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+subscription OnUpdateEditorRange {
+  onUpdateEditorRange {
+    id
+    name
+    description
+    editorId
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subset
+    min
+    max
+    step
+    uomId
+    uom {
+      id
+      name
+      description
+      subValues
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+subscription OnDeleteEditorRange {
+  onDeleteEditorRange {
+    id
+    name
+    description
+    editorId
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subset
+    min
+    max
+    step
+    uomId
+    uom {
+      id
+      name
+      description
+      subValues
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+subscription OnCreateNls {
+  onCreateNls {
+    id
+    name
+    description
+    subValues
+  }
+}
+subscription OnUpdateNls {
+  onUpdateNls {
+    id
+    name
+    description
+    subValues
+  }
+}
+subscription OnDeleteNls {
+  onDeleteNls {
+    id
+    name
+    description
+    subValues
+  }
+}
+subscription OnCreateUom {
+  onCreateUom {
+    id
+    name
+    description
+    subValues
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnUpdateUom {
+  onUpdateUom {
+    id
+    name
+    description
+    subValues
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnDeleteUom {
+  onDeleteUom {
+    id
+    name
+    description
+    subValues
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnCreateComplianceLog {
+  onCreateComplianceLog {
+    id
+    comment
+    complianceId
+  }
+}
+subscription OnUpdateComplianceLog {
+  onUpdateComplianceLog {
+    id
+    comment
+    complianceId
+  }
+}
+subscription OnDeleteComplianceLog {
+  onDeleteComplianceLog {
+    id
+    comment
+    complianceId
+  }
+}
+subscription OnCreateStatic {
+  onCreateStatic {
+    id
+    name
+    description
+    subValues
+    type
+  }
+}
+subscription OnUpdateStatic {
+  onUpdateStatic {
+    id
+    name
+    description
+    subValues
+    type
+  }
+}
+subscription OnDeleteStatic {
+  onDeleteStatic {
+    id
+    name
+    description
+    subValues
+    type
+  }
+}

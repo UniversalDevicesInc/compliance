@@ -1,13 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
-import { FlashMessagesModule } from 'angular2-flash-messages';
-import { FlashMessagesService } from 'angular2-flash-messages';
-
-import { AuthService } from './services/auth.service'
+import { CdkTableModule } from '@angular/cdk/table'
+import { ToastrModule } from 'ngx-toastr'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './guards/auth.guard';
+
+import { APIService } from './API.service'
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -28,18 +31,29 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     BrowserModule,
     AppRoutingModule,
     AmplifyAngularModule,
-    FlashMessagesModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    CdkTableModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      progressBar: true,
+      enableHtml: true,
+      closeButton: true,
+      timeOut: 5000
+    }),
     NgbModule.forRoot()
   ],
   providers: [
     AmplifyService,
-    FlashMessagesService,
-    AuthGuard
+    AuthGuard,
+    APIService
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(_auth: AuthService) {
+  constructor() {
     console.log('Starting AppModule')
   }
 }

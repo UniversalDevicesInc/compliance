@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Auth, Hub } from 'aws-amplify'
 import { BehaviorSubject, Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+
 import { User } from '../models/user'
+import { DataService } from './data.service'
 
 
 const initialAuthState: User = {
-  isLoggedIn: false,
+  loggedIn: false,
   username: null,
   id: null,
   email: null,
@@ -19,12 +20,13 @@ const initialAuthState: User = {
 })
 export class AuthService {
 
-  private readonly _authState = new BehaviorSubject<User>(initialAuthState)
-  auth$: Observable<User> = this._authState.asObservable()
-  public loggedIn: boolean
+  private _authState: BehaviorSubject<User> = new BehaviorSubject<User>(initialAuthState)
+  readonly user$ = this._authState.asObservable()
+  public user: User
 
-  constructor() {
-    this.auth$.subscribe(user => this.loggedIn = user.isLoggedIn)
+  constructor(
+    private data: DataService
+  ) {
     this.init()
   }
 
@@ -48,30 +50,35 @@ export class AuthService {
 
   private async setUser(existing, data) {
     if (existing) {
-      this._authState.next({ 
-        isLoggedIn: true, 
+      this.user = { 
+        loggedIn: true, 
         id: data.username, 
         username: data.username, 
         email: data.attributes.email, 
         name: data.attributes.name,
         groups: data.signInUserSession.accessToken.payload["cognito:groups"] || []
-      })
+      }
+      this._authState.next(this.user)
     } else {
       try {
         let user = await Auth.currentAuthenticatedUser()
         if (user && user.signInUserSession) {
-          this._authState.next({ 
-            isLoggedIn: true, 
+          this.user = { 
+            loggedIn: true, 
             id: user.username, 
             username: user.username, 
             email: user.attributes.email, 
             name: user.attributes.name,
             groups: user.signInUserSession.accessToken.payload["cognito:groups"] || []
-          })
+          }
+          this._authState.next(this.user)
         }
       } catch (err) {
         console.log(err)
+        return
       }
     }
+    console.log(`Logged in, running Data init()`)
+    this.data.init()
   }
 }

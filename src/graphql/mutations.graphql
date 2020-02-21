@@ -1,0 +1,2443 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateDomain(
+  $input: CreateDomainInput!
+  $condition: ModelDomainConditionInput
+) {
+  createDomain(input: $input, condition: $condition) {
+    id
+    name
+    description
+    compliances {
+      items {
+        id
+        name
+        description
+        domainId
+        domain {
+          id
+          name
+          description
+          compliances {
+            nextToken
+          }
+        }
+        hint
+        state
+        author
+        lastModifiedBy
+        complianceLogs {
+          items {
+            id
+            comment
+            complianceId
+          }
+          nextToken
+        }
+        status {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation UpdateDomain(
+  $input: UpdateDomainInput!
+  $condition: ModelDomainConditionInput
+) {
+  updateDomain(input: $input, condition: $condition) {
+    id
+    name
+    description
+    compliances {
+      items {
+        id
+        name
+        description
+        domainId
+        domain {
+          id
+          name
+          description
+          compliances {
+            nextToken
+          }
+        }
+        hint
+        state
+        author
+        lastModifiedBy
+        complianceLogs {
+          items {
+            id
+            comment
+            complianceId
+          }
+          nextToken
+        }
+        status {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation DeleteDomain(
+  $input: DeleteDomainInput!
+  $condition: ModelDomainConditionInput
+) {
+  deleteDomain(input: $input, condition: $condition) {
+    id
+    name
+    description
+    compliances {
+      items {
+        id
+        name
+        description
+        domainId
+        domain {
+          id
+          name
+          description
+          compliances {
+            nextToken
+          }
+        }
+        hint
+        state
+        author
+        lastModifiedBy
+        complianceLogs {
+          items {
+            id
+            comment
+            complianceId
+          }
+          nextToken
+        }
+        status {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation CreateCompliance(
+  $input: CreateComplianceInput!
+  $condition: ModelComplianceConditionInput
+) {
+  createCompliance(input: $input, condition: $condition) {
+    id
+    name
+    description
+    domainId
+    domain {
+      id
+      name
+      description
+      compliances {
+        items {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        nextToken
+      }
+    }
+    hint
+    state
+    author
+    lastModifiedBy
+    complianceLogs {
+      items {
+        id
+        comment
+        complianceId
+      }
+      nextToken
+    }
+    status {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation UpdateCompliance(
+  $input: UpdateComplianceInput!
+  $condition: ModelComplianceConditionInput
+) {
+  updateCompliance(input: $input, condition: $condition) {
+    id
+    name
+    description
+    domainId
+    domain {
+      id
+      name
+      description
+      compliances {
+        items {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        nextToken
+      }
+    }
+    hint
+    state
+    author
+    lastModifiedBy
+    complianceLogs {
+      items {
+        id
+        comment
+        complianceId
+      }
+      nextToken
+    }
+    status {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation DeleteCompliance(
+  $input: DeleteComplianceInput!
+  $condition: ModelComplianceConditionInput
+) {
+  deleteCompliance(input: $input, condition: $condition) {
+    id
+    name
+    description
+    domainId
+    domain {
+      id
+      name
+      description
+      compliances {
+        items {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        nextToken
+      }
+    }
+    hint
+    state
+    author
+    lastModifiedBy
+    complianceLogs {
+      items {
+        id
+        comment
+        complianceId
+      }
+      nextToken
+    }
+    status {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation CreateComplianceStatusLink(
+  $input: CreateComplianceStatusLinkInput!
+  $condition: ModelComplianceStatusLinkConditionInput
+) {
+  createComplianceStatusLink(input: $input, condition: $condition) {
+    id
+    complianceId
+    statusId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    status {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+      editorId
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+mutation UpdateComplianceStatusLink(
+  $input: UpdateComplianceStatusLinkInput!
+  $condition: ModelComplianceStatusLinkConditionInput
+) {
+  updateComplianceStatusLink(input: $input, condition: $condition) {
+    id
+    complianceId
+    statusId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    status {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+      editorId
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+mutation DeleteComplianceStatusLink(
+  $input: DeleteComplianceStatusLinkInput!
+  $condition: ModelComplianceStatusLinkConditionInput
+) {
+  deleteComplianceStatusLink(input: $input, condition: $condition) {
+    id
+    complianceId
+    statusId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    status {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+      editorId
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+mutation CreateStatus(
+  $input: CreateStatusInput!
+  $condition: ModelStatusConditionInput
+) {
+  createStatus(input: $input, condition: $condition) {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+    editorId
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+mutation UpdateStatus(
+  $input: UpdateStatusInput!
+  $condition: ModelStatusConditionInput
+) {
+  updateStatus(input: $input, condition: $condition) {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+    editorId
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+mutation DeleteStatus(
+  $input: DeleteStatusInput!
+  $condition: ModelStatusConditionInput
+) {
+  deleteStatus(input: $input, condition: $condition) {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+    editorId
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+mutation CreateComplianceCommandLink(
+  $input: CreateComplianceCommandLinkInput!
+  $condition: ModelComplianceCommandLinkConditionInput
+) {
+  createComplianceCommandLink(input: $input, condition: $condition) {
+    id
+    complianceId
+    commandId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    command {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          command {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+      nls {
+        id
+        name
+        description
+        subValues
+      }
+      subValues
+    }
+  }
+}
+mutation UpdateComplianceCommandLink(
+  $input: UpdateComplianceCommandLinkInput!
+  $condition: ModelComplianceCommandLinkConditionInput
+) {
+  updateComplianceCommandLink(input: $input, condition: $condition) {
+    id
+    complianceId
+    commandId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    command {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          command {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+      nls {
+        id
+        name
+        description
+        subValues
+      }
+      subValues
+    }
+  }
+}
+mutation DeleteComplianceCommandLink(
+  $input: DeleteComplianceCommandLinkInput!
+  $condition: ModelComplianceCommandLinkConditionInput
+) {
+  deleteComplianceCommandLink(input: $input, condition: $condition) {
+    id
+    complianceId
+    commandId
+    compliance {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    command {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          command {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+      nls {
+        id
+        name
+        description
+        subValues
+      }
+      subValues
+    }
+  }
+}
+mutation CreateCommand(
+  $input: CreateCommandInput!
+  $condition: ModelCommandConditionInput
+) {
+  createCommand(input: $input, condition: $condition) {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editor {
+            id
+            name
+            description
+          }
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subValues
+        }
+      }
+      nextToken
+    }
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subValues
+  }
+}
+mutation UpdateCommand(
+  $input: UpdateCommandInput!
+  $condition: ModelCommandConditionInput
+) {
+  updateCommand(input: $input, condition: $condition) {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editor {
+            id
+            name
+            description
+          }
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subValues
+        }
+      }
+      nextToken
+    }
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subValues
+  }
+}
+mutation DeleteCommand(
+  $input: DeleteCommandInput!
+  $condition: ModelCommandConditionInput
+) {
+  deleteCommand(input: $input, condition: $condition) {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editor {
+            id
+            name
+            description
+          }
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subValues
+        }
+      }
+      nextToken
+    }
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subValues
+  }
+}
+mutation CreateEditor(
+  $input: CreateEditorInput!
+  $condition: ModelEditorConditionInput
+) {
+  createEditor(input: $input, condition: $condition) {
+    id
+    name
+    description
+    status {
+      items {
+        id
+        name
+        description
+        compliance {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+        editorId
+        editor {
+          id
+          name
+          description
+          status {
+            nextToken
+          }
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation UpdateEditor(
+  $input: UpdateEditorInput!
+  $condition: ModelEditorConditionInput
+) {
+  updateEditor(input: $input, condition: $condition) {
+    id
+    name
+    description
+    status {
+      items {
+        id
+        name
+        description
+        compliance {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+        editorId
+        editor {
+          id
+          name
+          description
+          status {
+            nextToken
+          }
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation DeleteEditor(
+  $input: DeleteEditorInput!
+  $condition: ModelEditorConditionInput
+) {
+  deleteEditor(input: $input, condition: $condition) {
+    id
+    name
+    description
+    status {
+      items {
+        id
+        name
+        description
+        compliance {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+        editorId
+        editor {
+          id
+          name
+          description
+          status {
+            nextToken
+          }
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation CreateEditorRange(
+  $input: CreateEditorRangeInput!
+  $condition: ModelEditorRangeConditionInput
+) {
+  createEditorRange(input: $input, condition: $condition) {
+    id
+    name
+    description
+    editorId
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subset
+    min
+    max
+    step
+    uomId
+    uom {
+      id
+      name
+      description
+      subValues
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+mutation UpdateEditorRange(
+  $input: UpdateEditorRangeInput!
+  $condition: ModelEditorRangeConditionInput
+) {
+  updateEditorRange(input: $input, condition: $condition) {
+    id
+    name
+    description
+    editorId
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subset
+    min
+    max
+    step
+    uomId
+    uom {
+      id
+      name
+      description
+      subValues
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+mutation DeleteEditorRange(
+  $input: DeleteEditorRangeInput!
+  $condition: ModelEditorRangeConditionInput
+) {
+  deleteEditorRange(input: $input, condition: $condition) {
+    id
+    name
+    description
+    editorId
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subset
+    min
+    max
+    step
+    uomId
+    uom {
+      id
+      name
+      description
+      subValues
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+mutation CreateNls(
+  $input: CreateNlsInput!
+  $condition: ModelNlsConditionInput
+) {
+  createNls(input: $input, condition: $condition) {
+    id
+    name
+    description
+    subValues
+  }
+}
+mutation UpdateNls(
+  $input: UpdateNlsInput!
+  $condition: ModelNlsConditionInput
+) {
+  updateNls(input: $input, condition: $condition) {
+    id
+    name
+    description
+    subValues
+  }
+}
+mutation DeleteNls(
+  $input: DeleteNlsInput!
+  $condition: ModelNlsConditionInput
+) {
+  deleteNls(input: $input, condition: $condition) {
+    id
+    name
+    description
+    subValues
+  }
+}
+mutation CreateUom(
+  $input: CreateUomInput!
+  $condition: ModelUomConditionInput
+) {
+  createUom(input: $input, condition: $condition) {
+    id
+    name
+    description
+    subValues
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation UpdateUom(
+  $input: UpdateUomInput!
+  $condition: ModelUomConditionInput
+) {
+  updateUom(input: $input, condition: $condition) {
+    id
+    name
+    description
+    subValues
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation DeleteUom(
+  $input: DeleteUomInput!
+  $condition: ModelUomConditionInput
+) {
+  deleteUom(input: $input, condition: $condition) {
+    id
+    name
+    description
+    subValues
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation CreateComplianceLog(
+  $input: CreateComplianceLogInput!
+  $condition: ModelComplianceLogConditionInput
+) {
+  createComplianceLog(input: $input, condition: $condition) {
+    id
+    comment
+    complianceId
+  }
+}
+mutation UpdateComplianceLog(
+  $input: UpdateComplianceLogInput!
+  $condition: ModelComplianceLogConditionInput
+) {
+  updateComplianceLog(input: $input, condition: $condition) {
+    id
+    comment
+    complianceId
+  }
+}
+mutation DeleteComplianceLog(
+  $input: DeleteComplianceLogInput!
+  $condition: ModelComplianceLogConditionInput
+) {
+  deleteComplianceLog(input: $input, condition: $condition) {
+    id
+    comment
+    complianceId
+  }
+}
+mutation CreateStatic(
+  $input: CreateStaticInput!
+  $condition: ModelStaticConditionInput
+) {
+  createStatic(input: $input, condition: $condition) {
+    id
+    name
+    description
+    subValues
+    type
+  }
+}
+mutation UpdateStatic(
+  $input: UpdateStaticInput!
+  $condition: ModelStaticConditionInput
+) {
+  updateStatic(input: $input, condition: $condition) {
+    id
+    name
+    description
+    subValues
+    type
+  }
+}
+mutation DeleteStatic(
+  $input: DeleteStaticInput!
+  $condition: ModelStaticConditionInput
+) {
+  deleteStatic(input: $input, condition: $condition) {
+    id
+    name
+    description
+    subValues
+    type
+  }
+}

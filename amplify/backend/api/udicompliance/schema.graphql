@@ -1,0 +1,188 @@
+enum State {
+  NEW
+  REVIEW
+  COMPLETED
+  REJECTED
+}
+
+enum Type {
+  UOM
+  STATUS
+  EDITOR
+}
+
+type Domain @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  description: String
+  compliances: [Compliance] @connection(keyName: "byDomain", fields: ["id"])
+}
+
+type Compliance @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ])
+  @key(name: "byDomain", fields: ["domainId", "name"]) {
+  id: ID!
+  name: String!
+  description: String
+  domainId: ID!
+  domain: Domain @connection(fields: ["domainId"])
+  hint: String
+  state: State!
+  author: String
+  lastModifiedBy: String
+  complianceLogs: [ComplianceLog] @connection(keyName: "byCompliance", fields: ["id"])
+  status: [ComplianceStatusLink] @connection(keyName: "byCompliance", fields: ["id"])
+}
+
+type ComplianceStatusLink @model(queries: null)
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ])
+  @key(name: "byCompliance", fields: ["complianceId", "statusId"])
+  @key(name: "byStatus", fields: ["statusId", "complianceId"]) {
+  id: ID!
+  complianceId: ID!
+  statusId: ID!
+  compliance: Compliance! @connection(fields: ["complianceId"])
+  status: Status! @connection(fields: ["statusId"])
+}
+
+type Status @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ]) 
+  @key(name: "byEditor", fields: ["editorId"]) {
+  id: ID!
+  name: String!
+  description: String
+  compliance: [ComplianceStatusLink] @connection(keyName: "byStatus", fields: ["id"])
+  editorId: ID!
+  editor: Editor @connection(fields: ["editorId"])
+}
+
+type ComplianceCommandLink @model(queries: null)
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ])
+  @key(name: "byCompliance", fields: ["complianceId", "commandId"])
+  @key(name: "byCommand", fields: ["commandId", "complianceId"]) {
+  id: ID!
+  complianceId: ID!
+  commandId: ID!
+  compliance: Compliance! @connection(fields: ["complianceId"])
+  command: Command! @connection(fields: ["commandId"])
+}
+
+type Command @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  description: String
+  compliance: [ComplianceCommandLink] @connection(keyName: "byCommand", fields: ["id"])
+  editor: Editor
+  nls: Nls
+  subValues: AWSJSON
+}
+
+type Editor @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ]) {
+  id: ID!
+  name: String!
+  description: String
+  status: [Status] @connection(keyName: "byEditor", fields: ["id"])
+  ranges: [EditorRange] @connection(keyName: "byEditor", fields: ["id"])
+}
+
+type EditorRange @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ])
+  @key(name: "byEditor", fields: ["editorId"])
+  @key(name: "byUom", fields: ["uomId"]) {
+  id: ID!
+  name: String
+  description: String
+  editorId: ID
+  nls: Nls
+  subset: String
+  min: Int
+  max: Int
+  step: Float
+  uomId: ID!
+  uom: Uom @connection(fields: ["uomId"])
+}
+
+type Nls @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ]) {
+    id: ID!
+    name: String!
+    description: String
+    subValues: AWSJSON
+  }
+
+type Uom @model 
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ]) {
+  id: ID!
+  name: Int!
+  description: String
+  subValues: AWSJSON
+  ranges: [EditorRange] @connection(keyName: "byUom", fields: ["id"])
+}
+
+type ComplianceLog @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ])
+  @key(name: "byCompliance", fields: ["complianceId", "comment"]) {
+  id: ID!
+  comment: String!
+  complianceId: ID!
+}
+
+type Static @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: private, operations: [read] }
+  ]) 
+  @key(name: "byType", fields: ["type"]) {
+  id: ID!
+  name: String!
+  description: String
+  subValues: AWSJSON
+  type: Type!
+}

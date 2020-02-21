@@ -8,16 +8,16 @@ import { Auth } from 'aws-amplify'
 })
 export class AuthGuard implements CanActivate {
   constructor(
-    private router: Router,
+    private router: Router
   ) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      return Auth.currentAuthenticatedUser().then(() => { return true } )
-        .catch(() => {
-          this.router.navigate['/home']
-          return false
-        })
+  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    try {
+      const result = await Auth.currentAuthenticatedUser()
+      return result ? true : false
+    } catch {
+      await Auth.federatedSignIn()
+      return false
     }
+  }
 }

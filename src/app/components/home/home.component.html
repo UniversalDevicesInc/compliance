@@ -1,7 +1,7 @@
-<div class="jumbotron text-center">
-    <h1>UDI Compliance</h1>
-    <p class="lead">UDI's Compliance Platform</p>
-    <div>
-      <a *ngIf="!user.isLoggedIn" class="btn btn-primary" (click)="signIn()">Login</a>
-    </div>
+<div class="jumbotron text-center" >
+  <h1>UDI Compliance</h1>
+  <p class="lead">UDI's Compliance Platform</p>
+  <div>
+    <a *ngIf="!user.loggedIn" class="btn btn-primary" (click)="login()">Login</a>
   </div>
+</div>

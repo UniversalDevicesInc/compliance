@@ -1,0 +1,951 @@
+# this is an auto generated file. This will be overwritten
+query GetDomain($id: ID!) {
+  getDomain(id: $id) {
+    id
+    name
+    description
+    compliances {
+      items {
+        id
+        name
+        description
+        domainId
+        domain {
+          id
+          name
+          description
+          compliances {
+            nextToken
+          }
+        }
+        hint
+        state
+        author
+        lastModifiedBy
+        complianceLogs {
+          items {
+            id
+            comment
+            complianceId
+          }
+          nextToken
+        }
+        status {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+}
+query ListDomains(
+  $filter: ModelDomainFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listDomains(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      compliances {
+        items {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query GetCompliance($id: ID!) {
+  getCompliance(id: $id) {
+    id
+    name
+    description
+    domainId
+    domain {
+      id
+      name
+      description
+      compliances {
+        items {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        nextToken
+      }
+    }
+    hint
+    state
+    author
+    lastModifiedBy
+    complianceLogs {
+      items {
+        id
+        comment
+        complianceId
+      }
+      nextToken
+    }
+    status {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+query ListCompliances(
+  $filter: ModelComplianceFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCompliances(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      domainId
+      domain {
+        id
+        name
+        description
+        compliances {
+          items {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          nextToken
+        }
+      }
+      hint
+      state
+      author
+      lastModifiedBy
+      complianceLogs {
+        items {
+          id
+          comment
+          complianceId
+        }
+        nextToken
+      }
+      status {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query GetStatus($id: ID!) {
+  getStatus(id: $id) {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        statusId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        status {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+      }
+      nextToken
+    }
+    editorId
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+query ListStatuss(
+  $filter: ModelStatusFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listStatuss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          statusId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          status {
+            id
+            name
+            description
+            editorId
+          }
+        }
+        nextToken
+      }
+      editorId
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+    }
+    nextToken
+  }
+}
+query GetCommand($id: ID!) {
+  getCommand(id: $id) {
+    id
+    name
+    description
+    compliance {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editor {
+            id
+            name
+            description
+          }
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subValues
+        }
+      }
+      nextToken
+    }
+    editor {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subValues
+  }
+}
+query ListCommands(
+  $filter: ModelCommandFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCommands(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      compliance {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+          }
+          command {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+      editor {
+        id
+        name
+        description
+        status {
+          items {
+            id
+            name
+            description
+            editorId
+          }
+          nextToken
+        }
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+      nls {
+        id
+        name
+        description
+        subValues
+      }
+      subValues
+    }
+    nextToken
+  }
+}
+query GetEditor($id: ID!) {
+  getEditor(id: $id) {
+    id
+    name
+    description
+    status {
+      items {
+        id
+        name
+        description
+        compliance {
+          items {
+            id
+            complianceId
+            statusId
+          }
+          nextToken
+        }
+        editorId
+        editor {
+          id
+          name
+          description
+          status {
+            nextToken
+          }
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+query ListEditors(
+  $filter: ModelEditorFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listEditors(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      status {
+        items {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          editorId
+          editor {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query GetEditorRange($id: ID!) {
+  getEditorRange(id: $id) {
+    id
+    name
+    description
+    editorId
+    nls {
+      id
+      name
+      description
+      subValues
+    }
+    subset
+    min
+    max
+    step
+    uomId
+    uom {
+      id
+      name
+      description
+      subValues
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+query ListEditorRanges(
+  $filter: ModelEditorRangeFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listEditorRanges(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      editorId
+      nls {
+        id
+        name
+        description
+        subValues
+      }
+      subset
+      min
+      max
+      step
+      uomId
+      uom {
+        id
+        name
+        description
+        subValues
+        ranges {
+          items {
+            id
+            name
+            description
+            editorId
+            subset
+            min
+            max
+            step
+            uomId
+          }
+          nextToken
+        }
+      }
+    }
+    nextToken
+  }
+}
+query GetNls($id: ID!) {
+  getNls(id: $id) {
+    id
+    name
+    description
+    subValues
+  }
+}
+query ListNlss($filter: ModelNlsFilterInput, $limit: Int, $nextToken: String) {
+  listNlss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      subValues
+    }
+    nextToken
+  }
+}
+query GetUom($id: ID!) {
+  getUom(id: $id) {
+    id
+    name
+    description
+    subValues
+    ranges {
+      items {
+        id
+        name
+        description
+        editorId
+        nls {
+          id
+          name
+          description
+          subValues
+        }
+        subset
+        min
+        max
+        step
+        uomId
+        uom {
+          id
+          name
+          description
+          subValues
+          ranges {
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+query ListUoms($filter: ModelUomFilterInput, $limit: Int, $nextToken: String) {
+  listUoms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      subValues
+      ranges {
+        items {
+          id
+          name
+          description
+          editorId
+          nls {
+            id
+            name
+            description
+            subValues
+          }
+          subset
+          min
+          max
+          step
+          uomId
+          uom {
+            id
+            name
+            description
+            subValues
+          }
+        }
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query GetComplianceLog($id: ID!) {
+  getComplianceLog(id: $id) {
+    id
+    comment
+    complianceId
+  }
+}
+query ListComplianceLogs(
+  $filter: ModelComplianceLogFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listComplianceLogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      comment
+      complianceId
+    }
+    nextToken
+  }
+}
+query GetStatic($id: ID!) {
+  getStatic(id: $id) {
+    id
+    name
+    description
+    subValues
+    type
+  }
+}
+query ListStatics(
+  $filter: ModelStaticFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listStatics(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      subValues
+      type
+    }
+    nextToken
+  }
+}

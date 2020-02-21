@@ -5,6 +5,8 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 import Amplify from 'aws-amplify';
+import API from 'aws-amplify'
+import PubSub from '@aws-amplify/pubsub'
 import amplify from './aws-exports';
 
 const { host } = window.location;
@@ -23,7 +25,7 @@ if (amplify.oauth.redirectSignIn.includes(',')) {
     .shift();
 }
 
-Amplify.configure(amplify);
+Amplify.configure(amplify)
 
 
 if (environment.production) {
