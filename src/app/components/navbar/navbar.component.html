@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid" *ngIf="authService.user$ | async as user">
         <span class="navbar-brand" href="#">UDI Compliance</span>
         <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-target="#navbar" 
                 [attr.aria-expanded]="!isCollapsed" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,30 +13,40 @@
             </ul>
             <ul class="nav ml-auto">
               <!-- Dashboard -->
-              <li class="nav-item" *ngIf="currentDomain$ | async as cd" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}">
-                <a class="nav-link" [routerLink]="['/dashboard']" (click)="isCollapsed = !isCollapsed">{{cd.name}} Dashboard</a>
-              </li>
+              <div *ngIf="user.loggedIn">
+                <li class="nav-item" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}">
+                  <a class="nav-link" [routerLink]="['/dashboard']" (click)="isCollapsed = !isCollapsed">Dashboard</a>
+                </li>
+              </div>
               <!-- Domain Dropdown -->
-              <li class="nav-item" *ngIf="dataLoaded$ | async">
+              <li class="nav-item" *ngIf="user.loggedIn">
                 <div ngbDropdown>
                   <span class="nav-link text-light" id="domainMenu" ngbDropdownToggle>Domains</span>
                   <div ngbDropdownMenu aria-labelledby="domainMenu">
-                    <button *ngFor="let dom of domain$ | async" class="dropdown-item" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}" (click)="dataService.changeDomain(dom.id); isCollapsed = !isCollapsed">
-                      <span *ngIf="dom.id === dataService.currentDomain.id" class="badge badge-success">Selected</span>&nbsp;&nbsp;{{dom.name}}
-                    </button>
+                    <div *ngIf="dataLoaded$ | async">
+                      <button *ngFor="let dom of domain$ | async" class="dropdown-item" [routerLinkActive] = "['active']" [routerLinkActiveOptions] = "{exact:true}" (click)="dataService.changeDomain(dom.id); isCollapsed = !isCollapsed">
+                        <span *ngIf="dom.id === dataService.currentDomain.id" class="badge badge-success">Selected</span>&nbsp;&nbsp;{{dom.name}}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </li>
               <!-- Types Menu -->
-              <li class="nav-item" *ngIf="dataLoaded$ | async">
+              <li class="nav-item" *ngIf="user.loggedIn">
                 <div ngbDropdown>
                   <span class="nav-link text-light" id="typeMenu" ngbDropdownToggle>Types</span>
                   <div ngbDropdownMenu aria-labelledby="typeMenu">
-                    <button *ngFor="let type of dataService.apiTypes" class="dropdown-item" [routerLinkActive] = "['active']" 
-                      [routerLinkActiveOptions] = "{exact:true}" [routerLink]="['/'+type]"
-                        (click)="isCollapsed = !isCollapsed">
-                      {{type | titlecase}}
-                    </button>
+                    <div *ngIf="dataLoaded$ | async">
+                      <ng-container *ngFor="let type of dataService.apiTypes">
+                        <ng-container *ngIf="type !== 'static'">
+                          <button class="dropdown-item" [routerLinkActive] = "['active']" 
+                              [routerLinkActiveOptions] = "{exact:true}" [routerLink]="['/'+type]"
+                              (click)="isCollapsed = !isCollapsed">
+                            {{type | titlecase}}
+                          </button>
+                        </ng-container>
+                      </ng-container>
+                    </div>
                   </div>
                 </div>
               </li>              

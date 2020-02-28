@@ -1,7 +1,7 @@
 <div *ngIf="ds.dataLoaded$ | async; else loading" style="width:100%">
   <div *ngIf="authService.user$ | async as user" class="container-fluid">
     <!-- Title -->
-    <h2 align="center" class="text-white">UDI Compliance Dashboard</h2>
+    <h2 align="center" class="text-white">Units of Measure</h2>
     <!-- Accordion Panel -->
     <ngb-accordion #acc="ngbAccordion" activeIds="parent">
       <ngb-panel id="parent">
@@ -66,20 +66,25 @@
                 {{element.description}}
               </td>
             </ng-container>
-            <!-- Compliances -->
-            <ng-container cdkColumnDef="compliance">
-              <th cdk-header-cell *cdkHeaderCellDef class="text-center">Compliances</th>
+            <!-- SubValues -->
+            <ng-container cdkColumnDef="subValues">
+              <th cdk-header-cell *cdkHeaderCellDef class="text-center">Special Values</th>
               <td class="text-center" cdk-cell *cdkCellDef="let element">
-                <button type="button" class="btn btn-info" [routerLinkActive] = "['active']" 
-                      [routerLinkActiveOptions] = "{exact:true}" [routerLink]="['/compliance']">Compliances</button>
+                <div *ngIf="element.subValues">
+                  <button type="button" 
+                  class="btn btn-info" (click)="open('update', updateModal, element, true)">
+                    View
+                </button>
+                </div>
               </td>
             </ng-container>
-            <!-- Edit -->
+            <!-- Edit: Allow Access to Admins, or Editors if it's not a predefined UOM -->
             <ng-container cdkColumnDef="edit">
               <th cdk-header-cell *cdkHeaderCellDef class="text-center">Edit</th>
               <td class="text-center" cdk-cell *cdkCellDef="let element">
-                <button [disabled]="!user.groups.includes('Admins')" type="button" 
-                  class="btn btn-info" (click)="open('update', updateModal, element)">
+                <button [disabled]="!user.groups.includes('Admins') || 
+                  (user.groups.includes('Editors') && element.type === 'UOM')" type="button" 
+                  class="btn btn-info" (click)="open('update', updateModal, element, false)">
                     Edit
                 </button>
               </td>
@@ -89,7 +94,7 @@
               <th cdk-header-cell *cdkHeaderCellDef class="text-center">Delete</th>
               <td class="text-center" cdk-cell *cdkCellDef="let element">
                 <button [disabled]="!user.groups.includes('Admins') || element.id === 'ecc625a7-c7d5-4f8e-8225-0d529e423c39'" type="button" 
-                  class="btn btn-danger" (click)="open('delete', deleteModal, element)">
+                  class="btn btn-danger" (click)="open('delete', deleteModal, element, false)">
                     Delete
                 </button>              
               </td>
@@ -104,7 +109,10 @@
           </table>
           <!-- Create -->
           <div class="text-right">
-            <button [disabled]="!user.groups.includes('Admins')" type="submit" class="btn btn-primary" (click)="open('create', createModal)">New</button>
+            <button [disabled]="!user.groups.includes('Admins')" type="submit" 
+                class="btn btn-primary" (click)="open('create', createModal)">
+              New
+            </button>
           </div>
         </ng-template>
       </ngb-panel>
@@ -125,21 +133,67 @@
   </div>
   <div class="modal-body">
     <!-- Input Form -->
-    <form [formGroup]="createForm" (ngSubmit)="modify('create')">
+    <form [formGroup]="createForm" (ngSubmit)="create()">
       <!-- Name -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="text" formControlName="name">
+        <div class="col-sm-9 d-flex flex-column">
+          <input class="form-control" type="number" formControlName="name"
+          onkeyup="this.value = Math.round(this.value) ; if (this.value<0){ this.value= this.value * -1 }"
+              min="0" placeholder="Index - Positive Integers">
         </div>
       </div>
       <!-- Description -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Description</label>
-        <div class="col-sm-10">
+        <div class="col-sm-9 d-flex flex-column">
           <input class="form-control" type="text" formControlName="description">
         </div>
       </div>
+      <!-- subValues -->
+      <div *ngIf="createForm.value['subValues']" formGroupName="subValues">
+        <hr class="col-xs-12">
+        <div class="row">
+          <label class="col-sm-2 col-form-label">Index</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <label class="col-sm-2 col-form-label">Value</label>
+          </div>
+        </div>
+        <br>
+        <!-- Existing -->
+        <div class="form-group row" *ngFor="let key of controls('create', 'subValues')">
+          <label class="col-sm-2 col-form-label">{{key}}</label>
+          <div class="col-sm-9 d-flex">
+            <input [readonly]="readOnly" class="form-control mr-2" type="text" 
+              [formControlName]="key">
+            <ng-container *ngIf="!readOnly">
+              <button type="button" class="close mb-2" aria-label="Remove" 
+                  (click)="removeControl('create', key)">
+                <span aria-hidden="true">
+                  <fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon>
+                </span>
+              </button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <!-- Add New -->
+      <div *ngIf="createForm.value['subValues'] && !readOnly">
+        <hr class="col-xs-12">
+        <div class="row">
+          <label class="col-sm-2 col-form-label">New</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <input class="form-control mb-2" type="number" #newIndex 
+              onkeyup="this.value = Math.round(this.value) ; if (this.value<0){ this.value= this.value * -1 }"
+              min="0" placeholder="Index - Positive Integers">
+            <input class="form-control mb-2" type="text" #newValue placeholder="Value">
+            <button type="button" class="btn btn-primary mb-2"
+                (click)="addControl('create', newIndex.value, newValue.value); newIndex.value=null; newValue.value=null">
+              Add
+            </button>
+          </div>
+        </div><br>
+      </div>      
       <!-- Buttons -->
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -152,31 +206,79 @@
 <!-- Update Modal -->
 <ng-template #updateModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title text-white">Update {{typeValue | titlecase}}</h4>
+    <h4 class="modal-title text-white">Special Values for {{typeValue | uppercase}} {{current['name']}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
       <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
     </button>
   </div>
   <div class="modal-body">
-    <!-- Input Form -->
+    <!-- Table -->
     <form [formGroup]="updateForm" (ngSubmit)="modify('update')">
       <!-- Name -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="text" formControlName="name">
+        <div class="col-sm-9 d-flex flex-column">
+          <input [readonly]="readOnly" class="form-control" type="text" 
+            formControlName="name">
         </div>
       </div>
       <!-- Description -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Description</label>
-        <div class="col-sm-10">
-          <input class="form-control" type="text" formControlName="description">
+        <div class="col-sm-9 d-flex flex-column">
+          <input [readonly]="readOnly" class="form-control" type="text" 
+            formControlName="description">
         </div>
+      </div>
+      <hr class="col-xs-12">
+      <!-- subValues -->
+      <div *ngIf="current['subValues']" formGroupName="subValues">
+        <div class="row">
+          <label class="col-sm-2 col-form-label">Index</label>
+          <div class="col-sm-9">
+            <label class="col-sm-2 col-form-label">Value</label>
+          </div>
+        </div>
+        <br>
+        <!-- Existing -->
+        <div class="form-group row" *ngFor="let key of controls('update', 'subValues')">
+          <label class="col-sm-2 col-form-label">{{key}}</label>
+          <div class="col-sm-9 d-flex">
+            <input [readonly]="readOnly" class="form-control mr-2" type="text" 
+              [formControlName]="key">
+            <ng-container *ngIf="!readOnly">
+              <button type="button" class="close mb-2" aria-label="Remove" 
+                  (click)="removeControl('update', key)">
+                <span aria-hidden="true">
+                  <fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon>
+                </span>
+              </button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <!-- Add New -->
+      <div *ngIf="current['subValues'] && !readOnly">
+        <hr class="col-xs-12">
+        <div class="row">
+          <label class="col-sm-2 col-form-label">New</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <input class="form-control mb-2" type="number" #newIndex 
+              onkeyup="this.value = Math.round(this.value) ; if (this.value<0){ this.value= this.value * -1 }"
+              min="0" placeholder="Index - Positive Integers">
+            <input class="form-control mb-2" type="text" #newValue placeholder="Value">
+            <button type="button" class="btn btn-primary mb-2"
+                (click)="addControl('update', newIndex.value, newValue.value); newIndex.value=null; newValue.value=null">
+              Add
+            </button>
+          </div>
+        </div><br>
       </div>
       <!-- Buttons -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <ng-container *ngIf="!readOnly">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </ng-container>
         <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss()">Cancel</button>
       </div>
     </form>
@@ -186,7 +288,7 @@
 <!-- Delete Modal -->
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title text-white">Delete {{typeValue | titlecase}}?</h4>
+    <h4 class="modal-title text-white">Delete {{typeValue | uppercase}}?</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('cancel')">
       <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
     </button>
@@ -194,11 +296,11 @@
   <div class="modal-body">
     <h4>
       *** WARNING IRREVERSABLE *** <br>
-      Are you sure you want to delete {{typeValue}} {{current['name']}}?
+      Are you sure you want to delete {{typeValue | uppercase }} {{current['name']}}?
     </h4>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="modify('delete')">Delete</button>
+    <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
     <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss('cancel')">Cancel</button>
   </div>
 </ng-template>

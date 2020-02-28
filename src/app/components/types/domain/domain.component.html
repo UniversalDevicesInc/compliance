@@ -1,7 +1,7 @@
 <div *ngIf="ds.dataLoaded$ | async; else loading" style="width:100%">
   <div *ngIf="authService.user$ | async as user" class="container-fluid">
     <!-- Title -->
-    <h2 align="center" class="text-white">UDI Compliance Dashboard</h2>
+    <h2 align="center" class="text-white">Domains</h2>
     <!-- Accordion Panel -->
     <ngb-accordion #acc="ngbAccordion" activeIds="parent">
       <ngb-panel id="parent">
@@ -70,8 +70,10 @@
             <ng-container cdkColumnDef="compliance">
               <th cdk-header-cell *cdkHeaderCellDef class="text-center">Compliances</th>
               <td class="text-center" cdk-cell *cdkCellDef="let element">
-                <button type="button" class="btn btn-info" [routerLinkActive] = "['active']" 
-                      [routerLinkActiveOptions] = "{exact:true}" [routerLink]="['/compliance']">Compliances</button>
+                <button type="button" class="btn btn-info"
+                    [routerLink]="['/compliance']" [queryParams]="{search: element.id}">
+                  Compliances
+                </button>
               </td>
             </ng-container>
             <!-- Edit -->

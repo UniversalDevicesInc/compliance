@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   
   private subscription: Subscription = new Subscription()
   isCollapsed: boolean = true
-  user: User
+  //user: User
   currentDomain$
   domain$
   dataLoaded$
@@ -29,11 +29,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private router: Router,
     private ngZone: NgZone
   ) { 
-    this.subscription.add(this.authService.user$.subscribe(user => {
+    /*this.subscription.add(this.authService.user$.subscribe(user => {
       this.ngZone.run(() => {
         this.user = user
       })
-    }))
+    })) */
   }
 
   ngOnInit() {

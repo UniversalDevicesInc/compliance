@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core'
-import { Router } from '@angular/router'
+//import { Router } from '@angular/router'
 import { Auth } from 'aws-amplify'
 import { Subscription } from 'rxjs'
 
@@ -14,20 +14,18 @@ import { User } from '../../models/user'
 export class HomeComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription()
-  user: User
+  //user: User
 
   constructor(
     public authService: AuthService,
     private ngZone: NgZone
   ) {
     this.subscription.add(this.authService.user$.subscribe(user => {
-      this.ngZone.run(() => {
-        this.user = user
-      })
-    })) 
+      this.ngZone.run(() => {})})) 
   }
 
-  ngOnInit() { 
+  ngOnInit() {
+
   }
 
   ngOnDestroy() {

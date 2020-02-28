@@ -22,11 +22,15 @@ subscription OnCreateDomain {
         state
         author
         lastModifiedBy
+        createdAt
+        updatedAt
         complianceLogs {
           items {
             id
             comment
             complianceId
+            user
+            createdAt
           }
           nextToken
         }
@@ -66,11 +70,15 @@ subscription OnUpdateDomain {
         state
         author
         lastModifiedBy
+        createdAt
+        updatedAt
         complianceLogs {
           items {
             id
             comment
             complianceId
+            user
+            createdAt
           }
           nextToken
         }
@@ -110,11 +118,15 @@ subscription OnDeleteDomain {
         state
         author
         lastModifiedBy
+        createdAt
+        updatedAt
         complianceLogs {
           items {
             id
             comment
             complianceId
+            user
+            createdAt
           }
           nextToken
         }
@@ -156,6 +168,8 @@ subscription OnCreateCompliance {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -170,11 +184,15 @@ subscription OnCreateCompliance {
     state
     author
     lastModifiedBy
+    createdAt
+    updatedAt
     complianceLogs {
       items {
         id
         comment
         complianceId
+        user
+        createdAt
       }
       nextToken
     }
@@ -197,6 +215,8 @@ subscription OnCreateCompliance {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -248,6 +268,8 @@ subscription OnUpdateCompliance {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -262,11 +284,15 @@ subscription OnUpdateCompliance {
     state
     author
     lastModifiedBy
+    createdAt
+    updatedAt
     complianceLogs {
       items {
         id
         comment
         complianceId
+        user
+        createdAt
       }
       nextToken
     }
@@ -289,6 +315,8 @@ subscription OnUpdateCompliance {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -340,6 +368,8 @@ subscription OnDeleteCompliance {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -354,11 +384,15 @@ subscription OnDeleteCompliance {
     state
     author
     lastModifiedBy
+    createdAt
+    updatedAt
     complianceLogs {
       items {
         id
         comment
         complianceId
+        user
+        createdAt
       }
       nextToken
     }
@@ -381,6 +415,8 @@ subscription OnDeleteCompliance {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -431,6 +467,8 @@ subscription OnCreateComplianceStatusLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -439,11 +477,15 @@ subscription OnCreateComplianceStatusLink {
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -461,6 +503,8 @@ subscription OnCreateComplianceStatusLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -490,6 +534,8 @@ subscription OnCreateComplianceStatusLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -520,6 +566,7 @@ subscription OnCreateComplianceStatusLink {
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -556,6 +603,8 @@ subscription OnUpdateComplianceStatusLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -564,11 +613,15 @@ subscription OnUpdateComplianceStatusLink {
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -586,6 +639,8 @@ subscription OnUpdateComplianceStatusLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -615,6 +670,8 @@ subscription OnUpdateComplianceStatusLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -645,6 +702,7 @@ subscription OnUpdateComplianceStatusLink {
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -681,6 +739,8 @@ subscription OnDeleteComplianceStatusLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -689,11 +749,15 @@ subscription OnDeleteComplianceStatusLink {
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -711,6 +775,8 @@ subscription OnDeleteComplianceStatusLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -740,6 +806,8 @@ subscription OnDeleteComplianceStatusLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -770,6 +838,7 @@ subscription OnDeleteComplianceStatusLink {
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -806,6 +875,8 @@ subscription OnCreateStatus {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -858,12 +929,7 @@ subscription OnCreateStatus {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -905,6 +971,8 @@ subscription OnUpdateStatus {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -957,12 +1025,7 @@ subscription OnUpdateStatus {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1004,6 +1067,8 @@ subscription OnDeleteStatus {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -1056,12 +1121,7 @@ subscription OnDeleteStatus {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1103,6 +1163,8 @@ subscription OnCreateComplianceCommandLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -1111,11 +1173,15 @@ subscription OnCreateComplianceCommandLink {
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -1133,6 +1199,8 @@ subscription OnCreateComplianceCommandLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -1162,6 +1230,8 @@ subscription OnCreateComplianceCommandLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           command {
             id
@@ -1191,6 +1261,7 @@ subscription OnCreateComplianceCommandLink {
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -1234,6 +1305,8 @@ subscription OnUpdateComplianceCommandLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -1242,11 +1315,15 @@ subscription OnUpdateComplianceCommandLink {
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -1264,6 +1341,8 @@ subscription OnUpdateComplianceCommandLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -1293,6 +1372,8 @@ subscription OnUpdateComplianceCommandLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           command {
             id
@@ -1322,6 +1403,7 @@ subscription OnUpdateComplianceCommandLink {
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -1365,6 +1447,8 @@ subscription OnDeleteComplianceCommandLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -1373,11 +1457,15 @@ subscription OnDeleteComplianceCommandLink {
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -1395,6 +1483,8 @@ subscription OnDeleteComplianceCommandLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -1424,6 +1514,8 @@ subscription OnDeleteComplianceCommandLink {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           command {
             id
@@ -1453,6 +1545,7 @@ subscription OnDeleteComplianceCommandLink {
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -1496,6 +1589,8 @@ subscription OnCreateCommand {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -1553,12 +1648,7 @@ subscription OnCreateCommand {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1607,6 +1697,8 @@ subscription OnUpdateCommand {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -1664,12 +1756,7 @@ subscription OnUpdateCommand {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1718,6 +1805,8 @@ subscription OnDeleteCommand {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -1775,12 +1864,7 @@ subscription OnDeleteCommand {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1844,12 +1928,7 @@ subscription OnCreateEditor {
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -1908,12 +1987,7 @@ subscription OnUpdateEditor {
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -1972,12 +2046,7 @@ subscription OnDeleteEditor {
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -1997,18 +2066,13 @@ subscription OnDeleteEditor {
     }
   }
 }
-subscription OnCreateEditorRange {
-  onCreateEditorRange {
+subscription OnCreateEditorrange {
+  onCreateEditorrange {
     id
     name
     description
     editorId
-    nls {
-      id
-      name
-      description
-      subValues
-    }
+    nlsId
     subset
     min
     max
@@ -2025,12 +2089,7 @@ subscription OnCreateEditorRange {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -2048,18 +2107,13 @@ subscription OnCreateEditorRange {
     }
   }
 }
-subscription OnUpdateEditorRange {
-  onUpdateEditorRange {
+subscription OnUpdateEditorrange {
+  onUpdateEditorrange {
     id
     name
     description
     editorId
-    nls {
-      id
-      name
-      description
-      subValues
-    }
+    nlsId
     subset
     min
     max
@@ -2076,12 +2130,7 @@ subscription OnUpdateEditorRange {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -2099,18 +2148,13 @@ subscription OnUpdateEditorRange {
     }
   }
 }
-subscription OnDeleteEditorRange {
-  onDeleteEditorRange {
+subscription OnDeleteEditorrange {
+  onDeleteEditorrange {
     id
     name
     description
     editorId
-    nls {
-      id
-      name
-      description
-      subValues
-    }
+    nlsId
     subset
     min
     max
@@ -2127,12 +2171,7 @@ subscription OnDeleteEditorRange {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -2186,12 +2225,7 @@ subscription OnCreateUom {
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -2223,12 +2257,7 @@ subscription OnUpdateUom {
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -2260,12 +2289,7 @@ subscription OnDeleteUom {
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -2290,6 +2314,8 @@ subscription OnCreateComplianceLog {
     id
     comment
     complianceId
+    user
+    createdAt
   }
 }
 subscription OnUpdateComplianceLog {
@@ -2297,6 +2323,8 @@ subscription OnUpdateComplianceLog {
     id
     comment
     complianceId
+    user
+    createdAt
   }
 }
 subscription OnDeleteComplianceLog {
@@ -2304,32 +2332,7 @@ subscription OnDeleteComplianceLog {
     id
     comment
     complianceId
-  }
-}
-subscription OnCreateStatic {
-  onCreateStatic {
-    id
-    name
-    description
-    subValues
-    type
-  }
-}
-subscription OnUpdateStatic {
-  onUpdateStatic {
-    id
-    name
-    description
-    subValues
-    type
-  }
-}
-subscription OnDeleteStatic {
-  onDeleteStatic {
-    id
-    name
-    description
-    subValues
-    type
+    user
+    createdAt
   }
 }

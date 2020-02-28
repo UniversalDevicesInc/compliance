@@ -1,7 +1,7 @@
 <div *ngIf="ds.dataLoaded$ | async; else loading" style="width:100%">
   <div *ngIf="authService.user$ | async as user" class="container-fluid">
     <!-- Title -->
-    <h2 align="center" class="text-white">UDI Compliance Dashboard</h2>
+    <h2 align="center" class="text-white">Status</h2>
     <!-- Accordion Panel -->
     <ngb-accordion #acc="ngbAccordion" activeIds="parent">
       <ngb-panel id="parent">
@@ -45,7 +45,7 @@
             <!-- Name -->
             <ng-container cdkColumnDef="name">
               <th cdk-header-cell *cdkHeaderCellDef c
-                (click)="adjustSort('name')" class="w-10">
+                (click)="adjustSort('name')" class="p-2 flex-fill">
                 Name
                 <span *ngIf="sortKey$.value === 'name'">
                   {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
@@ -56,7 +56,7 @@
             <!-- Description -->
             <ng-container cdkColumnDef="description">
               <th cdk-header-cell *cdkHeaderCellDef 
-                (click)="adjustSort('description')" class="w-50">
+                (click)="adjustSort('description')" class="w-20 p-2">
                 Description
                 <span *ngIf="sortKey$.value === 'description'">
                   {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
@@ -66,17 +66,28 @@
                 {{element.description}}
               </td>
             </ng-container>
-            <!-- Compliances -->
-            <ng-container cdkColumnDef="compliance">
-              <th cdk-header-cell *cdkHeaderCellDef class="text-center">Compliances</th>
-              <td class="text-center" cdk-cell *cdkCellDef="let element">
-                <button type="button" class="btn btn-info" [routerLinkActive] = "['active']" 
-                      [routerLinkActiveOptions] = "{exact:true}" [routerLink]="['/compliance']">Compliances</button>
+            <!-- Editor -->
+            <ng-container cdkColumnDef="editor">
+              <th cdk-header-cell *cdkHeaderCellDef 
+                (click)="adjustSort('editor')" class="p-2 flex-fill">
+                Editor
+                <span *ngIf="sortKey$.value === 'editor'">
+                  {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                </span>
+              </th>
+              <td cdk-cell *cdkCellDef="let element">
+                <div *ngIf="element.editorId">
+                  <a [routerLink]="['/editor']" [queryParams]="{search: element.editorId}">
+                    <ng-container *ngFor="let editor of ds.editor$ | async | filter: element.editorId, 'id'">
+                      {{editor['name']}}
+                    </ng-container>
+                  </a>
+                </div>
               </td>
-            </ng-container>
+            </ng-container>     
             <!-- Edit -->
             <ng-container cdkColumnDef="edit">
-              <th cdk-header-cell *cdkHeaderCellDef class="text-center">Edit</th>
+              <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Edit</th>
               <td class="text-center" cdk-cell *cdkCellDef="let element">
                 <button [disabled]="!user.groups.includes('Admins')" type="button" 
                   class="btn btn-info" (click)="open('update', updateModal, element)">
@@ -85,8 +96,8 @@
               </td>
             </ng-container>
             <!-- Delete -->
-            <ng-container cdkColumnDef="delete">
-              <th cdk-header-cell *cdkHeaderCellDef class="text-center">Delete</th>
+            <ng-container cdkColumnDef="delete" class="w-10 p-2">
+              <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Delete</th>
               <td class="text-center" cdk-cell *cdkCellDef="let element">
                 <button [disabled]="!user.groups.includes('Admins') || element.id === 'ecc625a7-c7d5-4f8e-8225-0d529e423c39'" type="button" 
                   class="btn btn-danger" (click)="open('delete', deleteModal, element)">
@@ -104,7 +115,10 @@
           </table>
           <!-- Create -->
           <div class="text-right">
-            <button [disabled]="!user.groups.includes('Admins')" type="submit" class="btn btn-primary" (click)="open('create', createModal)">New</button>
+            <button [disabled]="!user.groups.includes('Admins')" type="submit" 
+                class="btn btn-primary" (click)="open('create', createModal)">
+              New
+            </button>
           </div>
         </ng-template>
       </ngb-panel>
@@ -125,19 +139,31 @@
   </div>
   <div class="modal-body">
     <!-- Input Form -->
-    <form [formGroup]="createForm" (ngSubmit)="modify('create')">
+    <form [formGroup]="createForm" (ngSubmit)="create()">
       <!-- Name -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
+        <div class="col-sm-9 d-flex flex-column">
           <input class="form-control" type="text" formControlName="name">
         </div>
       </div>
       <!-- Description -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Description</label>
-        <div class="col-sm-10">
+        <div class="col-sm-9 d-flex flex-column">
           <input class="form-control" type="text" formControlName="description">
+        </div>
+      </div>
+      <!-- Editor -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Editor</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" formControlName="editorId">
+            <option [value]=null>None</option>
+            <option *ngFor="let editor of ds.editor$ | async" [value]="editor.id">
+              {{editor['name']}}
+            </option>
+          </select>
         </div>
       </div>
       <!-- Buttons -->
@@ -163,15 +189,27 @@
       <!-- Name -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
+        <div class="col-sm-9 d-flex flex-column">
           <input class="form-control" type="text" formControlName="name">
         </div>
       </div>
       <!-- Description -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Description</label>
-        <div class="col-sm-10">
+        <div class="col-sm-9 d-flex flex-column">
           <input class="form-control" type="text" formControlName="description">
+        </div>
+      </div>
+      <!-- Editor -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Editor</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" formControlName="editorId">
+            <option [value]=null>None</option>
+            <option *ngFor="let editor of ds.editor$ | async" [value]="editor.id">
+              {{editor['name']}}
+            </option>
+          </select>
         </div>
       </div>
       <!-- Buttons -->
@@ -198,7 +236,7 @@
     </h4>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="modify('delete')">Delete</button>
+    <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
     <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss('cancel')">Cancel</button>
   </div>
 </ng-template>

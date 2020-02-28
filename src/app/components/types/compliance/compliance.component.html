@@ -1,0 +1,476 @@
+<ng-container *ngIf="authService.user$ | async as user" >
+  <div *ngIf="ds.dataLoaded$ | async; else loading" style="width:100%">
+    <div class="container-fluid">
+      <!-- Title -->
+      <h2 align="center" class="text-white">Compliances</h2>
+      <!-- Accordion Panel -->
+      <ngb-accordion #acc="ngbAccordion" activeIds="parent">
+        <ngb-panel id="parent">
+          <ng-template ngbPanelHeader let-opened="opened">
+            <div class="row text-white d-flex align-items-center justify-content-between">
+              <h4 class="col">{{typeValue | titlecase}}</h4>
+              <div class="input-group col-6">
+                <input
+                  type="text"
+                  class="form-control "
+                  placeholder="Search…"
+                  [formControl]="searchFormControl">
+                <div class="input-group-append">
+                  <button
+                    class="button btn-secondary"
+                    (click)="searchFormControl.setValue('')">
+                    <fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="col">
+                <button style="width: 200px;" ngbPanelToggle class="btn btn-secondary btn-link float-right">
+                  <fa-icon *ngIf="!opened" class="fa-1x" [icon]="faAngleDoubleDown"></fa-icon>
+                  <fa-icon *ngIf="opened" class="fa-1x" [icon]="faAngleDoubleUp"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <ngb-pagination
+              [collectionSize]="tableDataSource$.value.length"
+              [pageSize]="pageSize$.value"
+              [page]="currentPage$.value"
+              (pageChange)="currentPage$.next($event)">
+            </ngb-pagination>
+            <table 
+              class="table table-striped table-bordered table-hover"
+              cdk-table
+              [dataSource]="dataOnPage$"
+              >          
+              <!-- Name -->
+              <ng-container cdkColumnDef="name">
+                <th cdk-header-cell *cdkHeaderCellDef c
+                  (click)="adjustSort('name')" class="p-2 flex-fill">
+                  Name
+                  <span *ngIf="sortKey$.value === 'name'">
+                    {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                  </span>
+                </th>
+                <td cdk-cell *cdkCellDef="let element">{{element.name}}</td>
+              </ng-container>
+              <!-- Description -->
+              <ng-container cdkColumnDef="description">
+                <th cdk-header-cell *cdkHeaderCellDef 
+                  (click)="adjustSort('description')" class="p-2 flex-fill">
+                  Description
+                  <span *ngIf="sortKey$.value === 'description'">
+                    {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                  </span>
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  {{element.description}}
+                </td>
+              </ng-container>
+              <!-- State -->
+              <ng-container cdkColumnDef="state">
+                <th cdk-header-cell *cdkHeaderCellDef 
+                  (click)="adjustSort('state')" class="p-2 flex-fill">
+                  State
+                  <span *ngIf="sortKey$.value === 'state'">
+                    {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                  </span>
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  {{element.state}}
+                </td>
+              </ng-container>
+              <!-- Author -->
+              <ng-container cdkColumnDef="author">
+                <th cdk-header-cell *cdkHeaderCellDef 
+                  (click)="adjustSort('author')" class="p-2 flex-fill">
+                  Author
+                  <span *ngIf="sortKey$.value === 'author'">
+                    {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                  </span>
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  {{element.author}}
+                </td>
+              </ng-container>
+              <!-- CreatedAt -->
+              <ng-container cdkColumnDef="createdAt">
+                <th cdk-header-cell *cdkHeaderCellDef 
+                  (click)="adjustSort('createdAt')" class="p-2 flex-fill">
+                  Created
+                  <span *ngIf="sortKey$.value === 'createdAt'">
+                    {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                  </span>
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  {{element.createdAt | date}}
+                </td>
+              </ng-container>
+              <!-- LastModified -->
+              <ng-container cdkColumnDef="updatedAt">
+                <th cdk-header-cell *cdkHeaderCellDef 
+                  (click)="adjustSort('description')" class="p-2 flex-fill">
+                  Last Modified
+                  <span *ngIf="sortKey$.value === 'updatedAt'">
+                    {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                  </span>
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  {{element.updatedAt | date }}
+                </td>
+              </ng-container>
+              <!-- Edit -->
+              <ng-container cdkColumnDef="logs">
+                <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Edit</th>
+                <td class="text-center" cdk-cell *cdkCellDef="let element">
+                  <button type="button" 
+                    class="btn btn-secondary" (click)="openLogs(logsModal, element)">
+                      Logs
+                  </button>
+                </td>
+              </ng-container>
+              <!-- Edit -->
+              <ng-container cdkColumnDef="edit">
+                <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Edit</th>
+                <td class="text-center" cdk-cell *cdkCellDef="let element">
+                  <button [disabled]="!user.groups.includes('Admins')" type="button" 
+                    class="btn btn-info" (click)="open('update', updateModal, element)">
+                      Edit
+                  </button>
+                </td>
+              </ng-container>
+              <!-- Delete -->
+              <ng-container cdkColumnDef="delete" class="w-10 p-2">
+                <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Delete</th>
+                <td class="text-center" cdk-cell *cdkCellDef="let element">
+                  <button [disabled]="!user.groups.includes('Admins') || element.id === 'ecc625a7-c7d5-4f8e-8225-0d529e423c39'" type="button" 
+                    class="btn btn-danger" (click)="open('delete', deleteModal, element)">
+                      Delete
+                  </button>              
+                </td>
+              </ng-container>
+              <!-- Table -->
+              <thead>
+                <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+              </thead>
+              <tbody>
+                <tr cdk-row *cdkRowDef="let row; columns: displayedColumns; let i = index" 
+                  (click)="currentCompliance$.next(row); selectedCompliance = i;
+                  scroll(statusElement);"
+                  [class.active]="row === currentCompliance$.value"></tr>
+              </tbody>
+            </table>
+            <!-- Create -->
+            <div class="text-right">
+              <button [disabled]="!user.groups.includes('Admins')" type="submit" 
+                  class="btn btn-primary" (click)="open('create', createModal)">
+                New
+              </button>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+  </div><br>
+  <ng-template #loading>
+    <div>Loading...</div>
+  </ng-template>
+  
+  <!-- Create Modal -->
+  <ng-template #createModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title text-white">Create {{typeValue | titlecase}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Input Form -->
+      <form [formGroup]="createForm" (ngSubmit)="create()">
+        <!-- Name -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <input class="form-control" type="text" formControlName="name">
+          </div>
+        </div>
+        <!-- Description -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <input class="form-control" type="text" formControlName="description">
+          </div>
+        </div>
+        <!-- Domain -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Domain</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <select class="form-control" formControlName="domainId">
+              <option *ngFor="let dom of ds.domain$ | async" [value]="dom.id">
+                {{dom['name']}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- Hint -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Hint</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <input class="form-control mb-2" type="text" formControlName="hint"
+                placeholder="Device Type ID">
+          </div>
+        </div>
+        <!-- Buttons -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  
+  <!-- Update Modal -->
+  <ng-template #updateModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title text-white">Update {{typeValue | titlecase}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Input Form -->
+      <form [formGroup]="updateForm" (ngSubmit)="modify(comment.value)">
+        <!-- Name -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <input class="form-control" type="text" formControlName="name">
+          </div>
+        </div>
+        <!-- Description -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <input class="form-control" type="text" formControlName="description">
+          </div>
+        </div>
+        <!-- Domain -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Domain</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <select class="form-control" formControlName="domainId">
+              <option *ngFor="let dom of ds.domain$ | async" [value]="dom.id">
+                {{dom['name']}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- State -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">State</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <select class="form-control" formControlName="state">
+              <option value='PROPOSED' selected>Proposed</option>
+              <option value='REVIEW'>Review</option>
+              <option value='COMPLETED'>Completed</option>
+              <option value='REJECTED'>Rejected</option>
+            </select>
+          </div>
+        </div>    
+        <!-- Hint -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Hint</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <input class="form-control mb-2" type="text" formControlName="hint"
+                placeholder="Device Type ID">
+          </div>
+        </div>
+        <!-- Add New -->
+        <div>
+          <hr class="col-xs-12">
+          <div class="row">
+            <label class="col-sm-2 col-form-label">Comment</label>
+            <div class="col-sm-9 d-flex flex-column">
+              <input class="form-control mb-2" type="text" #comment placeholder="Change Reason - Required">
+            </div>
+          </div><br>
+        </div>
+        <!-- Buttons -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  
+  <!-- Delete Modal -->
+  <ng-template #deleteModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title text-white">Delete {{typeValue | titlecase}}?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('cancel')">
+        <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h4>
+        *** WARNING IRREVERSABLE *** <br>
+        Are you sure you want to delete {{typeValue}} {{current['name']}}?
+      </h4>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+      <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss('cancel')">Cancel</button>
+    </div>
+  </ng-template>
+
+  <!-- Unlink Modal -->
+  <ng-template #unlinkModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title text-white">Remove Status {{selectedLink.status.name}} Link for {{currentCompliance$.value['name']}}?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h4>
+        *** WARNING IRREVERSABLE *** <br>
+        Are you sure you want to delete {{selectedLink.status.name}} Link for {{currentCompliance$.value['name']}}?
+      </h4>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="deleteLink()">Delete</button>
+      <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss('cancel')">Cancel</button>
+    </div>
+  </ng-template>
+  
+  <!-- Logs Modal -->
+  <ng-template #logsModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title text-white">{{typeValue | titlecase}} Logs</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th class="p-2 flex-fill">#</th>
+            <th class="p-2 flex-fill">Date</th>
+            <th class="p-2 flex-fill ">User</th>
+            <th class="p-2 flex-fill">Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of logs; index as i">
+            <td>{{i+1}}</td>
+            <td>{{log.createdAt | date}}</td>
+            <td>{{log.user}}</td>
+            <td>{{log.comment}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss()">Close</button>
+    </div>
+  </ng-template>
+
+  <!-- Link Modal -->
+  <ng-template #statusModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title text-white">Link Status to Compliance</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Status</label>
+          <div class="col-sm-9 d-flex flex-column">
+            <select class="form-control" [(ngModel)]="selectedStatus">
+              <option *ngFor="let item of ds.status$ | async" [ngValue]="item">
+                {{item['name']}}
+              </option>
+            </select>
+          </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button (click)="createLink()" class="btn btn-primary">Link</button>
+      <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss()">Cancel</button>
+    </div>
+  </ng-template>
+  
+  <div #statusElement>
+    <div *ngIf="currentCompliance$ | async" class="container-fluid" >
+      <ngb-accordion #acc="ngbAccordion" activeIds="child">
+        <ngb-panel id="child">
+          <ng-template ngbPanelHeader let-opened="opened">
+            <div class="row text-white d-flex align-items-center justify-content-between">
+              <h4 class="col">Status List for {{currentCompliance$.value['name']}}</h4>
+              <div class="col">
+                <button style="width: 200px;" ngbPanelToggle class="btn btn-secondary btn-link float-right">
+                  <fa-icon *ngIf="!opened" class="fa-1x" [icon]="faAngleDoubleDown"></fa-icon>
+                  <fa-icon *ngIf="opened" class="fa-1x" [icon]="faAngleDoubleUp"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <table 
+              class="table table-striped table-bordered"
+              cdk-table
+              [dataSource]="currentStatus$">          
+              <!-- Name -->
+              <ng-container cdkColumnDef="name">
+                <th cdk-header-cell *cdkHeaderCellDef class="p-2 flex-fill">
+                  Name
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  <a [routerLink]="['/status']" [queryParams]="{search: element.status.id}">
+                    {{element.status['name']}}
+                  </a>
+                </td>
+              </ng-container>
+              <!-- Description -->
+              <ng-container cdkColumnDef="description">
+                <th cdk-header-cell *cdkHeaderCellDef class="p-2 flex-fill">
+                  Description
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  {{element.status['description']}}
+                </td>
+              </ng-container>
+              <!-- Unlink -->
+              <ng-container cdkColumnDef="unlink" class="w-10 p-2">
+                <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Unlink</th>
+                <td class="text-center" cdk-cell *cdkCellDef="let element">
+                  <button [disabled]="!user.groups.includes('Admins')" type="button" 
+                    class="btn btn-danger" (click)="openNaked(unlinkModal); selectedLink = element">
+                      Unlink
+                  </button>              
+                </td>
+              </ng-container>
+              <!-- Table -->
+              <thead>
+                <tr cdk-header-row *cdkHeaderRowDef="statusColumns"></tr>
+              </thead>
+              <tbody>
+                <tr cdk-row *cdkRowDef="let row; columns: statusColumns; let i = index"></tr>
+              </tbody>
+            </table>
+            <!-- Link -->
+            <div class="text-right">
+              <button [disabled]="!user.groups.includes('Admins')"  
+                  class="btn btn-primary" (click)="openNaked(statusModal)">
+                Link Status to Compliance
+              </button>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+  </div>
+</ng-container>

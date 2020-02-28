@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, Hub } from 'aws-amplify'
+import { Router } from '@angular/router'
 import { BehaviorSubject, Observable } from 'rxjs'
 
 import { User } from '../models/user'
@@ -25,7 +26,8 @@ export class AuthService {
   public user: User
 
   constructor(
-    private data: DataService
+    private data: DataService,
+    private router: Router
   ) {
     this.init()
   }

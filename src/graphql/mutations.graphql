@@ -25,11 +25,15 @@ mutation CreateDomain(
         state
         author
         lastModifiedBy
+        createdAt
+        updatedAt
         complianceLogs {
           items {
             id
             comment
             complianceId
+            user
+            createdAt
           }
           nextToken
         }
@@ -72,11 +76,15 @@ mutation UpdateDomain(
         state
         author
         lastModifiedBy
+        createdAt
+        updatedAt
         complianceLogs {
           items {
             id
             comment
             complianceId
+            user
+            createdAt
           }
           nextToken
         }
@@ -119,11 +127,15 @@ mutation DeleteDomain(
         state
         author
         lastModifiedBy
+        createdAt
+        updatedAt
         complianceLogs {
           items {
             id
             comment
             complianceId
+            user
+            createdAt
           }
           nextToken
         }
@@ -168,6 +180,8 @@ mutation CreateCompliance(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -182,11 +196,15 @@ mutation CreateCompliance(
     state
     author
     lastModifiedBy
+    createdAt
+    updatedAt
     complianceLogs {
       items {
         id
         comment
         complianceId
+        user
+        createdAt
       }
       nextToken
     }
@@ -209,6 +227,8 @@ mutation CreateCompliance(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -263,6 +283,8 @@ mutation UpdateCompliance(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -277,11 +299,15 @@ mutation UpdateCompliance(
     state
     author
     lastModifiedBy
+    createdAt
+    updatedAt
     complianceLogs {
       items {
         id
         comment
         complianceId
+        user
+        createdAt
       }
       nextToken
     }
@@ -304,6 +330,8 @@ mutation UpdateCompliance(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -358,6 +386,8 @@ mutation DeleteCompliance(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -372,11 +402,15 @@ mutation DeleteCompliance(
     state
     author
     lastModifiedBy
+    createdAt
+    updatedAt
     complianceLogs {
       items {
         id
         comment
         complianceId
+        user
+        createdAt
       }
       nextToken
     }
@@ -399,6 +433,8 @@ mutation DeleteCompliance(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -452,6 +488,8 @@ mutation CreateComplianceStatusLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -460,11 +498,15 @@ mutation CreateComplianceStatusLink(
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -482,6 +524,8 @@ mutation CreateComplianceStatusLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -511,6 +555,8 @@ mutation CreateComplianceStatusLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -541,6 +587,7 @@ mutation CreateComplianceStatusLink(
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -580,6 +627,8 @@ mutation UpdateComplianceStatusLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -588,11 +637,15 @@ mutation UpdateComplianceStatusLink(
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -610,6 +663,8 @@ mutation UpdateComplianceStatusLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -639,6 +694,8 @@ mutation UpdateComplianceStatusLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -669,6 +726,7 @@ mutation UpdateComplianceStatusLink(
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -708,6 +766,8 @@ mutation DeleteComplianceStatusLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -716,11 +776,15 @@ mutation DeleteComplianceStatusLink(
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -738,6 +802,8 @@ mutation DeleteComplianceStatusLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -767,6 +833,8 @@ mutation DeleteComplianceStatusLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -797,6 +865,7 @@ mutation DeleteComplianceStatusLink(
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -836,6 +905,8 @@ mutation CreateStatus(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -888,12 +959,7 @@ mutation CreateStatus(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -938,6 +1004,8 @@ mutation UpdateStatus(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -990,12 +1058,7 @@ mutation UpdateStatus(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1040,6 +1103,8 @@ mutation DeleteStatus(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -1092,12 +1157,7 @@ mutation DeleteStatus(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1142,6 +1202,8 @@ mutation CreateComplianceCommandLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -1150,11 +1212,15 @@ mutation CreateComplianceCommandLink(
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -1172,6 +1238,8 @@ mutation CreateComplianceCommandLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -1201,6 +1269,8 @@ mutation CreateComplianceCommandLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           command {
             id
@@ -1230,6 +1300,7 @@ mutation CreateComplianceCommandLink(
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -1276,6 +1347,8 @@ mutation UpdateComplianceCommandLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -1284,11 +1357,15 @@ mutation UpdateComplianceCommandLink(
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -1306,6 +1383,8 @@ mutation UpdateComplianceCommandLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -1335,6 +1414,8 @@ mutation UpdateComplianceCommandLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           command {
             id
@@ -1364,6 +1445,7 @@ mutation UpdateComplianceCommandLink(
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -1410,6 +1492,8 @@ mutation DeleteComplianceCommandLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -1418,11 +1502,15 @@ mutation DeleteComplianceCommandLink(
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -1440,6 +1528,8 @@ mutation DeleteComplianceCommandLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -1469,6 +1559,8 @@ mutation DeleteComplianceCommandLink(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           command {
             id
@@ -1498,6 +1590,7 @@ mutation DeleteComplianceCommandLink(
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -1544,6 +1637,8 @@ mutation CreateCommand(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -1601,12 +1696,7 @@ mutation CreateCommand(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1658,6 +1748,8 @@ mutation UpdateCommand(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -1715,12 +1807,7 @@ mutation UpdateCommand(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1772,6 +1859,8 @@ mutation DeleteCommand(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -1829,12 +1918,7 @@ mutation DeleteCommand(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -1901,12 +1985,7 @@ mutation CreateEditor(
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -1968,12 +2047,7 @@ mutation UpdateEditor(
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -2035,12 +2109,7 @@ mutation DeleteEditor(
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -2060,21 +2129,16 @@ mutation DeleteEditor(
     }
   }
 }
-mutation CreateEditorRange(
-  $input: CreateEditorRangeInput!
-  $condition: ModelEditorRangeConditionInput
+mutation CreateEditorrange(
+  $input: CreateEditorrangeInput!
+  $condition: ModelEditorrangeConditionInput
 ) {
-  createEditorRange(input: $input, condition: $condition) {
+  createEditorrange(input: $input, condition: $condition) {
     id
     name
     description
     editorId
-    nls {
-      id
-      name
-      description
-      subValues
-    }
+    nlsId
     subset
     min
     max
@@ -2091,12 +2155,7 @@ mutation CreateEditorRange(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -2114,21 +2173,16 @@ mutation CreateEditorRange(
     }
   }
 }
-mutation UpdateEditorRange(
-  $input: UpdateEditorRangeInput!
-  $condition: ModelEditorRangeConditionInput
+mutation UpdateEditorrange(
+  $input: UpdateEditorrangeInput!
+  $condition: ModelEditorrangeConditionInput
 ) {
-  updateEditorRange(input: $input, condition: $condition) {
+  updateEditorrange(input: $input, condition: $condition) {
     id
     name
     description
     editorId
-    nls {
-      id
-      name
-      description
-      subValues
-    }
+    nlsId
     subset
     min
     max
@@ -2145,12 +2199,7 @@ mutation UpdateEditorRange(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -2168,21 +2217,16 @@ mutation UpdateEditorRange(
     }
   }
 }
-mutation DeleteEditorRange(
-  $input: DeleteEditorRangeInput!
-  $condition: ModelEditorRangeConditionInput
+mutation DeleteEditorrange(
+  $input: DeleteEditorrangeInput!
+  $condition: ModelEditorrangeConditionInput
 ) {
-  deleteEditorRange(input: $input, condition: $condition) {
+  deleteEditorrange(input: $input, condition: $condition) {
     id
     name
     description
     editorId
-    nls {
-      id
-      name
-      description
-      subValues
-    }
+    nlsId
     subset
     min
     max
@@ -2199,12 +2243,7 @@ mutation DeleteEditorRange(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -2270,12 +2309,7 @@ mutation CreateUom(
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -2310,12 +2344,7 @@ mutation UpdateUom(
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -2350,12 +2379,7 @@ mutation DeleteUom(
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -2383,6 +2407,8 @@ mutation CreateComplianceLog(
     id
     comment
     complianceId
+    user
+    createdAt
   }
 }
 mutation UpdateComplianceLog(
@@ -2393,6 +2419,8 @@ mutation UpdateComplianceLog(
     id
     comment
     complianceId
+    user
+    createdAt
   }
 }
 mutation DeleteComplianceLog(
@@ -2403,41 +2431,7 @@ mutation DeleteComplianceLog(
     id
     comment
     complianceId
-  }
-}
-mutation CreateStatic(
-  $input: CreateStaticInput!
-  $condition: ModelStaticConditionInput
-) {
-  createStatic(input: $input, condition: $condition) {
-    id
-    name
-    description
-    subValues
-    type
-  }
-}
-mutation UpdateStatic(
-  $input: UpdateStaticInput!
-  $condition: ModelStaticConditionInput
-) {
-  updateStatic(input: $input, condition: $condition) {
-    id
-    name
-    description
-    subValues
-    type
-  }
-}
-mutation DeleteStatic(
-  $input: DeleteStaticInput!
-  $condition: ModelStaticConditionInput
-) {
-  deleteStatic(input: $input, condition: $condition) {
-    id
-    name
-    description
-    subValues
-    type
+    user
+    createdAt
   }
 }

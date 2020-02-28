@@ -1,5 +1,5 @@
 enum State {
-  NEW
+  PROPOSED
   REVIEW
   COMPLETED
   REJECTED
@@ -39,6 +39,8 @@ type Compliance @model
   state: State!
   author: String
   lastModifiedBy: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   complianceLogs: [ComplianceLog] @connection(keyName: "byCompliance", fields: ["id"])
   status: [ComplianceStatusLink] @connection(keyName: "byCompliance", fields: ["id"])
 }
@@ -113,10 +115,10 @@ type Editor @model
   name: String!
   description: String
   status: [Status] @connection(keyName: "byEditor", fields: ["id"])
-  ranges: [EditorRange] @connection(keyName: "byEditor", fields: ["id"])
+  ranges: [Editorrange] @connection(keyName: "byEditor", fields: ["id"])
 }
 
-type EditorRange @model
+type Editorrange @model
   @auth(rules: [
     { allow: groups, groups: ["Admins"] },
     { allow: groups, operations: [create, update], groups: ["Editors"] },
@@ -128,7 +130,7 @@ type EditorRange @model
   name: String
   description: String
   editorId: ID
-  nls: Nls
+  nlsId: ID
   subset: String
   min: Int
   max: Int
@@ -159,7 +161,7 @@ type Uom @model
   name: Int!
   description: String
   subValues: AWSJSON
-  ranges: [EditorRange] @connection(keyName: "byUom", fields: ["id"])
+  ranges: [Editorrange] @connection(keyName: "byUom", fields: ["id"])
 }
 
 type ComplianceLog @model
@@ -172,17 +174,6 @@ type ComplianceLog @model
   id: ID!
   comment: String!
   complianceId: ID!
-}
-
-type Static @model
-  @auth(rules: [
-    { allow: groups, groups: ["Admins"] },
-    { allow: private, operations: [read] }
-  ]) 
-  @key(name: "byType", fields: ["type"]) {
-  id: ID!
-  name: String!
-  description: String
-  subValues: AWSJSON
-  type: Type!
+  user: String!
+  createdAt: AWSDateTime
 }

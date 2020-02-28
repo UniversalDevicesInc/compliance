@@ -1,7 +1,7 @@
 <div *ngIf="ds.dataLoaded$ | async; else loading" style="width:100%">
   <div *ngIf="authService.user$ | async as user" class="container-fluid">
     <!-- Title -->
-    <h2 align="center" class="text-white">UDI Compliance Dashboard</h2>
+    <h2 align="center" class="text-white">Commands</h2>
     <!-- Accordion Panel -->
     <ngb-accordion #acc="ngbAccordion" activeIds="parent">
       <ngb-panel id="parent">

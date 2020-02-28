@@ -22,11 +22,15 @@ query GetDomain($id: ID!) {
         state
         author
         lastModifiedBy
+        createdAt
+        updatedAt
         complianceLogs {
           items {
             id
             comment
             complianceId
+            user
+            createdAt
           }
           nextToken
         }
@@ -68,6 +72,8 @@ query ListDomains(
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -106,6 +112,8 @@ query GetCompliance($id: ID!) {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -120,11 +128,15 @@ query GetCompliance($id: ID!) {
     state
     author
     lastModifiedBy
+    createdAt
+    updatedAt
     complianceLogs {
       items {
         id
         comment
         complianceId
+        user
+        createdAt
       }
       nextToken
     }
@@ -147,6 +159,8 @@ query GetCompliance($id: ID!) {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -198,6 +212,8 @@ query ListCompliances(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -206,11 +222,15 @@ query ListCompliances(
       state
       author
       lastModifiedBy
+      createdAt
+      updatedAt
       complianceLogs {
         items {
           id
           comment
           complianceId
+          user
+          createdAt
         }
         nextToken
       }
@@ -228,6 +248,8 @@ query ListCompliances(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -266,6 +288,8 @@ query GetStatus($id: ID!) {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -318,12 +342,7 @@ query GetStatus($id: ID!) {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -365,6 +384,8 @@ query ListStatuss(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           status {
             id
@@ -395,6 +416,7 @@ query ListStatuss(
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -432,6 +454,8 @@ query GetCommand($id: ID!) {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             nextToken
           }
@@ -489,12 +513,7 @@ query GetCommand($id: ID!) {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -543,6 +562,8 @@ query ListCommands(
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
           }
           command {
             id
@@ -572,6 +593,7 @@ query ListCommands(
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -631,12 +653,7 @@ query GetEditor($id: ID!) {
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -689,12 +706,7 @@ query ListEditors(
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -713,18 +725,13 @@ query ListEditors(
     nextToken
   }
 }
-query GetEditorRange($id: ID!) {
-  getEditorRange(id: $id) {
+query GetEditorrange($id: ID!) {
+  getEditorrange(id: $id) {
     id
     name
     description
     editorId
-    nls {
-      id
-      name
-      description
-      subValues
-    }
+    nlsId
     subset
     min
     max
@@ -741,12 +748,7 @@ query GetEditorRange($id: ID!) {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -764,23 +766,18 @@ query GetEditorRange($id: ID!) {
     }
   }
 }
-query ListEditorRanges(
-  $filter: ModelEditorRangeFilterInput
+query ListEditorranges(
+  $filter: ModelEditorrangeFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listEditorRanges(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listEditorranges(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       name
       description
       editorId
-      nls {
-        id
-        name
-        description
-        subValues
-      }
+      nlsId
       subset
       min
       max
@@ -797,6 +794,7 @@ query ListEditorRanges(
             name
             description
             editorId
+            nlsId
             subset
             min
             max
@@ -841,12 +839,7 @@ query GetUom($id: ID!) {
         name
         description
         editorId
-        nls {
-          id
-          name
-          description
-          subValues
-        }
+        nlsId
         subset
         min
         max
@@ -879,12 +872,7 @@ query ListUoms($filter: ModelUomFilterInput, $limit: Int, $nextToken: String) {
           name
           description
           editorId
-          nls {
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -908,6 +896,8 @@ query GetComplianceLog($id: ID!) {
     id
     comment
     complianceId
+    user
+    createdAt
   }
 }
 query ListComplianceLogs(
@@ -920,31 +910,8 @@ query ListComplianceLogs(
       id
       comment
       complianceId
-    }
-    nextToken
-  }
-}
-query GetStatic($id: ID!) {
-  getStatic(id: $id) {
-    id
-    name
-    description
-    subValues
-    type
-  }
-}
-query ListStatics(
-  $filter: ModelStaticFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listStatics(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      name
-      description
-      subValues
-      type
+      user
+      createdAt
     }
     nextToken
   }

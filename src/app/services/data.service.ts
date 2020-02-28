@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ReplaySubject } from 'rxjs'
+import { BehaviorSubject, ReplaySubject } from 'rxjs'
 
 import { API, graphqlOperation } from 'aws-amplify'
 import * as QlApi from '../API.service'
@@ -9,14 +9,14 @@ import * as QlApi from '../API.service'
 })
 export class DataService {
 
-  private _domain: ReplaySubject<Array<QlApi.GetDomainQuery>> = new ReplaySubject(1)
+  private _domain: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _compliance: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _status: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _command: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _editor: ReplaySubject<Array<Object>> = new ReplaySubject(1)
+  private _editorrange: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _nls: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _uom: ReplaySubject<Array<Object>> = new ReplaySubject(1)
-  private _static: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _dataStore: Object = {}
   private _listeners: Array<string> = []
   private _subApi: Object = {}
@@ -27,15 +27,15 @@ export class DataService {
   readonly status$ = this._status.asObservable()
   readonly command$ = this._command.asObservable()
   readonly editor$ = this._editor.asObservable()
+  readonly editorrange$ = this._editorrange.asObservable()
   readonly nls$ = this._nls.asObservable()
   readonly uom$ = this._uom.asObservable()
-  readonly static$ = this._static.asObservable()  
 
-  public apiTypes = ["domain","compliance","status","command","editor","nls","uom","static"]
+  public apiTypes = ["domain","compliance","status","command","editor","editorrange","nls","uom"]
   public currentDomain: QlApi.GetDomainQuery
 
   public dataLoaded$: ReplaySubject<boolean> = new ReplaySubject(1)
-  public currentDomain$: ReplaySubject<Object> = new ReplaySubject(1)
+  public currentDomain$: BehaviorSubject<Object> = new BehaviorSubject(1)
 
   constructor(
     private qlApi: QlApi.APIService
@@ -92,17 +92,19 @@ export class DataService {
   async onCreate(type, data) {
     console.log(`${type} added: ${data.name}(${data.id}) - ${data.description}`)
     this._dataStore[type].push(data)
+    this._dataStore[type].sort(this.sortData)
     this[`_${type}`].next(this._dataStore[type])
   }
   async onUpdate(type, data) {
     console.log(`${type} updated: ${data.name}(${data.id}) - ${data.description}`)
     this._dataStore[type] = this._dataStore[type].filter(item => item.id !== data.id)
     this._dataStore[type].push(data)
+    this._dataStore[type].sort(this.sortData)
     this[`_${type}`].next(this._dataStore[type])
   }
   async onDelete(type, data) {
     console.log(`${type} deleted: ${data.name || "none"}(${data.id}) - ${data.description || "none"}`)
-    this._dataStore[type] = this._dataStore[type].filter(item => item.id !== data.id)
+    this._dataStore[type] = this._dataStore[type].filter(item => item.id !== data.id).sort(this.sortData)
     this[`_${type}`].next(this._dataStore[type])
   }
   async notFound(type, data) {
@@ -116,20 +118,33 @@ export class DataService {
       for(let type of this.apiTypes) {
         // Get all Data types and load into memory
         dataLoads.push(this._crudApi[type].read.func(null, 500).then(data => {
-          this._dataStore[type] = data.items
+          this._dataStore[type] = data.items.sort(this.sortData)
           this[`_${type}`].next(this._dataStore[type])
         }))
       }
       await Promise.all(dataLoads)
       console.log(`Data Loaded from API`)
       if (this._dataStore.hasOwnProperty('domain') && this._dataStore['domain'].length > 0) {
-        this.currentDomain = this._dataStore['domain'].filter(d => d.name === "UDI")[0]
+        this.currentDomain = this._dataStore['domain'].filter(d => d.id === "ecc625a7-c7d5-4f8e-8225-0d529e423c39")[0]
         this.currentDomain$.next(this.currentDomain)
-        console.log(`Set default domain to UDI`)
+        console.log(`Set default domain to ${this.currentDomain.name}`)
       }
       this.dataLoaded$.next(true)
     } catch (err) {
       console.log(`loadData error: ${err} :: ${JSON.stringify(err)}`)
+    }
+  }
+
+  async loadType(type) {
+    try {
+      if (this.apiTypes.includes(type)) {
+        let data = await this._crudApi[type].read.func(null, 500)
+        this._dataStore[type] = data.items.sort(this.sortData)
+        this[`_${type}`].next(this._dataStore[type])
+        console.log(`Reloaded ${type} data`)
+      }
+    } catch (err) {
+      if (err) console.log(err)
     }
   }
 
@@ -175,6 +190,39 @@ export class DataService {
   async callApi(type, action, payload) {
     console.log(`Called ${type} with ${action} payload ${JSON.stringify(payload)}`)
     return await this._crudApi[type][action].func(payload)
+  }
+
+  async addComplianceLog(complianceId, user, comment) {
+    return await this.qlApi.CreateComplianceLog({
+      complianceId: complianceId,
+      comment: comment,
+      user: user
+    })
+  }
+
+  async addComplianceStatusLink(complianceId, statusId) {
+    return await this.qlApi.CreateComplianceStatusLink({
+      complianceId: complianceId,
+      statusId: statusId
+    })
+  }
+
+  async deleteComplianceStatusLink(id) {
+    return await this.qlApi.DeleteComplianceStatusLink({
+      id: id
+    })
+  }
+
+  sortData(a,b) {
+    if (a && b && a.hasOwnProperty('name') && b.hasOwnProperty('name')) {
+      if (Number.isFinite(a['name']) && Number.isFinite(b['name'])) {
+        return a['name'] - b['name']
+      }
+      else {
+        if (a['name'] > b['name']) return 1
+        if (a['name'] < b['name']) return -1
+      }
+    } else return 0
   }
   
 }

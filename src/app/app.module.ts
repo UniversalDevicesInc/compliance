@@ -18,6 +18,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DomainComponent } from './components/types/domain/domain.component';
+import { ComplianceComponent } from './components/types/compliance/compliance.component';
+import { StatusComponent } from './components/types/status/status.component';
+import { CommandComponent } from './components/types/command/command.component';
+import { EditorComponent } from './components/types/editor/editor.component';
+import { EditorrangeComponent } from './components/types/editorrange/editorrange.component';
+import { NlsComponent } from './components/types/nls/nls.component';
+import { UomComponent } from './components/types/uom/uom.component';
+import { FilterPipe } from './pipes/filter.pipe';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +35,16 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     HomeComponent,
     NavbarComponent,
     FooterComponent,
-    DashboardComponent
+    DashboardComponent,
+    DomainComponent,
+    ComplianceComponent,
+    StatusComponent,
+    CommandComponent,
+    EditorComponent,
+    NlsComponent,
+    UomComponent,
+    EditorrangeComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,

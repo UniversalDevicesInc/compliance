@@ -60,7 +60,7 @@ export type ModelSizeInput = {
 };
 
 export enum State {
-  NEW = "NEW",
+  PROPOSED = "PROPOSED",
   REVIEW = "REVIEW",
   COMPLETED = "COMPLETED",
   REJECTED = "REJECTED"
@@ -85,6 +85,8 @@ export type CreateComplianceInput = {
   state: State;
   author?: string | null;
   lastModifiedBy?: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 };
 
 export type ModelComplianceConditionInput = {
@@ -95,6 +97,8 @@ export type ModelComplianceConditionInput = {
   state?: ModelStateInput | null;
   author?: ModelStringInput | null;
   lastModifiedBy?: ModelStringInput | null;
+  createdAt?: ModelStringInput | null;
+  updatedAt?: ModelStringInput | null;
   and?: Array<ModelComplianceConditionInput | null> | null;
   or?: Array<ModelComplianceConditionInput | null> | null;
   not?: ModelComplianceConditionInput | null;
@@ -130,6 +134,8 @@ export type UpdateComplianceInput = {
   state?: State | null;
   author?: string | null;
   lastModifiedBy?: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 };
 
 export type DeleteComplianceInput = {
@@ -262,11 +268,12 @@ export type DeleteEditorInput = {
   id?: string | null;
 };
 
-export type CreateEditorRangeInput = {
+export type CreateEditorrangeInput = {
   id?: string | null;
   name?: string | null;
   description?: string | null;
   editorId?: string | null;
+  nlsId?: string | null;
   subset?: string | null;
   min?: number | null;
   max?: number | null;
@@ -274,18 +281,19 @@ export type CreateEditorRangeInput = {
   uomId: string;
 };
 
-export type ModelEditorRangeConditionInput = {
+export type ModelEditorrangeConditionInput = {
   name?: ModelStringInput | null;
   description?: ModelStringInput | null;
   editorId?: ModelIDInput | null;
+  nlsId?: ModelIDInput | null;
   subset?: ModelStringInput | null;
   min?: ModelIntInput | null;
   max?: ModelIntInput | null;
   step?: ModelFloatInput | null;
   uomId?: ModelIDInput | null;
-  and?: Array<ModelEditorRangeConditionInput | null> | null;
-  or?: Array<ModelEditorRangeConditionInput | null> | null;
-  not?: ModelEditorRangeConditionInput | null;
+  and?: Array<ModelEditorrangeConditionInput | null> | null;
+  or?: Array<ModelEditorrangeConditionInput | null> | null;
+  not?: ModelEditorrangeConditionInput | null;
 };
 
 export type ModelIntInput = {
@@ -312,11 +320,12 @@ export type ModelFloatInput = {
   attributeType?: ModelAttributeTypes | null;
 };
 
-export type UpdateEditorRangeInput = {
+export type UpdateEditorrangeInput = {
   id: string;
   name?: string | null;
   description?: string | null;
   editorId?: string | null;
+  nlsId?: string | null;
   subset?: string | null;
   min?: number | null;
   max?: number | null;
@@ -324,7 +333,7 @@ export type UpdateEditorRangeInput = {
   uomId?: string | null;
 };
 
-export type DeleteEditorRangeInput = {
+export type DeleteEditorrangeInput = {
   id?: string | null;
 };
 
@@ -386,11 +395,15 @@ export type CreateComplianceLogInput = {
   id?: string | null;
   comment: string;
   complianceId: string;
+  user: string;
+  createdAt?: string | null;
 };
 
 export type ModelComplianceLogConditionInput = {
   comment?: ModelStringInput | null;
   complianceId?: ModelIDInput | null;
+  user?: ModelStringInput | null;
+  createdAt?: ModelStringInput | null;
   and?: Array<ModelComplianceLogConditionInput | null> | null;
   or?: Array<ModelComplianceLogConditionInput | null> | null;
   not?: ModelComplianceLogConditionInput | null;
@@ -400,50 +413,11 @@ export type UpdateComplianceLogInput = {
   id: string;
   comment?: string | null;
   complianceId?: string | null;
+  user?: string | null;
+  createdAt?: string | null;
 };
 
 export type DeleteComplianceLogInput = {
-  id?: string | null;
-};
-
-export type CreateStaticInput = {
-  id?: string | null;
-  name: string;
-  description?: string | null;
-  subValues?: string | null;
-  type: Type;
-};
-
-export enum Type {
-  UOM = "UOM",
-  STATUS = "STATUS",
-  EDITOR = "EDITOR"
-}
-
-export type ModelStaticConditionInput = {
-  name?: ModelStringInput | null;
-  description?: ModelStringInput | null;
-  subValues?: ModelStringInput | null;
-  type?: ModelTypeInput | null;
-  and?: Array<ModelStaticConditionInput | null> | null;
-  or?: Array<ModelStaticConditionInput | null> | null;
-  not?: ModelStaticConditionInput | null;
-};
-
-export type ModelTypeInput = {
-  eq?: Type | null;
-  ne?: Type | null;
-};
-
-export type UpdateStaticInput = {
-  id: string;
-  name?: string | null;
-  description?: string | null;
-  subValues?: string | null;
-  type?: Type | null;
-};
-
-export type DeleteStaticInput = {
   id?: string | null;
 };
 
@@ -465,6 +439,8 @@ export type ModelComplianceFilterInput = {
   state?: ModelStateInput | null;
   author?: ModelStringInput | null;
   lastModifiedBy?: ModelStringInput | null;
+  createdAt?: ModelStringInput | null;
+  updatedAt?: ModelStringInput | null;
   and?: Array<ModelComplianceFilterInput | null> | null;
   or?: Array<ModelComplianceFilterInput | null> | null;
   not?: ModelComplianceFilterInput | null;
@@ -499,19 +475,20 @@ export type ModelEditorFilterInput = {
   not?: ModelEditorFilterInput | null;
 };
 
-export type ModelEditorRangeFilterInput = {
+export type ModelEditorrangeFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
   description?: ModelStringInput | null;
   editorId?: ModelIDInput | null;
+  nlsId?: ModelIDInput | null;
   subset?: ModelStringInput | null;
   min?: ModelIntInput | null;
   max?: ModelIntInput | null;
   step?: ModelFloatInput | null;
   uomId?: ModelIDInput | null;
-  and?: Array<ModelEditorRangeFilterInput | null> | null;
-  or?: Array<ModelEditorRangeFilterInput | null> | null;
-  not?: ModelEditorRangeFilterInput | null;
+  and?: Array<ModelEditorrangeFilterInput | null> | null;
+  or?: Array<ModelEditorrangeFilterInput | null> | null;
+  not?: ModelEditorrangeFilterInput | null;
 };
 
 export type ModelNlsFilterInput = {
@@ -538,20 +515,11 @@ export type ModelComplianceLogFilterInput = {
   id?: ModelIDInput | null;
   comment?: ModelStringInput | null;
   complianceId?: ModelIDInput | null;
+  user?: ModelStringInput | null;
+  createdAt?: ModelStringInput | null;
   and?: Array<ModelComplianceLogFilterInput | null> | null;
   or?: Array<ModelComplianceLogFilterInput | null> | null;
   not?: ModelComplianceLogFilterInput | null;
-};
-
-export type ModelStaticFilterInput = {
-  id?: ModelIDInput | null;
-  name?: ModelStringInput | null;
-  description?: ModelStringInput | null;
-  subValues?: ModelStringInput | null;
-  type?: ModelTypeInput | null;
-  and?: Array<ModelStaticFilterInput | null> | null;
-  or?: Array<ModelStaticFilterInput | null> | null;
-  not?: ModelStaticFilterInput | null;
 };
 
 export type CreateDomainMutation = {
@@ -581,6 +549,8 @@ export type CreateDomainMutation = {
       state: State;
       author: string | null;
       lastModifiedBy: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
       complianceLogs: {
         __typename: "ModelComplianceLogConnection";
         items: Array<{
@@ -588,6 +558,8 @@ export type CreateDomainMutation = {
           id: string;
           comment: string;
           complianceId: string;
+          user: string;
+          createdAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -633,6 +605,8 @@ export type UpdateDomainMutation = {
       state: State;
       author: string | null;
       lastModifiedBy: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
       complianceLogs: {
         __typename: "ModelComplianceLogConnection";
         items: Array<{
@@ -640,6 +614,8 @@ export type UpdateDomainMutation = {
           id: string;
           comment: string;
           complianceId: string;
+          user: string;
+          createdAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -685,6 +661,8 @@ export type DeleteDomainMutation = {
       state: State;
       author: string | null;
       lastModifiedBy: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
       complianceLogs: {
         __typename: "ModelComplianceLogConnection";
         items: Array<{
@@ -692,6 +670,8 @@ export type DeleteDomainMutation = {
           id: string;
           comment: string;
           complianceId: string;
+          user: string;
+          createdAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -739,6 +719,8 @@ export type CreateComplianceMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -755,6 +737,8 @@ export type CreateComplianceMutation = {
   state: State;
   author: string | null;
   lastModifiedBy: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
   complianceLogs: {
     __typename: "ModelComplianceLogConnection";
     items: Array<{
@@ -762,6 +746,8 @@ export type CreateComplianceMutation = {
       id: string;
       comment: string;
       complianceId: string;
+      user: string;
+      createdAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -788,6 +774,8 @@ export type CreateComplianceMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -848,6 +836,8 @@ export type UpdateComplianceMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -864,6 +854,8 @@ export type UpdateComplianceMutation = {
   state: State;
   author: string | null;
   lastModifiedBy: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
   complianceLogs: {
     __typename: "ModelComplianceLogConnection";
     items: Array<{
@@ -871,6 +863,8 @@ export type UpdateComplianceMutation = {
       id: string;
       comment: string;
       complianceId: string;
+      user: string;
+      createdAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -897,6 +891,8 @@ export type UpdateComplianceMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -957,6 +953,8 @@ export type DeleteComplianceMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -973,6 +971,8 @@ export type DeleteComplianceMutation = {
   state: State;
   author: string | null;
   lastModifiedBy: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
   complianceLogs: {
     __typename: "ModelComplianceLogConnection";
     items: Array<{
@@ -980,6 +980,8 @@ export type DeleteComplianceMutation = {
       id: string;
       comment: string;
       complianceId: string;
+      user: string;
+      createdAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -1006,6 +1008,8 @@ export type DeleteComplianceMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -1065,6 +1069,8 @@ export type CreateComplianceStatusLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -1073,6 +1079,8 @@ export type CreateComplianceStatusLinkMutation = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -1080,6 +1088,8 @@ export type CreateComplianceStatusLinkMutation = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -1100,6 +1110,8 @@ export type CreateComplianceStatusLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -1134,6 +1146,8 @@ export type CreateComplianceStatusLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -1163,13 +1177,14 @@ export type CreateComplianceStatusLinkMutation = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -1210,6 +1225,8 @@ export type UpdateComplianceStatusLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -1218,6 +1235,8 @@ export type UpdateComplianceStatusLinkMutation = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -1225,6 +1244,8 @@ export type UpdateComplianceStatusLinkMutation = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -1245,6 +1266,8 @@ export type UpdateComplianceStatusLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -1279,6 +1302,8 @@ export type UpdateComplianceStatusLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -1308,13 +1333,14 @@ export type UpdateComplianceStatusLinkMutation = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -1355,6 +1381,8 @@ export type DeleteComplianceStatusLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -1363,6 +1391,8 @@ export type DeleteComplianceStatusLinkMutation = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -1370,6 +1400,8 @@ export type DeleteComplianceStatusLinkMutation = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -1390,6 +1422,8 @@ export type DeleteComplianceStatusLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -1424,6 +1458,8 @@ export type DeleteComplianceStatusLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -1453,13 +1489,14 @@ export type DeleteComplianceStatusLinkMutation = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -1500,6 +1537,8 @@ export type CreateStatusMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -1557,20 +1596,14 @@ export type CreateStatusMutation = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -1617,6 +1650,8 @@ export type UpdateStatusMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -1674,20 +1709,14 @@ export type UpdateStatusMutation = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -1734,6 +1763,8 @@ export type DeleteStatusMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -1791,20 +1822,14 @@ export type DeleteStatusMutation = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -1851,6 +1876,8 @@ export type CreateComplianceCommandLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -1859,6 +1886,8 @@ export type CreateComplianceCommandLinkMutation = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -1866,6 +1895,8 @@ export type CreateComplianceCommandLinkMutation = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -1886,6 +1917,8 @@ export type CreateComplianceCommandLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -1920,6 +1953,8 @@ export type CreateComplianceCommandLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         command: {
           __typename: "Command";
@@ -1948,13 +1983,14 @@ export type CreateComplianceCommandLinkMutation = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -2003,6 +2039,8 @@ export type UpdateComplianceCommandLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -2011,6 +2049,8 @@ export type UpdateComplianceCommandLinkMutation = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -2018,6 +2058,8 @@ export type UpdateComplianceCommandLinkMutation = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -2038,6 +2080,8 @@ export type UpdateComplianceCommandLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -2072,6 +2116,8 @@ export type UpdateComplianceCommandLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         command: {
           __typename: "Command";
@@ -2100,13 +2146,14 @@ export type UpdateComplianceCommandLinkMutation = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -2155,6 +2202,8 @@ export type DeleteComplianceCommandLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -2163,6 +2212,8 @@ export type DeleteComplianceCommandLinkMutation = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -2170,6 +2221,8 @@ export type DeleteComplianceCommandLinkMutation = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -2190,6 +2243,8 @@ export type DeleteComplianceCommandLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -2224,6 +2279,8 @@ export type DeleteComplianceCommandLinkMutation = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         command: {
           __typename: "Command";
@@ -2252,13 +2309,14 @@ export type DeleteComplianceCommandLinkMutation = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -2307,6 +2365,8 @@ export type CreateCommandMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -2370,20 +2430,14 @@ export type CreateCommandMutation = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -2438,6 +2492,8 @@ export type UpdateCommandMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -2501,20 +2557,14 @@ export type UpdateCommandMutation = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -2569,6 +2619,8 @@ export type DeleteCommandMutation = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -2632,20 +2684,14 @@ export type DeleteCommandMutation = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -2705,7 +2751,7 @@ export type CreateEditorMutation = {
           nextToken: string | null;
         } | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -2713,20 +2759,14 @@ export type CreateEditorMutation = {
     nextToken: string | null;
   } | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -2739,7 +2779,7 @@ export type CreateEditorMutation = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -2781,7 +2821,7 @@ export type UpdateEditorMutation = {
           nextToken: string | null;
         } | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -2789,20 +2829,14 @@ export type UpdateEditorMutation = {
     nextToken: string | null;
   } | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -2815,7 +2849,7 @@ export type UpdateEditorMutation = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -2857,7 +2891,7 @@ export type DeleteEditorMutation = {
           nextToken: string | null;
         } | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -2865,20 +2899,14 @@ export type DeleteEditorMutation = {
     nextToken: string | null;
   } | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -2891,7 +2919,7 @@ export type DeleteEditorMutation = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -2900,19 +2928,13 @@ export type DeleteEditorMutation = {
   } | null;
 };
 
-export type CreateEditorRangeMutation = {
-  __typename: "EditorRange";
+export type CreateEditorrangeMutation = {
+  __typename: "Editorrange";
   id: string;
   name: string | null;
   description: string | null;
   editorId: string | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
+  nlsId: string | null;
   subset: string | null;
   min: number | null;
   max: number | null;
@@ -2925,20 +2947,14 @@ export type CreateEditorRangeMutation = {
     description: string | null;
     subValues: string | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -2957,19 +2973,13 @@ export type CreateEditorRangeMutation = {
   } | null;
 };
 
-export type UpdateEditorRangeMutation = {
-  __typename: "EditorRange";
+export type UpdateEditorrangeMutation = {
+  __typename: "Editorrange";
   id: string;
   name: string | null;
   description: string | null;
   editorId: string | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
+  nlsId: string | null;
   subset: string | null;
   min: number | null;
   max: number | null;
@@ -2982,20 +2992,14 @@ export type UpdateEditorRangeMutation = {
     description: string | null;
     subValues: string | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -3014,19 +3018,13 @@ export type UpdateEditorRangeMutation = {
   } | null;
 };
 
-export type DeleteEditorRangeMutation = {
-  __typename: "EditorRange";
+export type DeleteEditorrangeMutation = {
+  __typename: "Editorrange";
   id: string;
   name: string | null;
   description: string | null;
   editorId: string | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
+  nlsId: string | null;
   subset: string | null;
   min: number | null;
   max: number | null;
@@ -3039,20 +3037,14 @@ export type DeleteEditorRangeMutation = {
     description: string | null;
     subValues: string | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -3102,20 +3094,14 @@ export type CreateUomMutation = {
   description: string | null;
   subValues: string | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -3128,7 +3114,7 @@ export type CreateUomMutation = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -3144,20 +3130,14 @@ export type UpdateUomMutation = {
   description: string | null;
   subValues: string | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -3170,7 +3150,7 @@ export type UpdateUomMutation = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -3186,20 +3166,14 @@ export type DeleteUomMutation = {
   description: string | null;
   subValues: string | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -3212,7 +3186,7 @@ export type DeleteUomMutation = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -3226,6 +3200,8 @@ export type CreateComplianceLogMutation = {
   id: string;
   comment: string;
   complianceId: string;
+  user: string;
+  createdAt: string | null;
 };
 
 export type UpdateComplianceLogMutation = {
@@ -3233,6 +3209,8 @@ export type UpdateComplianceLogMutation = {
   id: string;
   comment: string;
   complianceId: string;
+  user: string;
+  createdAt: string | null;
 };
 
 export type DeleteComplianceLogMutation = {
@@ -3240,33 +3218,8 @@ export type DeleteComplianceLogMutation = {
   id: string;
   comment: string;
   complianceId: string;
-};
-
-export type CreateStaticMutation = {
-  __typename: "Static";
-  id: string;
-  name: string;
-  description: string | null;
-  subValues: string | null;
-  type: Type;
-};
-
-export type UpdateStaticMutation = {
-  __typename: "Static";
-  id: string;
-  name: string;
-  description: string | null;
-  subValues: string | null;
-  type: Type;
-};
-
-export type DeleteStaticMutation = {
-  __typename: "Static";
-  id: string;
-  name: string;
-  description: string | null;
-  subValues: string | null;
-  type: Type;
+  user: string;
+  createdAt: string | null;
 };
 
 export type GetDomainQuery = {
@@ -3296,6 +3249,8 @@ export type GetDomainQuery = {
       state: State;
       author: string | null;
       lastModifiedBy: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
       complianceLogs: {
         __typename: "ModelComplianceLogConnection";
         items: Array<{
@@ -3303,6 +3258,8 @@ export type GetDomainQuery = {
           id: string;
           comment: string;
           complianceId: string;
+          user: string;
+          createdAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -3346,6 +3303,8 @@ export type ListDomainsQuery = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -3390,6 +3349,8 @@ export type GetComplianceQuery = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -3406,6 +3367,8 @@ export type GetComplianceQuery = {
   state: State;
   author: string | null;
   lastModifiedBy: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
   complianceLogs: {
     __typename: "ModelComplianceLogConnection";
     items: Array<{
@@ -3413,6 +3376,8 @@ export type GetComplianceQuery = {
       id: string;
       comment: string;
       complianceId: string;
+      user: string;
+      createdAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -3439,6 +3404,8 @@ export type GetComplianceQuery = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -3495,6 +3462,8 @@ export type ListCompliancesQuery = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -3503,6 +3472,8 @@ export type ListCompliancesQuery = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -3510,6 +3481,8 @@ export type ListCompliancesQuery = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -3530,6 +3503,8 @@ export type ListCompliancesQuery = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -3573,6 +3548,8 @@ export type GetStatusQuery = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -3630,20 +3607,14 @@ export type GetStatusQuery = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -3686,6 +3657,8 @@ export type ListStatussQuery = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -3715,13 +3688,14 @@ export type ListStatussQuery = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -3763,6 +3737,8 @@ export type GetCommandQuery = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -3826,20 +3802,14 @@ export type GetCommandQuery = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -3890,6 +3860,8 @@ export type ListCommandsQuery = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         command: {
           __typename: "Command";
@@ -3918,13 +3890,14 @@ export type ListCommandsQuery = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -3979,7 +3952,7 @@ export type GetEditorQuery = {
           nextToken: string | null;
         } | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -3987,20 +3960,14 @@ export type GetEditorQuery = {
     nextToken: string | null;
   } | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -4013,7 +3980,7 @@ export type GetEditorQuery = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -4051,20 +4018,14 @@ export type ListEditorsQuery = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -4084,19 +4045,13 @@ export type ListEditorsQuery = {
   nextToken: string | null;
 };
 
-export type GetEditorRangeQuery = {
-  __typename: "EditorRange";
+export type GetEditorrangeQuery = {
+  __typename: "Editorrange";
   id: string;
   name: string | null;
   description: string | null;
   editorId: string | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
+  nlsId: string | null;
   subset: string | null;
   min: number | null;
   max: number | null;
@@ -4109,20 +4064,14 @@ export type GetEditorRangeQuery = {
     description: string | null;
     subValues: string | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -4141,21 +4090,15 @@ export type GetEditorRangeQuery = {
   } | null;
 };
 
-export type ListEditorRangesQuery = {
-  __typename: "ModelEditorRangeConnection";
+export type ListEditorrangesQuery = {
+  __typename: "ModelEditorrangeConnection";
   items: Array<{
-    __typename: "EditorRange";
+    __typename: "Editorrange";
     id: string;
     name: string | null;
     description: string | null;
     editorId: string | null;
-    nls: {
-      __typename: "Nls";
-      id: string;
-      name: string;
-      description: string | null;
-      subValues: string | null;
-    } | null;
+    nlsId: string | null;
     subset: string | null;
     min: number | null;
     max: number | null;
@@ -4168,13 +4111,14 @@ export type ListEditorRangesQuery = {
       description: string | null;
       subValues: string | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -4215,20 +4159,14 @@ export type GetUomQuery = {
   description: string | null;
   subValues: string | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -4241,7 +4179,7 @@ export type GetUomQuery = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -4259,20 +4197,14 @@ export type ListUomsQuery = {
     description: string | null;
     subValues: string | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -4297,6 +4229,8 @@ export type GetComplianceLogQuery = {
   id: string;
   comment: string;
   complianceId: string;
+  user: string;
+  createdAt: string | null;
 };
 
 export type ListComplianceLogsQuery = {
@@ -4306,28 +4240,8 @@ export type ListComplianceLogsQuery = {
     id: string;
     comment: string;
     complianceId: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetStaticQuery = {
-  __typename: "Static";
-  id: string;
-  name: string;
-  description: string | null;
-  subValues: string | null;
-  type: Type;
-};
-
-export type ListStaticsQuery = {
-  __typename: "ModelStaticConnection";
-  items: Array<{
-    __typename: "Static";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-    type: Type;
+    user: string;
+    createdAt: string | null;
   } | null> | null;
   nextToken: string | null;
 };
@@ -4359,6 +4273,8 @@ export type OnCreateDomainSubscription = {
       state: State;
       author: string | null;
       lastModifiedBy: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
       complianceLogs: {
         __typename: "ModelComplianceLogConnection";
         items: Array<{
@@ -4366,6 +4282,8 @@ export type OnCreateDomainSubscription = {
           id: string;
           comment: string;
           complianceId: string;
+          user: string;
+          createdAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -4411,6 +4329,8 @@ export type OnUpdateDomainSubscription = {
       state: State;
       author: string | null;
       lastModifiedBy: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
       complianceLogs: {
         __typename: "ModelComplianceLogConnection";
         items: Array<{
@@ -4418,6 +4338,8 @@ export type OnUpdateDomainSubscription = {
           id: string;
           comment: string;
           complianceId: string;
+          user: string;
+          createdAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -4463,6 +4385,8 @@ export type OnDeleteDomainSubscription = {
       state: State;
       author: string | null;
       lastModifiedBy: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
       complianceLogs: {
         __typename: "ModelComplianceLogConnection";
         items: Array<{
@@ -4470,6 +4394,8 @@ export type OnDeleteDomainSubscription = {
           id: string;
           comment: string;
           complianceId: string;
+          user: string;
+          createdAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -4517,6 +4443,8 @@ export type OnCreateComplianceSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -4533,6 +4461,8 @@ export type OnCreateComplianceSubscription = {
   state: State;
   author: string | null;
   lastModifiedBy: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
   complianceLogs: {
     __typename: "ModelComplianceLogConnection";
     items: Array<{
@@ -4540,6 +4470,8 @@ export type OnCreateComplianceSubscription = {
       id: string;
       comment: string;
       complianceId: string;
+      user: string;
+      createdAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -4566,6 +4498,8 @@ export type OnCreateComplianceSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -4626,6 +4560,8 @@ export type OnUpdateComplianceSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -4642,6 +4578,8 @@ export type OnUpdateComplianceSubscription = {
   state: State;
   author: string | null;
   lastModifiedBy: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
   complianceLogs: {
     __typename: "ModelComplianceLogConnection";
     items: Array<{
@@ -4649,6 +4587,8 @@ export type OnUpdateComplianceSubscription = {
       id: string;
       comment: string;
       complianceId: string;
+      user: string;
+      createdAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -4675,6 +4615,8 @@ export type OnUpdateComplianceSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -4735,6 +4677,8 @@ export type OnDeleteComplianceSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -4751,6 +4695,8 @@ export type OnDeleteComplianceSubscription = {
   state: State;
   author: string | null;
   lastModifiedBy: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
   complianceLogs: {
     __typename: "ModelComplianceLogConnection";
     items: Array<{
@@ -4758,6 +4704,8 @@ export type OnDeleteComplianceSubscription = {
       id: string;
       comment: string;
       complianceId: string;
+      user: string;
+      createdAt: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -4784,6 +4732,8 @@ export type OnDeleteComplianceSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -4843,6 +4793,8 @@ export type OnCreateComplianceStatusLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -4851,6 +4803,8 @@ export type OnCreateComplianceStatusLinkSubscription = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -4858,6 +4812,8 @@ export type OnCreateComplianceStatusLinkSubscription = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -4878,6 +4834,8 @@ export type OnCreateComplianceStatusLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -4912,6 +4870,8 @@ export type OnCreateComplianceStatusLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -4941,13 +4901,14 @@ export type OnCreateComplianceStatusLinkSubscription = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -4988,6 +4949,8 @@ export type OnUpdateComplianceStatusLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -4996,6 +4959,8 @@ export type OnUpdateComplianceStatusLinkSubscription = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -5003,6 +4968,8 @@ export type OnUpdateComplianceStatusLinkSubscription = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -5023,6 +4990,8 @@ export type OnUpdateComplianceStatusLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -5057,6 +5026,8 @@ export type OnUpdateComplianceStatusLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -5086,13 +5057,14 @@ export type OnUpdateComplianceStatusLinkSubscription = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -5133,6 +5105,8 @@ export type OnDeleteComplianceStatusLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -5141,6 +5115,8 @@ export type OnDeleteComplianceStatusLinkSubscription = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -5148,6 +5124,8 @@ export type OnDeleteComplianceStatusLinkSubscription = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -5168,6 +5146,8 @@ export type OnDeleteComplianceStatusLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -5202,6 +5182,8 @@ export type OnDeleteComplianceStatusLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -5231,13 +5213,14 @@ export type OnDeleteComplianceStatusLinkSubscription = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -5278,6 +5261,8 @@ export type OnCreateStatusSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -5335,20 +5320,14 @@ export type OnCreateStatusSubscription = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -5395,6 +5374,8 @@ export type OnUpdateStatusSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -5452,20 +5433,14 @@ export type OnUpdateStatusSubscription = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -5512,6 +5487,8 @@ export type OnDeleteStatusSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -5569,20 +5546,14 @@ export type OnDeleteStatusSubscription = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -5629,6 +5600,8 @@ export type OnCreateComplianceCommandLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -5637,6 +5610,8 @@ export type OnCreateComplianceCommandLinkSubscription = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -5644,6 +5619,8 @@ export type OnCreateComplianceCommandLinkSubscription = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -5664,6 +5641,8 @@ export type OnCreateComplianceCommandLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -5698,6 +5677,8 @@ export type OnCreateComplianceCommandLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         command: {
           __typename: "Command";
@@ -5726,13 +5707,14 @@ export type OnCreateComplianceCommandLinkSubscription = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -5781,6 +5763,8 @@ export type OnUpdateComplianceCommandLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -5789,6 +5773,8 @@ export type OnUpdateComplianceCommandLinkSubscription = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -5796,6 +5782,8 @@ export type OnUpdateComplianceCommandLinkSubscription = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -5816,6 +5804,8 @@ export type OnUpdateComplianceCommandLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -5850,6 +5840,8 @@ export type OnUpdateComplianceCommandLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         command: {
           __typename: "Command";
@@ -5878,13 +5870,14 @@ export type OnUpdateComplianceCommandLinkSubscription = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -5933,6 +5926,8 @@ export type OnDeleteComplianceCommandLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -5941,6 +5936,8 @@ export type OnDeleteComplianceCommandLinkSubscription = {
     state: State;
     author: string | null;
     lastModifiedBy: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
     complianceLogs: {
       __typename: "ModelComplianceLogConnection";
       items: Array<{
@@ -5948,6 +5945,8 @@ export type OnDeleteComplianceCommandLinkSubscription = {
         id: string;
         comment: string;
         complianceId: string;
+        user: string;
+        createdAt: string | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -5968,6 +5967,8 @@ export type OnDeleteComplianceCommandLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         status: {
           __typename: "Status";
@@ -6002,6 +6003,8 @@ export type OnDeleteComplianceCommandLinkSubscription = {
           state: State;
           author: string | null;
           lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
         };
         command: {
           __typename: "Command";
@@ -6030,13 +6033,14 @@ export type OnDeleteComplianceCommandLinkSubscription = {
         nextToken: string | null;
       } | null;
       ranges: {
-        __typename: "ModelEditorRangeConnection";
+        __typename: "ModelEditorrangeConnection";
         items: Array<{
-          __typename: "EditorRange";
+          __typename: "Editorrange";
           id: string;
           name: string | null;
           description: string | null;
           editorId: string | null;
+          nlsId: string | null;
           subset: string | null;
           min: number | null;
           max: number | null;
@@ -6085,6 +6089,8 @@ export type OnCreateCommandSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -6148,20 +6154,14 @@ export type OnCreateCommandSubscription = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -6216,6 +6216,8 @@ export type OnUpdateCommandSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -6279,20 +6281,14 @@ export type OnUpdateCommandSubscription = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -6347,6 +6343,8 @@ export type OnDeleteCommandSubscription = {
         state: State;
         author: string | null;
         lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
         complianceLogs: {
           __typename: "ModelComplianceLogConnection";
           nextToken: string | null;
@@ -6410,20 +6408,14 @@ export type OnDeleteCommandSubscription = {
       nextToken: string | null;
     } | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -6483,7 +6475,7 @@ export type OnCreateEditorSubscription = {
           nextToken: string | null;
         } | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -6491,20 +6483,14 @@ export type OnCreateEditorSubscription = {
     nextToken: string | null;
   } | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -6517,7 +6503,7 @@ export type OnCreateEditorSubscription = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -6559,7 +6545,7 @@ export type OnUpdateEditorSubscription = {
           nextToken: string | null;
         } | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -6567,20 +6553,14 @@ export type OnUpdateEditorSubscription = {
     nextToken: string | null;
   } | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -6593,7 +6573,7 @@ export type OnUpdateEditorSubscription = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -6635,7 +6615,7 @@ export type OnDeleteEditorSubscription = {
           nextToken: string | null;
         } | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -6643,20 +6623,14 @@ export type OnDeleteEditorSubscription = {
     nextToken: string | null;
   } | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -6669,7 +6643,7 @@ export type OnDeleteEditorSubscription = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -6678,19 +6652,13 @@ export type OnDeleteEditorSubscription = {
   } | null;
 };
 
-export type OnCreateEditorRangeSubscription = {
-  __typename: "EditorRange";
+export type OnCreateEditorrangeSubscription = {
+  __typename: "Editorrange";
   id: string;
   name: string | null;
   description: string | null;
   editorId: string | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
+  nlsId: string | null;
   subset: string | null;
   min: number | null;
   max: number | null;
@@ -6703,20 +6671,14 @@ export type OnCreateEditorRangeSubscription = {
     description: string | null;
     subValues: string | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -6735,19 +6697,13 @@ export type OnCreateEditorRangeSubscription = {
   } | null;
 };
 
-export type OnUpdateEditorRangeSubscription = {
-  __typename: "EditorRange";
+export type OnUpdateEditorrangeSubscription = {
+  __typename: "Editorrange";
   id: string;
   name: string | null;
   description: string | null;
   editorId: string | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
+  nlsId: string | null;
   subset: string | null;
   min: number | null;
   max: number | null;
@@ -6760,20 +6716,14 @@ export type OnUpdateEditorRangeSubscription = {
     description: string | null;
     subValues: string | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -6792,19 +6742,13 @@ export type OnUpdateEditorRangeSubscription = {
   } | null;
 };
 
-export type OnDeleteEditorRangeSubscription = {
-  __typename: "EditorRange";
+export type OnDeleteEditorrangeSubscription = {
+  __typename: "Editorrange";
   id: string;
   name: string | null;
   description: string | null;
   editorId: string | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
+  nlsId: string | null;
   subset: string | null;
   min: number | null;
   max: number | null;
@@ -6817,20 +6761,14 @@ export type OnDeleteEditorRangeSubscription = {
     description: string | null;
     subValues: string | null;
     ranges: {
-      __typename: "ModelEditorRangeConnection";
+      __typename: "ModelEditorrangeConnection";
       items: Array<{
-        __typename: "EditorRange";
+        __typename: "Editorrange";
         id: string;
         name: string | null;
         description: string | null;
         editorId: string | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
+        nlsId: string | null;
         subset: string | null;
         min: number | null;
         max: number | null;
@@ -6880,20 +6818,14 @@ export type OnCreateUomSubscription = {
   description: string | null;
   subValues: string | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -6906,7 +6838,7 @@ export type OnCreateUomSubscription = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -6922,20 +6854,14 @@ export type OnUpdateUomSubscription = {
   description: string | null;
   subValues: string | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -6948,7 +6874,7 @@ export type OnUpdateUomSubscription = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -6964,20 +6890,14 @@ export type OnDeleteUomSubscription = {
   description: string | null;
   subValues: string | null;
   ranges: {
-    __typename: "ModelEditorRangeConnection";
+    __typename: "ModelEditorrangeConnection";
     items: Array<{
-      __typename: "EditorRange";
+      __typename: "Editorrange";
       id: string;
       name: string | null;
       description: string | null;
       editorId: string | null;
-      nls: {
-        __typename: "Nls";
-        id: string;
-        name: string;
-        description: string | null;
-        subValues: string | null;
-      } | null;
+      nlsId: string | null;
       subset: string | null;
       min: number | null;
       max: number | null;
@@ -6990,7 +6910,7 @@ export type OnDeleteUomSubscription = {
         description: string | null;
         subValues: string | null;
         ranges: {
-          __typename: "ModelEditorRangeConnection";
+          __typename: "ModelEditorrangeConnection";
           nextToken: string | null;
         } | null;
       } | null;
@@ -7004,6 +6924,8 @@ export type OnCreateComplianceLogSubscription = {
   id: string;
   comment: string;
   complianceId: string;
+  user: string;
+  createdAt: string | null;
 };
 
 export type OnUpdateComplianceLogSubscription = {
@@ -7011,6 +6933,8 @@ export type OnUpdateComplianceLogSubscription = {
   id: string;
   comment: string;
   complianceId: string;
+  user: string;
+  createdAt: string | null;
 };
 
 export type OnDeleteComplianceLogSubscription = {
@@ -7018,33 +6942,8 @@ export type OnDeleteComplianceLogSubscription = {
   id: string;
   comment: string;
   complianceId: string;
-};
-
-export type OnCreateStaticSubscription = {
-  __typename: "Static";
-  id: string;
-  name: string;
-  description: string | null;
-  subValues: string | null;
-  type: Type;
-};
-
-export type OnUpdateStaticSubscription = {
-  __typename: "Static";
-  id: string;
-  name: string;
-  description: string | null;
-  subValues: string | null;
-  type: Type;
-};
-
-export type OnDeleteStaticSubscription = {
-  __typename: "Static";
-  id: string;
-  name: string;
-  description: string | null;
-  subValues: string | null;
-  type: Type;
+  user: string;
+  createdAt: string | null;
 };
 
 @Injectable({
@@ -7083,6 +6982,8 @@ export class APIService {
               state
               author
               lastModifiedBy
+              createdAt
+              updatedAt
               complianceLogs {
                 __typename
                 items {
@@ -7090,6 +6991,8 @@ export class APIService {
                   id
                   comment
                   complianceId
+                  user
+                  createdAt
                 }
                 nextToken
               }
@@ -7151,6 +7054,8 @@ export class APIService {
               state
               author
               lastModifiedBy
+              createdAt
+              updatedAt
               complianceLogs {
                 __typename
                 items {
@@ -7158,6 +7063,8 @@ export class APIService {
                   id
                   comment
                   complianceId
+                  user
+                  createdAt
                 }
                 nextToken
               }
@@ -7219,6 +7126,8 @@ export class APIService {
               state
               author
               lastModifiedBy
+              createdAt
+              updatedAt
               complianceLogs {
                 __typename
                 items {
@@ -7226,6 +7135,8 @@ export class APIService {
                   id
                   comment
                   complianceId
+                  user
+                  createdAt
                 }
                 nextToken
               }
@@ -7289,6 +7200,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -7305,6 +7218,8 @@ export class APIService {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             __typename
             items {
@@ -7312,6 +7227,8 @@ export class APIService {
               id
               comment
               complianceId
+              user
+              createdAt
             }
             nextToken
           }
@@ -7338,6 +7255,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -7414,6 +7333,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -7430,6 +7351,8 @@ export class APIService {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             __typename
             items {
@@ -7437,6 +7360,8 @@ export class APIService {
               id
               comment
               complianceId
+              user
+              createdAt
             }
             nextToken
           }
@@ -7463,6 +7388,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -7539,6 +7466,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -7555,6 +7484,8 @@ export class APIService {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             __typename
             items {
@@ -7562,6 +7493,8 @@ export class APIService {
               id
               comment
               complianceId
+              user
+              createdAt
             }
             nextToken
           }
@@ -7588,6 +7521,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -7663,6 +7598,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -7671,6 +7608,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -7678,6 +7617,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -7698,6 +7639,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -7732,6 +7675,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -7768,6 +7713,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -7826,6 +7772,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -7834,6 +7782,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -7841,6 +7791,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -7861,6 +7813,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -7895,6 +7849,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -7931,6 +7887,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -7989,6 +7946,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -7997,6 +7956,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -8004,6 +7965,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -8024,6 +7987,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -8058,6 +8023,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -8094,6 +8061,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -8152,6 +8120,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -8216,13 +8186,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -8285,6 +8249,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -8349,13 +8315,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -8418,6 +8378,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -8482,13 +8444,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -8551,6 +8507,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -8559,6 +8517,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -8566,6 +8526,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -8586,6 +8548,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -8620,6 +8584,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 command {
                   __typename
@@ -8655,6 +8621,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -8721,6 +8688,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -8729,6 +8698,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -8736,6 +8707,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -8756,6 +8729,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -8790,6 +8765,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 command {
                   __typename
@@ -8825,6 +8802,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -8891,6 +8869,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -8899,6 +8879,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -8906,6 +8888,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -8926,6 +8910,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -8960,6 +8946,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 command {
                   __typename
@@ -8995,6 +8983,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -9061,6 +9050,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -9131,13 +9122,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -9208,6 +9193,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -9278,13 +9265,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -9355,6 +9336,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -9425,13 +9408,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -9522,13 +9499,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -9614,13 +9585,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -9706,13 +9671,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -9745,24 +9704,18 @@ export class APIService {
     )) as any;
     return <DeleteEditorMutation>response.data.deleteEditor;
   }
-  async CreateEditorRange(
-    input: CreateEditorRangeInput,
-    condition?: ModelEditorRangeConditionInput
-  ): Promise<CreateEditorRangeMutation> {
-    const statement = `mutation CreateEditorRange($input: CreateEditorRangeInput!, $condition: ModelEditorRangeConditionInput) {
-        createEditorRange(input: $input, condition: $condition) {
+  async CreateEditorrange(
+    input: CreateEditorrangeInput,
+    condition?: ModelEditorrangeConditionInput
+  ): Promise<CreateEditorrangeMutation> {
+    const statement = `mutation CreateEditorrange($input: CreateEditorrangeInput!, $condition: ModelEditorrangeConditionInput) {
+        createEditorrange(input: $input, condition: $condition) {
           __typename
           id
           name
           description
           editorId
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -9782,13 +9735,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -9816,26 +9763,20 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <CreateEditorRangeMutation>response.data.createEditorRange;
+    return <CreateEditorrangeMutation>response.data.createEditorrange;
   }
-  async UpdateEditorRange(
-    input: UpdateEditorRangeInput,
-    condition?: ModelEditorRangeConditionInput
-  ): Promise<UpdateEditorRangeMutation> {
-    const statement = `mutation UpdateEditorRange($input: UpdateEditorRangeInput!, $condition: ModelEditorRangeConditionInput) {
-        updateEditorRange(input: $input, condition: $condition) {
+  async UpdateEditorrange(
+    input: UpdateEditorrangeInput,
+    condition?: ModelEditorrangeConditionInput
+  ): Promise<UpdateEditorrangeMutation> {
+    const statement = `mutation UpdateEditorrange($input: UpdateEditorrangeInput!, $condition: ModelEditorrangeConditionInput) {
+        updateEditorrange(input: $input, condition: $condition) {
           __typename
           id
           name
           description
           editorId
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -9855,13 +9796,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -9889,26 +9824,20 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <UpdateEditorRangeMutation>response.data.updateEditorRange;
+    return <UpdateEditorrangeMutation>response.data.updateEditorrange;
   }
-  async DeleteEditorRange(
-    input: DeleteEditorRangeInput,
-    condition?: ModelEditorRangeConditionInput
-  ): Promise<DeleteEditorRangeMutation> {
-    const statement = `mutation DeleteEditorRange($input: DeleteEditorRangeInput!, $condition: ModelEditorRangeConditionInput) {
-        deleteEditorRange(input: $input, condition: $condition) {
+  async DeleteEditorrange(
+    input: DeleteEditorrangeInput,
+    condition?: ModelEditorrangeConditionInput
+  ): Promise<DeleteEditorrangeMutation> {
+    const statement = `mutation DeleteEditorrange($input: DeleteEditorrangeInput!, $condition: ModelEditorrangeConditionInput) {
+        deleteEditorrange(input: $input, condition: $condition) {
           __typename
           id
           name
           description
           editorId
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -9928,13 +9857,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -9962,7 +9885,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <DeleteEditorRangeMutation>response.data.deleteEditorRange;
+    return <DeleteEditorrangeMutation>response.data.deleteEditorrange;
   }
   async CreateNls(
     input: CreateNlsInput,
@@ -10055,13 +9978,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -10113,13 +10030,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -10171,13 +10082,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -10220,6 +10125,8 @@ export class APIService {
           id
           comment
           complianceId
+          user
+          createdAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -10243,6 +10150,8 @@ export class APIService {
           id
           comment
           complianceId
+          user
+          createdAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -10266,6 +10175,8 @@ export class APIService {
           id
           comment
           complianceId
+          user
+          createdAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -10278,81 +10189,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteComplianceLogMutation>response.data.deleteComplianceLog;
-  }
-  async CreateStatic(
-    input: CreateStaticInput,
-    condition?: ModelStaticConditionInput
-  ): Promise<CreateStaticMutation> {
-    const statement = `mutation CreateStatic($input: CreateStaticInput!, $condition: ModelStaticConditionInput) {
-        createStatic(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          description
-          subValues
-          type
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateStaticMutation>response.data.createStatic;
-  }
-  async UpdateStatic(
-    input: UpdateStaticInput,
-    condition?: ModelStaticConditionInput
-  ): Promise<UpdateStaticMutation> {
-    const statement = `mutation UpdateStatic($input: UpdateStaticInput!, $condition: ModelStaticConditionInput) {
-        updateStatic(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          description
-          subValues
-          type
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateStaticMutation>response.data.updateStatic;
-  }
-  async DeleteStatic(
-    input: DeleteStaticInput,
-    condition?: ModelStaticConditionInput
-  ): Promise<DeleteStaticMutation> {
-    const statement = `mutation DeleteStatic($input: DeleteStaticInput!, $condition: ModelStaticConditionInput) {
-        deleteStatic(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          description
-          subValues
-          type
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteStaticMutation>response.data.deleteStatic;
   }
   async GetDomain(id: string): Promise<GetDomainQuery> {
     const statement = `query GetDomain($id: ID!) {
@@ -10383,6 +10219,8 @@ export class APIService {
               state
               author
               lastModifiedBy
+              createdAt
+              updatedAt
               complianceLogs {
                 __typename
                 items {
@@ -10390,6 +10228,8 @@ export class APIService {
                   id
                   comment
                   complianceId
+                  user
+                  createdAt
                 }
                 nextToken
               }
@@ -10447,6 +10287,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -10508,6 +10350,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -10524,6 +10368,8 @@ export class APIService {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             __typename
             items {
@@ -10531,6 +10377,8 @@ export class APIService {
               id
               comment
               complianceId
+              user
+              createdAt
             }
             nextToken
           }
@@ -10557,6 +10405,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -10627,6 +10477,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -10635,6 +10487,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -10642,6 +10496,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -10662,6 +10518,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -10722,6 +10580,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -10786,13 +10646,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -10849,6 +10703,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -10885,6 +10741,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -10943,6 +10800,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -11013,13 +10872,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -11084,6 +10937,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 command {
                   __typename
@@ -11119,6 +10974,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -11205,13 +11061,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -11283,13 +11133,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -11324,21 +11168,15 @@ export class APIService {
     )) as any;
     return <ListEditorsQuery>response.data.listEditors;
   }
-  async GetEditorRange(id: string): Promise<GetEditorRangeQuery> {
-    const statement = `query GetEditorRange($id: ID!) {
-        getEditorRange(id: $id) {
+  async GetEditorrange(id: string): Promise<GetEditorrangeQuery> {
+    const statement = `query GetEditorrange($id: ID!) {
+        getEditorrange(id: $id) {
           __typename
           id
           name
           description
           editorId
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -11358,13 +11196,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -11389,15 +11221,15 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetEditorRangeQuery>response.data.getEditorRange;
+    return <GetEditorrangeQuery>response.data.getEditorrange;
   }
-  async ListEditorRanges(
-    filter?: ModelEditorRangeFilterInput,
+  async ListEditorranges(
+    filter?: ModelEditorrangeFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ListEditorRangesQuery> {
-    const statement = `query ListEditorRanges($filter: ModelEditorRangeFilterInput, $limit: Int, $nextToken: String) {
-        listEditorRanges(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<ListEditorrangesQuery> {
+    const statement = `query ListEditorranges($filter: ModelEditorrangeFilterInput, $limit: Int, $nextToken: String) {
+        listEditorranges(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
@@ -11405,13 +11237,7 @@ export class APIService {
             name
             description
             editorId
-            nls {
-              __typename
-              id
-              name
-              description
-              subValues
-            }
+            nlsId
             subset
             min
             max
@@ -11431,6 +11257,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -11457,7 +11284,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListEditorRangesQuery>response.data.listEditorRanges;
+    return <ListEditorrangesQuery>response.data.listEditorranges;
   }
   async GetNls(id: string): Promise<GetNlsQuery> {
     const statement = `query GetNls($id: ID!) {
@@ -11526,13 +11353,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -11584,13 +11405,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -11632,6 +11447,8 @@ export class APIService {
           id
           comment
           complianceId
+          user
+          createdAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -11655,6 +11472,8 @@ export class APIService {
             id
             comment
             complianceId
+            user
+            createdAt
           }
           nextToken
         }
@@ -11673,59 +11492,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListComplianceLogsQuery>response.data.listComplianceLogs;
-  }
-  async GetStatic(id: string): Promise<GetStaticQuery> {
-    const statement = `query GetStatic($id: ID!) {
-        getStatic(id: $id) {
-          __typename
-          id
-          name
-          description
-          subValues
-          type
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetStaticQuery>response.data.getStatic;
-  }
-  async ListStatics(
-    filter?: ModelStaticFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListStaticsQuery> {
-    const statement = `query ListStatics($filter: ModelStaticFilterInput, $limit: Int, $nextToken: String) {
-        listStatics(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            name
-            description
-            subValues
-            type
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListStaticsQuery>response.data.listStatics;
   }
   OnCreateDomainListener: Observable<OnCreateDomainSubscription> = API.graphql(
     graphqlOperation(
@@ -11757,6 +11523,8 @@ export class APIService {
               state
               author
               lastModifiedBy
+              createdAt
+              updatedAt
               complianceLogs {
                 __typename
                 items {
@@ -11764,6 +11532,8 @@ export class APIService {
                   id
                   comment
                   complianceId
+                  user
+                  createdAt
                 }
                 nextToken
               }
@@ -11815,6 +11585,8 @@ export class APIService {
               state
               author
               lastModifiedBy
+              createdAt
+              updatedAt
               complianceLogs {
                 __typename
                 items {
@@ -11822,6 +11594,8 @@ export class APIService {
                   id
                   comment
                   complianceId
+                  user
+                  createdAt
                 }
                 nextToken
               }
@@ -11873,6 +11647,8 @@ export class APIService {
               state
               author
               lastModifiedBy
+              createdAt
+              updatedAt
               complianceLogs {
                 __typename
                 items {
@@ -11880,6 +11656,8 @@ export class APIService {
                   id
                   comment
                   complianceId
+                  user
+                  createdAt
                 }
                 nextToken
               }
@@ -11935,6 +11713,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -11951,6 +11731,8 @@ export class APIService {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             __typename
             items {
@@ -11958,6 +11740,8 @@ export class APIService {
               id
               comment
               complianceId
+              user
+              createdAt
             }
             nextToken
           }
@@ -11984,6 +11768,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -12052,6 +11838,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -12068,6 +11856,8 @@ export class APIService {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             __typename
             items {
@@ -12075,6 +11865,8 @@ export class APIService {
               id
               comment
               complianceId
+              user
+              createdAt
             }
             nextToken
           }
@@ -12101,6 +11893,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -12169,6 +11963,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -12185,6 +11981,8 @@ export class APIService {
           state
           author
           lastModifiedBy
+          createdAt
+          updatedAt
           complianceLogs {
             __typename
             items {
@@ -12192,6 +11990,8 @@ export class APIService {
               id
               comment
               complianceId
+              user
+              createdAt
             }
             nextToken
           }
@@ -12218,6 +12018,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -12285,6 +12087,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -12293,6 +12097,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -12300,6 +12106,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -12320,6 +12128,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -12354,6 +12164,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -12390,6 +12202,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -12438,6 +12251,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -12446,6 +12261,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -12453,6 +12270,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -12473,6 +12292,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -12507,6 +12328,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -12543,6 +12366,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -12591,6 +12415,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -12599,6 +12425,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -12606,6 +12434,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -12626,6 +12456,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -12660,6 +12492,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -12696,6 +12530,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -12742,6 +12577,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -12806,13 +12643,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -12865,6 +12696,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -12929,13 +12762,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -12988,6 +12815,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -13052,13 +12881,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -13113,6 +12936,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -13121,6 +12946,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -13128,6 +12955,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -13148,6 +12977,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -13182,6 +13013,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 command {
                   __typename
@@ -13217,6 +13050,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -13273,6 +13107,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -13281,6 +13117,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -13288,6 +13126,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -13308,6 +13148,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -13342,6 +13184,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 command {
                   __typename
@@ -13377,6 +13221,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -13433,6 +13278,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 nextToken
               }
@@ -13441,6 +13288,8 @@ export class APIService {
             state
             author
             lastModifiedBy
+            createdAt
+            updatedAt
             complianceLogs {
               __typename
               items {
@@ -13448,6 +13297,8 @@ export class APIService {
                 id
                 comment
                 complianceId
+                user
+                createdAt
               }
               nextToken
             }
@@ -13468,6 +13319,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 status {
                   __typename
@@ -13502,6 +13355,8 @@ export class APIService {
                   state
                   author
                   lastModifiedBy
+                  createdAt
+                  updatedAt
                 }
                 command {
                   __typename
@@ -13537,6 +13392,7 @@ export class APIService {
                   name
                   description
                   editorId
+                  nlsId
                   subset
                   min
                   max
@@ -13593,6 +13449,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -13663,13 +13521,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -13732,6 +13584,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -13802,13 +13656,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -13871,6 +13719,8 @@ export class APIService {
                 state
                 author
                 lastModifiedBy
+                createdAt
+                updatedAt
                 complianceLogs {
                   __typename
                   nextToken
@@ -13941,13 +13791,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -14028,13 +13872,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -14110,13 +13948,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -14192,13 +14024,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -14223,24 +14049,18 @@ export class APIService {
     )
   ) as Observable<OnDeleteEditorSubscription>;
 
-  OnCreateEditorRangeListener: Observable<
-    OnCreateEditorRangeSubscription
+  OnCreateEditorrangeListener: Observable<
+    OnCreateEditorrangeSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreateEditorRange {
-        onCreateEditorRange {
+      `subscription OnCreateEditorrange {
+        onCreateEditorrange {
           __typename
           id
           name
           description
           editorId
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -14260,13 +14080,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -14286,26 +14100,20 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreateEditorRangeSubscription>;
+  ) as Observable<OnCreateEditorrangeSubscription>;
 
-  OnUpdateEditorRangeListener: Observable<
-    OnUpdateEditorRangeSubscription
+  OnUpdateEditorrangeListener: Observable<
+    OnUpdateEditorrangeSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateEditorRange {
-        onUpdateEditorRange {
+      `subscription OnUpdateEditorrange {
+        onUpdateEditorrange {
           __typename
           id
           name
           description
           editorId
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -14325,13 +14133,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -14351,26 +14153,20 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdateEditorRangeSubscription>;
+  ) as Observable<OnUpdateEditorrangeSubscription>;
 
-  OnDeleteEditorRangeListener: Observable<
-    OnDeleteEditorRangeSubscription
+  OnDeleteEditorrangeListener: Observable<
+    OnDeleteEditorrangeSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnDeleteEditorRange {
-        onDeleteEditorRange {
+      `subscription OnDeleteEditorrange {
+        onDeleteEditorrange {
           __typename
           id
           name
           description
           editorId
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
+          nlsId
           subset
           min
           max
@@ -14390,13 +14186,7 @@ export class APIService {
                 name
                 description
                 editorId
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
+                nlsId
                 subset
                 min
                 max
@@ -14416,7 +14206,7 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeleteEditorRangeSubscription>;
+  ) as Observable<OnDeleteEditorrangeSubscription>;
 
   OnCreateNlsListener: Observable<OnCreateNlsSubscription> = API.graphql(
     graphqlOperation(
@@ -14477,13 +14267,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -14525,13 +14309,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -14573,13 +14351,7 @@ export class APIService {
               name
               description
               editorId
-              nls {
-                __typename
-                id
-                name
-                description
-                subValues
-              }
+              nlsId
               subset
               min
               max
@@ -14614,6 +14386,8 @@ export class APIService {
           id
           comment
           complianceId
+          user
+          createdAt
         }
       }`
     )
@@ -14629,6 +14403,8 @@ export class APIService {
           id
           comment
           complianceId
+          user
+          createdAt
         }
       }`
     )
@@ -14644,53 +14420,10 @@ export class APIService {
           id
           comment
           complianceId
+          user
+          createdAt
         }
       }`
     )
   ) as Observable<OnDeleteComplianceLogSubscription>;
-
-  OnCreateStaticListener: Observable<OnCreateStaticSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateStatic {
-        onCreateStatic {
-          __typename
-          id
-          name
-          description
-          subValues
-          type
-        }
-      }`
-    )
-  ) as Observable<OnCreateStaticSubscription>;
-
-  OnUpdateStaticListener: Observable<OnUpdateStaticSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateStatic {
-        onUpdateStatic {
-          __typename
-          id
-          name
-          description
-          subValues
-          type
-        }
-      }`
-    )
-  ) as Observable<OnUpdateStaticSubscription>;
-
-  OnDeleteStaticListener: Observable<OnDeleteStaticSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteStatic {
-        onDeleteStatic {
-          __typename
-          id
-          name
-          description
-          subValues
-          type
-        }
-      }`
-    )
-  ) as Observable<OnDeleteStaticSubscription>;
 }

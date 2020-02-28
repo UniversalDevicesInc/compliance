@@ -1,7 +1,7 @@
 <div *ngIf="ds.dataLoaded$ | async; else loading" style="width:100%">
   <div *ngIf="authService.user$ | async as user" class="container-fluid">
     <!-- Title -->
-    <h2 align="center" class="text-white">UDI Compliance Dashboard</h2>
+    <h2 align="center" class="text-white">NLS</h2>
     <!-- Accordion Panel -->
     <ngb-accordion #acc="ngbAccordion" activeIds="parent">
       <ngb-panel id="parent">
@@ -53,25 +53,17 @@
               </th>
               <td cdk-cell *cdkCellDef="let element">{{element.name}}</td>
             </ng-container>
-            <!-- Description -->
+            <!-- Value -->
             <ng-container cdkColumnDef="description">
               <th cdk-header-cell *cdkHeaderCellDef 
                 (click)="adjustSort('description')" class="w-50">
-                Description
+                Value
                 <span *ngIf="sortKey$.value === 'description'">
                   {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
                 </span>
               </th>
               <td cdk-cell *cdkCellDef="let element">
                 {{element.description}}
-              </td>
-            </ng-container>
-            <!-- Compliances -->
-            <ng-container cdkColumnDef="compliance">
-              <th cdk-header-cell *cdkHeaderCellDef class="text-center">Compliances</th>
-              <td class="text-center" cdk-cell *cdkCellDef="let element">
-                <button type="button" class="btn btn-info" [routerLinkActive] = "['active']" 
-                      [routerLinkActiveOptions] = "{exact:true}" [routerLink]="['/compliance']">Compliances</button>
               </td>
             </ng-container>
             <!-- Edit -->
@@ -129,14 +121,14 @@
       <!-- Name -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
+        <div class="col-sm-9 d-flex flex-column">
           <input class="form-control" type="text" formControlName="name">
         </div>
       </div>
       <!-- Description -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Description</label>
-        <div class="col-sm-10">
+        <div class="col-sm-9 d-flex flex-column">
           <input class="form-control" type="text" formControlName="description">
         </div>
       </div>
@@ -163,14 +155,14 @@
       <!-- Name -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
+        <div class="col-sm-9 d-flex flex-column">
           <input class="form-control" type="text" formControlName="name">
         </div>
       </div>
       <!-- Description -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Description</label>
-        <div class="col-sm-10">
+        <div class="col-sm-9 d-flex flex-column">
           <input class="form-control" type="text" formControlName="description">
         </div>
       </div>
