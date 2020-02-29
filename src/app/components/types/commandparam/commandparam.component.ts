@@ -7,15 +7,17 @@ import { NgbModal, NgbModalOptions, NgbPanelChangeEvent, NgbAccordion } from '@n
 import { faAngleDoubleDown, faAngleDoubleUp, faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import { ToastrService } from 'ngx-toastr'
 
+
 import { AuthService } from '../../../services/auth.service'
 import { DataService } from '../../../services/data.service'
 
+
 @Component({
-  selector: 'app-status',
-  templateUrl: './status.component.html',
-  styleUrls: ['./status.component.scss']
+  selector: 'app-commandparam',
+  templateUrl: './commandparam.component.html',
+  styleUrls: ['./commandparam.component.scss']
 })
-export class StatusComponent implements OnInit {
+export class CommandparamComponent implements OnInit {
   @ViewChild('acc', {static: true}) accordian: NgbAccordion
 
   createForm: FormGroup
@@ -25,9 +27,9 @@ export class StatusComponent implements OnInit {
   faAngleDoubleUp = faAngleDoubleUp
   faWindowClose = faWindowClose
   modalOptions: NgbModalOptions
-  typeValue: String = 'status'
+  typeValue: String = 'commandparam'
   current: Object = {}
-  public displayedColumns: string[] = ['name', 'description', 'editor', 'edit', 'delete']
+  public displayedColumns: string[] = ['name','description','command','editor','nls','init','optional','edit','delete']
   currentPage$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(10);
   dataOnPage$ = new BehaviorSubject<any[]>([]);
@@ -54,13 +56,21 @@ export class StatusComponent implements OnInit {
     this.createForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      editorId: ['']
+      nlsId: [null],
+      editorId: [null],
+      commandId: [null],
+      init: [null],
+      optional: [null],
     })
     this.updateForm = this.fb.group({
-      id: ['', Validators.required], 
+      id: ['', Validators.required],
       name: ['', Validators.required],
       description: ['', Validators.required],
-      editorId: ['']
+      nlsId: [null],
+      editorId: [null],
+      commandId: [null],
+      init: [null],
+      optional: [null],
     })
     this.deleteForm = this.fb.group({
       id: ['', Validators.required]
@@ -68,26 +78,26 @@ export class StatusComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest(this.ds[`${this.typeValue}$`], 
+    combineLatest(this.ds[`${this.typeValue}$`],
       this.searchFormControl.valueChanges,
       this.sortKey$, this.sortDirection$)
     .subscribe(([data, searchTerm, sortKey, sortDirection]) => {
-      const dataArray = Object.values(data)
-      let filteredData: any[]
+      const dataArray = Object.values(this.cleanArray(data))
+      //dataArray.concat(staticArray)
 
+      let filteredData: any[]
       if (!searchTerm) {
         filteredData = dataArray
         this.location.replaceState(`/${this.typeValue}`)
       } else {
         this.location.replaceState(`/${this.typeValue}?search=${searchTerm}`)
-        const filteredResults = dataArray.filter(item => {
+        const filteredResults = dataArray.filter(Boolean).filter(item => {
           return Object.values(item).reduce((prev, curr) => {
             return prev || curr.toString().toLowerCase().includes(searchTerm.toLowerCase())
           }, false)
         })
         filteredData = filteredResults
       }
-
       let isNumbers: boolean = true
       let sortedData
       for (let item of filteredData) {
@@ -117,9 +127,6 @@ export class StatusComponent implements OnInit {
     })
     let id = this.routeInfo.snapshot.queryParamMap.get('search') || null
     if (id) { this.searchFormControl.patchValue(id) }
-    if (this.ds.currentDomain) {
-      this.ds.loadType(this.typeValue)
-    }
   }
 
   ngOnDestroy() {
@@ -135,6 +142,7 @@ export class StatusComponent implements OnInit {
       await this.modal.open(content, this.modalOptions).result
     } catch (err) {
       // This catches the modal cancel
+      this.current = {}
     }
   }
 
@@ -194,12 +202,6 @@ export class StatusComponent implements OnInit {
   async delete() {
     try {
       this.modal.dismissAll()
-      if (this.current.hasOwnProperty('compliance')) {
-        for (let link of this.current['compliance'].items) {
-          this.toastr.success(`Removing Links...`)
-          await this.ds.deleteComplianceStatusLink(link.id)
-        }
-      }      
       let type = this.typeValue
       let name = this.current['name'] || this.current['id']
       this.toastr.success(`Processing Delete for ${name}...`)
@@ -215,6 +217,12 @@ export class StatusComponent implements OnInit {
       }
     }
     this.current = {}
+  }
+
+  getNlsName(id) {
+    this.ds.nls$.subscribe(date => {
+
+    })
   }
 
   adjustSort(key: string) {
@@ -248,3 +256,4 @@ export class StatusComponent implements OnInit {
   }
 
 }
+

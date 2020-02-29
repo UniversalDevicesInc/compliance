@@ -23,15 +23,22 @@ export class ComplianceComponent implements OnInit {
   updateForm: FormGroup
   deleteForm: FormGroup
   statusForm: FormGroup
+  updateStatusForm: FormGroup
+  deleteStatusForm: FormGroup
+  updateCommandForm: FormGroup
+  deleteCommandForm: FormGroup
   faAngleDoubleDown = faAngleDoubleDown
   faAngleDoubleUp = faAngleDoubleUp
   faWindowClose = faWindowClose
   modalOptions: NgbModalOptions
   typeValue: String = 'compliance'
   current: Object = {}
+  currentStatus: Object = {}
+  currentCommand: Object = {}
   logs
   public displayedColumns: string[] = ['name','description','state','author','createdAt','updatedAt','logs','edit','delete']
-  public statusColumns: string[] = ['name','description','unlink']
+  public statusColumns: string[] = ['name','description','editor','edit','delete','unlink']
+  public commandColumns: string[] = ['name','description','params','edit','delete','unlink']
   currentPage$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(10);
   dataOnPage$ = new BehaviorSubject<any[]>([]);
@@ -43,8 +50,11 @@ export class ComplianceComponent implements OnInit {
 
   currentCompliance$ = new BehaviorSubject<Object>(null)
   currentStatus$ = new BehaviorSubject<Object>([{}])
+  currentCommand$ = new BehaviorSubject<Object>([{}])
   selectedStatus
+  selectedCommand
   selectedLink
+  selectedCommandLink
 
   constructor(
     public router: Router,
@@ -80,12 +90,32 @@ export class ComplianceComponent implements OnInit {
     this.statusForm = this.fb.group({
       status: ["", Validators.required]
     })
+    this.updateStatusForm = this.fb.group({
+      id: ['', Validators.required], 
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      editorId: ['']
+    })
+    this.deleteStatusForm = this.fb.group({
+      id: ['', Validators.required]
+    })
+    this.updateCommandForm = this.fb.group({
+      id: ['', Validators.required], 
+      name: ['', Validators.required],
+      description: ['', Validators.required]
+    })
+    this.deleteCommandForm = this.fb.group({
+      id: ['', Validators.required]
+    })
   }
 
   ngOnInit() {
     this.subscription.add(this.currentCompliance$.subscribe(data => {
       if (data && data.hasOwnProperty('status') && data['status'].hasOwnProperty('items')) {
         this.currentStatus$.next(data['status'].items)
+      }
+      if (data && data.hasOwnProperty('command') && data['command'].hasOwnProperty('items')) {
+        this.currentCommand$.next(data['command'].items)
       }
     }))
     combineLatest(this.ds[`${this.typeValue}$`], 
@@ -169,6 +199,32 @@ export class ComplianceComponent implements OnInit {
     } catch (err) {
       // This catches the modal cancel
       this.current = {}
+    }
+  }
+
+  async openStatus(action, content, item) {
+    try {
+      this.currentStatus = item || {}
+      this[`${action}StatusForm`].reset()
+      if (item) {
+        this[`${action}StatusForm`].patchValue(item)
+      }
+      await this.modal.open(content, this.modalOptions).result
+    } catch (err) {
+      // This catches the modal cancel
+    }
+  }
+
+  async openCommand(action, content, item) {
+    try {
+      this.currentCommand = item || {}
+      this[`${action}CommandForm`].reset()
+      if (item) {
+        this[`${action}CommandForm`].patchValue(item)
+      }
+      await this.modal.open(content, this.modalOptions).result
+    } catch (err) {
+      // This catches the modal cancel
     }
   }
 
@@ -260,11 +316,33 @@ export class ComplianceComponent implements OnInit {
     try {
       this.modal.dismissAll()
       let type = this.typeValue
-      let name = this.current['name'] || this.current['id']
+      //Deepcopy
+      let comp = JSON.parse(JSON.stringify(this.current))
+      let name = comp['name'] || comp['id']
+      let id = comp['id']
       this.toastr.success(`Processing Delete for ${name}...`)
-      await this.ds.callApi(type, 'delete', { id: this.current['id'] })
+      let run = Promise.all
+      if (comp.hasOwnProperty('status')) {
+        for(let status of comp['status'].items) {
+          this.toastr.success('Removing Status Links..')
+          if (status && status.hasOwnProperty('id')) {
+            await this.ds.deleteComplianceStatusLink(status.id)
+          }
+        }
+      }
+      if (comp.hasOwnProperty('command')) {
+        for(let command of comp['command'].items) {
+          this.toastr.success('Removing Command Links..')
+          if (command && command.hasOwnProperty('id')) {
+            await this.ds.deleteComplianceCommandLink(command.id)
+          }
+        }
+      }
+      await this.ds.callApi(type, 'delete', { id: comp['id'] })
       this.toastr.success(`Delete ${name} Successful!`)
+      this.currentCompliance$.next(null)
     } catch (err) {
+      console.log(err)
       if (err && typeof err === 'object') {
         this.toastr.error(`Failed to Delete ${name} :: ${JSON.stringify(err)}`)
         console.log(`modify error: ${JSON.stringify(err)}`)
@@ -274,6 +352,122 @@ export class ComplianceComponent implements OnInit {
       }
     }
     this.current = {}
+  }
+
+  async statusModify() {
+    this.modal.dismissAll()
+    this.currentStatus = this.cleanObject(this.updateStatusForm.value)
+    let name = this.currentStatus['name'] || this.currentStatus['id']
+    console.log(`${this.typeValue} Update`)
+    if (this.updateStatusForm.pristine) {
+      return this.toastr.error(`Nothing Changed`)      
+    }
+    if (!this.updateStatusForm.valid) {
+      return this.toastr.error(`Missing required field`)
+    }
+    this.toastr.success(`Processing Update for ${name}...`)
+    try {
+      await this.ds.callApi('status', 'update', this.currentStatus)
+      this.toastr.success(`Update of ${name} Successful!`)
+      this.getData()
+    } catch (err) {
+      if (err && typeof err === 'object') {
+        this.toastr.error(`Failed to Update ${name} :: ${JSON.stringify(err)}`)
+        console.log(`modify error: ${JSON.stringify(err)}`)
+      } else {
+        this.toastr.error(`Failed to Update ${name} :: ${err}`)
+        console.log(`modify error: ${err}`)
+      }   
+    }
+    this.updateStatusForm.reset()
+    this.currentStatus = {}
+  }
+
+  async statusDelete() {
+    try {
+      this.modal.dismissAll()
+      let comp = JSON.parse(JSON.stringify(this.currentCompliance$.value))
+      if (comp.hasOwnProperty('status')) {
+        for(let status of comp['status'].items) {
+          if (this.currentStatus['id'] === status['statusId']) {
+            this.toastr.success('Removing Status Link..')
+            await this.ds.deleteComplianceStatusLink(status.id)
+          }
+        }
+      }      
+      let name = this.currentStatus['name'] || this.currentStatus['id']
+      this.toastr.success(`Processing Delete for ${name}...`)
+      await this.ds.callApi('status', 'delete', { id: this.currentStatus['id'] })
+      this.toastr.success(`Delete ${name} Successful!`)
+      this.getData()
+    } catch (err) {
+      if (err && typeof err === 'object') {
+        this.toastr.error(`Failed to Delete ${name} :: ${JSON.stringify(err)}`)
+        console.log(`modify error: ${JSON.stringify(err)}`)
+      } else {
+        this.toastr.error(`Failed to Delete ${name} :: ${err}`)
+        console.log(`modify error: ${err}`)
+      }
+    }
+    this.currentStatus = {}
+  }
+
+  async commandModify() {
+    this.modal.dismissAll()
+    this.currentCommand = this.cleanObject(this.updateCommandForm.value)
+    let name = this.currentCommand['name'] || this.currentCommand['id']
+    console.log(`${this.typeValue} Update`)
+    if (this.updateCommandForm.pristine) {
+      return this.toastr.error(`Nothing Changed`)      
+    }
+    if (!this.updateCommandForm.valid) {
+      return this.toastr.error(`Missing required field`)
+    }
+    this.toastr.success(`Processing Update for ${name}...`)
+    try {
+      await this.ds.callApi('command', 'update', this.currentCommand)
+      this.toastr.success(`Update of ${name} Successful!`)
+      this.getData()
+    } catch (err) {
+      if (err && typeof err === 'object') {
+        this.toastr.error(`Failed to Update ${name} :: ${JSON.stringify(err)}`)
+        console.log(`modify error: ${JSON.stringify(err)}`)
+      } else {
+        this.toastr.error(`Failed to Update ${name} :: ${err}`)
+        console.log(`modify error: ${err}`)
+      }   
+    }
+    this.updateCommandForm.reset()
+    this.currentCommand = {}
+  }
+
+  async commandDelete() {
+    try {
+      this.modal.dismissAll()
+      let comp = JSON.parse(JSON.stringify(this.currentCompliance$.value))
+      if (comp.hasOwnProperty('command')) {
+        for(let command of comp['command'].items) {
+          if (this.currentCommand['id'] === command['commandId']) {
+            this.toastr.success('Removing Command Link..')
+            await this.ds.deleteComplianceCommandLink(command.id)
+          }
+        }
+      }      
+      let name = this.currentCommand['name'] || this.currentCommand['id']
+      this.toastr.success(`Processing Delete for ${name}...`)
+      await this.ds.callApi('command', 'delete', { id: this.currentCommand['id'] })
+      this.toastr.success(`Delete ${name} Successful!`)
+      this.getData()
+    } catch (err) {
+      if (err && typeof err === 'object') {
+        this.toastr.error(`Failed to Delete ${name} :: ${JSON.stringify(err)}`)
+        console.log(`modify error: ${JSON.stringify(err)}`)
+      } else {
+        this.toastr.error(`Failed to Delete ${name} :: ${err}`)
+        console.log(`modify error: ${err}`)
+      }
+    }
+    this.currentCommand = {}
   }
 
   async createLink() {
@@ -289,6 +483,7 @@ export class ComplianceComponent implements OnInit {
       }
       if (this.currentCompliance$.value['id'] && this.selectedStatus.id) {
         this.toastr.success(`Linking ${this.selectedStatus.name} to Compliance ${this.currentCompliance$.value['name']}...`)
+        console.log(this.currentCompliance$.value['id'], this.selectedStatus.id)
         await this.ds.addComplianceStatusLink(this.currentCompliance$.value['id'], this.selectedStatus.id)
         this.toastr.success(`Successfully linked ${this.selectedStatus.name} to Compliance ${this.currentCompliance$.value['name']}`)
         this.getData()
@@ -324,6 +519,56 @@ export class ComplianceComponent implements OnInit {
       }
     }
     this.selectedLink = null 
+  }
+
+  async createCommandLink() {
+    try {
+      if (!this.selectedCommand) {
+        return this.toastr.error(`Nothing selected.`)
+      }
+      this.modal.dismissAll()
+      for (let command of this.currentCompliance$.value['command']['items']) {
+        if (command['command'].id === this.selectedCommand.id) {
+          return this.toastr.error(`Already Linked.`)
+        }
+      }
+      if (this.currentCompliance$.value['id'] && this.selectedCommand.id) {
+        this.toastr.success(`Linking ${this.selectedCommand.name} to Compliance ${this.currentCompliance$.value['name']}...`)
+        await this.ds.addComplianceCommandLink(this.currentCompliance$.value['id'], this.selectedCommand.id)
+        this.toastr.success(`Successfully linked ${this.selectedCommand.name} to Compliance ${this.currentCompliance$.value['name']}`)
+        this.getData()
+      }
+    } catch (err) {
+      if (err && typeof err === 'object') {
+        this.toastr.error(`Failed to Link :: ${JSON.stringify(err)}`)
+        console.log(`link error: ${JSON.stringify(err)}`)
+      } else {
+        this.toastr.error(`Failed to Link :: ${err}`)
+        console.log(`link error: ${err}`)
+      }
+    }
+    this.selectedCommand = null
+  }
+
+  async deleteCommandLink() {
+    try {
+      if (!this.selectedCommandLink) return
+      let name = `${this.selectedCommandLink.command.name}`
+      this.modal.dismissAll()
+      this.toastr.success(`Removing link for ${name} to Compliance ${this.currentCompliance$.value['name']}...`)
+      await this.ds.deleteComplianceCommandLink(this.selectedCommandLink.id)
+      this.toastr.success(`Successfully removed link for ${name}`)
+      this.getData()
+    } catch (err) {
+      if (err && typeof err === 'object') {
+        this.toastr.error(`Failed to Remove Link :: ${JSON.stringify(err)}`)
+        console.log(`link error: ${JSON.stringify(err)}`)
+      } else {
+        this.toastr.error(`Failed to Remove Link :: ${err}`)
+        console.log(`link error: ${err}`)
+      }
+    }
+    this.selectedCommandLink = null 
   }
 
   scroll(element) {

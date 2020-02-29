@@ -13,6 +13,7 @@ export class DataService {
   private _compliance: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _status: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _command: ReplaySubject<Array<Object>> = new ReplaySubject(1)
+  private _commandparam: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _editor: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _editorrange: ReplaySubject<Array<Object>> = new ReplaySubject(1)
   private _nls: ReplaySubject<Array<Object>> = new ReplaySubject(1)
@@ -26,12 +27,13 @@ export class DataService {
   readonly compliance$ = this._compliance.asObservable()
   readonly status$ = this._status.asObservable()
   readonly command$ = this._command.asObservable()
+  readonly commandparam$ = this._commandparam.asObservable()
   readonly editor$ = this._editor.asObservable()
   readonly editorrange$ = this._editorrange.asObservable()
   readonly nls$ = this._nls.asObservable()
   readonly uom$ = this._uom.asObservable()
 
-  public apiTypes = ["domain","compliance","status","command","editor","editorrange","nls","uom"]
+  public apiTypes = ["domain","compliance","status","command","commandparam","editor","editorrange","nls","uom"]
   public currentDomain: QlApi.GetDomainQuery
 
   public dataLoaded$: ReplaySubject<boolean> = new ReplaySubject(1)
@@ -189,11 +191,11 @@ export class DataService {
 
   async callApi(type, action, payload) {
     console.log(`Called ${type} with ${action} payload ${JSON.stringify(payload)}`)
-    return await this._crudApi[type][action].func(payload)
+    return this._crudApi[type][action].func(payload)
   }
 
   async addComplianceLog(complianceId, user, comment) {
-    return await this.qlApi.CreateComplianceLog({
+    return this.qlApi.CreateComplianceLog({
       complianceId: complianceId,
       comment: comment,
       user: user
@@ -201,14 +203,27 @@ export class DataService {
   }
 
   async addComplianceStatusLink(complianceId, statusId) {
-    return await this.qlApi.CreateComplianceStatusLink({
+    return this.qlApi.CreateComplianceStatusLink({
       complianceId: complianceId,
       statusId: statusId
     })
   }
 
   async deleteComplianceStatusLink(id) {
-    return await this.qlApi.DeleteComplianceStatusLink({
+    return this.qlApi.DeleteComplianceStatusLink({
+      id: id
+    })
+  }
+
+  async addComplianceCommandLink(complianceId, commandId) {
+    return this.qlApi.CreateComplianceCommandLink({
+      complianceId: complianceId,
+      commandId: commandId
+    })
+  }
+
+  async deleteComplianceCommandLink(id) {
+    return this.qlApi.DeleteComplianceCommandLink({
       id: id
     })
   }

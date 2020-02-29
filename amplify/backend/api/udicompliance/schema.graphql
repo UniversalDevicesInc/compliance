@@ -43,6 +43,7 @@ type Compliance @model
   updatedAt: AWSDateTime
   complianceLogs: [ComplianceLog] @connection(keyName: "byCompliance", fields: ["id"])
   status: [ComplianceStatusLink] @connection(keyName: "byCompliance", fields: ["id"])
+  command: [ComplianceCommandLink] @connection(keyName: "byCompliance", fields: ["id"])
 }
 
 type ComplianceStatusLink @model(queries: null)
@@ -71,8 +72,8 @@ type Status @model
   name: String!
   description: String
   compliance: [ComplianceStatusLink] @connection(keyName: "byStatus", fields: ["id"])
-  editorId: ID!
-  editor: Editor @connection(fields: ["editorId"])
+  editorId: ID
+  editor: Editor
 }
 
 type ComplianceCommandLink @model(queries: null)
@@ -100,9 +101,25 @@ type Command @model
   name: String!
   description: String
   compliance: [ComplianceCommandLink] @connection(keyName: "byCommand", fields: ["id"])
-  editor: Editor
-  nls: Nls
-  subValues: AWSJSON
+  params: [Commandparam] @connection(keyName: "byCommand", fields: ["id"])
+}
+
+type Commandparam @model
+  @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, operations: [create, update], groups: ["Editors"] },
+    { allow: private, operations: [read] }
+  ])
+  @key(name: "byEditor", fields: ["editorId"])
+  @key(name: "byCommand", fields: ["commandId"]) {
+  id: ID!
+  name: String
+  description: String
+  editorId: ID
+  nlsId: ID
+  commandId: ID
+  init: String
+  optional: Boolean
 }
 
 type Editor @model

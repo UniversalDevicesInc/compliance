@@ -9,6 +9,7 @@ import { DomainComponent } from './components/types/domain/domain.component';
 import { ComplianceComponent } from './components/types/compliance/compliance.component';
 import { StatusComponent } from './components/types/status/status.component';
 import { CommandComponent } from './components/types/command/command.component';
+import { CommandparamComponent } from './components/types/commandparam/commandparam.component';
 import { EditorComponent } from './components/types/editor/editor.component';
 import { EditorrangeComponent } from './components/types/editorrange/editorrange.component';
 import { NlsComponent } from './components/types/nls/nls.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'compliance', component: ComplianceComponent, canActivate: [AuthGuard]},
   {path: 'status', component: StatusComponent, canActivate: [AuthGuard]},
   {path: 'command', component: CommandComponent, canActivate: [AuthGuard]},
+  {path: 'commandparam', component: CommandparamComponent, canActivate: [AuthGuard]},
   {path: 'editor', component: EditorComponent, canActivate: [AuthGuard]},
   {path: 'editorrange', component: EditorrangeComponent, canActivate: [AuthGuard]},
   {path: 'nls', component: NlsComponent, canActivate: [AuthGuard]},

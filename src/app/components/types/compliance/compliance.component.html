@@ -143,7 +143,7 @@
               <ng-container cdkColumnDef="delete" class="w-10 p-2">
                 <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Delete</th>
                 <td class="text-center" cdk-cell *cdkCellDef="let element">
-                  <button [disabled]="!user.groups.includes('Admins') || element.id === 'ecc625a7-c7d5-4f8e-8225-0d529e423c39'" type="button" 
+                  <button [disabled]="!user.groups.includes('Admins') || element['id'] === 'ecc625a7-c7d5-4f8e-8225-0d529e423c39'" type="button" 
                     class="btn btn-danger" (click)="open('delete', deleteModal, element)">
                       Delete
                   </button>              
@@ -206,7 +206,7 @@
           <label class="col-sm-2 col-form-label">Domain</label>
           <div class="col-sm-9 d-flex flex-column">
             <select class="form-control" formControlName="domainId">
-              <option *ngFor="let dom of ds.domain$ | async" [value]="dom.id">
+              <option *ngFor="let dom of ds.domain$ | async" [value]="dom['id']">
                 {{dom['name']}}
               </option>
             </select>
@@ -259,7 +259,7 @@
           <label class="col-sm-2 col-form-label">Domain</label>
           <div class="col-sm-9 d-flex flex-column">
             <select class="form-control" formControlName="domainId">
-              <option *ngFor="let dom of ds.domain$ | async" [value]="dom.id">
+              <option *ngFor="let dom of ds.domain$ | async" [value]="dom['id']">
                 {{dom['name']}}
               </option>
             </select>
@@ -324,26 +324,6 @@
     </div>
   </ng-template>
 
-  <!-- Unlink Modal -->
-  <ng-template #unlinkModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title text-white">Remove Status {{selectedLink.status.name}} Link for {{currentCompliance$.value['name']}}?</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
-        <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <h4>
-        *** WARNING IRREVERSABLE *** <br>
-        Are you sure you want to delete {{selectedLink.status.name}} Link for {{currentCompliance$.value['name']}}?
-      </h4>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-danger" (click)="deleteLink()">Delete</button>
-      <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss('cancel')">Cancel</button>
-    </div>
-  </ng-template>
-  
   <!-- Logs Modal -->
   <ng-template #logsModal let-modal>
     <div class="modal-header">
@@ -377,8 +357,8 @@
     </div>
   </ng-template>
 
-  <!-- Link Modal -->
-  <ng-template #statusModal let-modal>
+  <!-- Status Link Modal -->
+  <ng-template #statusLinkModal let-modal>
     <div class="modal-header">
       <h4 class="modal-title text-white">Link Status to Compliance</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
@@ -402,11 +382,197 @@
       <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss()">Cancel</button>
     </div>
   </ng-template>
-  
+
+    <!-- Status Unlink Modal -->
+    <ng-template #statusUnlinkModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title text-white">Remove Status {{selectedLink.status.name}} Link for {{currentCompliance$.value['name']}}?</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>
+          *** WARNING IRREVERSABLE *** <br>
+          Are you sure you want to delete {{selectedLink.status.name}} Link for {{currentCompliance$.value['name']}}?
+        </h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="deleteLink()">Delete</button>
+        <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss('cancel')">Cancel</button>
+      </div>
+    </ng-template>
+
+  <!-- Status Update Modal -->
+<ng-template #statusUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-white">Update Status</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- Input Form -->
+    <form [formGroup]="updateStatusForm" (ngSubmit)="statusModify()">
+      <!-- Name -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <input class="form-control" type="text" formControlName="name">
+        </div>
+      </div>
+      <!-- Description -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <input class="form-control" type="text" formControlName="description">
+        </div>
+      </div>
+      <!-- Editor -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Editor</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" formControlName="editorId">
+            <option [value]=null>None</option>
+            <option *ngFor="let editor of ds.editor$ | async" [value]="editor['id']">
+              {{editor['name']}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- Buttons -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Status Delete Modal -->
+<ng-template #statusDeleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-white">Delete Status?</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('cancel')">
+      <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h4>
+      *** WARNING IRREVERSABLE *** <br>
+      Are you sure you want to delete Status {{currentStatus['name']}}?
+    </h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="statusDelete()">Delete</button>
+    <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss('cancel')">Cancel</button>
+  </div>
+</ng-template>
+
+<!-- Command Link Modal -->
+<ng-template #commandLinkModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-white">Link Command to Compliance</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Command</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" [(ngModel)]="selectedCommand">
+            <option *ngFor="let item of ds.command$ | async" [ngValue]="item">
+              {{item['name']}}
+            </option>
+          </select>
+        </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="createCommandLink()" class="btn btn-primary">Link</button>
+    <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss()">Cancel</button>
+  </div>
+</ng-template>
+
+<!-- Command Unlink Modal -->
+<ng-template #commandUnlinkModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-white">Remove Command {{selectedCommandLink.command.name}} Link for {{currentCompliance$.value['name']}}?</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h4>
+      *** WARNING IRREVERSABLE *** <br>
+      Are you sure you want to delete {{selectedCommandLink.command.name}} Link for {{currentCompliance$.value['name']}}?
+    </h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteCommandLink()">Delete</button>
+    <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss('cancel')">Cancel</button>
+  </div>
+</ng-template>
+
+<!-- Command Update Modal -->
+<ng-template #commandUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-white">Update Command</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- Input Form -->
+    <form [formGroup]="updateCommandForm" (ngSubmit)="commandModify()">
+      <!-- Name -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <input class="form-control" type="text" formControlName="name">
+        </div>
+      </div>
+      <!-- Description -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <input class="form-control" type="text" formControlName="description">
+        </div>
+      </div>
+      <!-- Buttons -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Command Delete Modal -->
+<ng-template #commandDeleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-white">Delete Command?</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('cancel')">
+      <span aria-hidden="true"><fa-icon class="fa-1x" [icon]="faWindowClose"></fa-icon></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h4>
+      *** WARNING IRREVERSABLE *** <br>
+      Are you sure you want to delete Status {{currentCommand['name']}}?
+    </h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="commandDelete()">Delete</button>
+    <button ngbAutofocus type="button" class="btn btn-primary" (click)="modal.dismiss('cancel')">Cancel</button>
+  </div>
+</ng-template>
+
   <div #statusElement>
     <div *ngIf="currentCompliance$ | async" class="container-fluid" >
-      <ngb-accordion #acc="ngbAccordion" activeIds="child">
-        <ngb-panel id="child">
+      <ngb-accordion #acc="ngbAccordion" activeIds="status, command">
+        <ngb-panel id="status">
           <ng-template ngbPanelHeader let-opened="opened">
             <div class="row text-white d-flex align-items-center justify-content-between">
               <h4 class="col">Status List for {{currentCompliance$.value['name']}}</h4>
@@ -429,7 +595,7 @@
                   Name
                 </th>
                 <td cdk-cell *cdkCellDef="let element">
-                  <a [routerLink]="['/status']" [queryParams]="{search: element.status.id}">
+                  <a [routerLink]="['/status']" [queryParams]="{search: element.status['id']}">
                     {{element.status['name']}}
                   </a>
                 </td>
@@ -443,12 +609,47 @@
                   {{element.status['description']}}
                 </td>
               </ng-container>
+              <!-- Editor -->
+              <ng-container cdkColumnDef="editor">
+                <th cdk-header-cell *cdkHeaderCellDef class="p-2 flex-fill">
+                  Editor
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  <div *ngIf="element.status['editorId']">
+                    <a [routerLink]="['/editor']" [queryParams]="{search: element.status['editorId']}">
+                      <ng-container *ngFor="let editor of ds.editor$ | async | filter: element.status['editorId'], 'id'">
+                        {{editor['name']}}
+                      </ng-container>
+                    </a>
+                  </div>
+                </td>
+              </ng-container>
+              <!-- Edit -->
+              <ng-container cdkColumnDef="edit">
+                <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Edit</th>
+                <td class="text-center" cdk-cell *cdkCellDef="let element">
+                  <button [disabled]="!user.groups.includes('Admins')" type="button" 
+                    class="btn btn-info" (click)="openStatus('update', statusUpdateModal, element.status)">
+                      Edit
+                  </button>
+                </td>
+              </ng-container>
+              <!-- Delete -->
+              <ng-container cdkColumnDef="delete" class="w-10 p-2">
+                <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Delete</th>
+                <td class="text-center" cdk-cell *cdkCellDef="let element">
+                  <button [disabled]="!user.groups.includes('Admins') || element['id'] === 'ecc625a7-c7d5-4f8e-8225-0d529e423c39'" type="button" 
+                    class="btn btn-danger" (click)="openStatus('delete', statusDeleteModal, element.status)">
+                      Delete
+                  </button>              
+                </td>
+              </ng-container>
               <!-- Unlink -->
               <ng-container cdkColumnDef="unlink" class="w-10 p-2">
                 <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Unlink</th>
                 <td class="text-center" cdk-cell *cdkCellDef="let element">
                   <button [disabled]="!user.groups.includes('Admins')" type="button" 
-                    class="btn btn-danger" (click)="openNaked(unlinkModal); selectedLink = element">
+                    class="btn btn-danger" (click)="selectedLink = element; openNaked(statusUnlinkModal)">
                       Unlink
                   </button>              
                 </td>
@@ -464,8 +665,107 @@
             <!-- Link -->
             <div class="text-right">
               <button [disabled]="!user.groups.includes('Admins')"  
-                  class="btn btn-primary" (click)="openNaked(statusModal)">
+                  class="btn btn-primary" (click)="openNaked(statusLinkModal)">
                 Link Status to Compliance
+              </button>
+            </div>
+          </ng-template>
+        </ngb-panel>
+
+<!-- Commands -->        
+        <ngb-panel id="command">
+          <ng-template ngbPanelHeader let-opened="opened">
+            <div class="row text-white d-flex align-items-center justify-content-between">
+              <h4 class="col">Command List for {{currentCompliance$.value['name']}}</h4>
+              <div class="col">
+                <button style="width: 200px;" ngbPanelToggle class="btn btn-secondary btn-link float-right">
+                  <fa-icon *ngIf="!opened" class="fa-1x" [icon]="faAngleDoubleDown"></fa-icon>
+                  <fa-icon *ngIf="opened" class="fa-1x" [icon]="faAngleDoubleUp"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <table 
+              class="table table-striped table-bordered"
+              cdk-table
+              [dataSource]="currentCommand$">          
+              <!-- Name -->
+              <ng-container cdkColumnDef="name">
+                <th cdk-header-cell *cdkHeaderCellDef class="p-2 flex-fill">
+                  Name
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  <a [routerLink]="['/command']" [queryParams]="{search: element.command['id']}">
+                    {{element.command['name']}}
+                  </a>
+                </td>
+              </ng-container>
+              <!-- Description -->
+              <ng-container cdkColumnDef="description">
+                <th cdk-header-cell *cdkHeaderCellDef class="p-2 flex-fill">
+                  Description
+                </th>
+                <td cdk-cell *cdkCellDef="let element">
+                  {{element.command['description']}}
+                </td>
+              </ng-container>
+              <!-- Params -->
+              <ng-container cdkColumnDef="params">
+                <th cdk-header-cell *cdkHeaderCellDef class="w-20 p-2">Command Params</th>
+                <td cdk-cell *cdkCellDef="let element">
+                  <ng-container *ngIf="element.commandId">
+                    <div *ngFor="let param of ds.commandparam$ | async | filter: element.commandId: 'commandId'">
+                      <a [routerLink]="['/commandparam']" [queryParams]="{search: param.id}">
+                        {{param.name}}
+                      </a><br>
+                    </div>
+                  </ng-container>
+                </td>
+              </ng-container>                
+              <!-- Edit -->
+              <ng-container cdkColumnDef="edit">
+                <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Edit</th>
+                <td class="text-center" cdk-cell *cdkCellDef="let element">
+                  <button [disabled]="!user.groups.includes('Admins')" type="button" 
+                    class="btn btn-info" (click)="openCommand('update', commandUpdateModal, element.command)">
+                      Edit
+                  </button>
+                </td>
+              </ng-container>
+              <!-- Delete -->
+              <ng-container cdkColumnDef="delete" class="w-10 p-2">
+                <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Delete</th>
+                <td class="text-center" cdk-cell *cdkCellDef="let element">
+                  <button [disabled]="!user.groups.includes('Admins')" type="button" 
+                    class="btn btn-danger" (click)="openCommand('delete', commandDeleteModal, element.command)">
+                      Delete
+                  </button>              
+                </td>
+              </ng-container>
+              <!-- Unlink -->
+              <ng-container cdkColumnDef="unlink" class="w-10 p-2">
+                <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Unlink</th>
+                <td class="text-center" cdk-cell *cdkCellDef="let element">
+                  <button [disabled]="!user.groups.includes('Admins')" type="button" 
+                    class="btn btn-danger" (click)="selectedCommandLink = element; openNaked(commandUnlinkModal)">
+                      Unlink
+                  </button>              
+                </td>
+              </ng-container>
+              <!-- Table -->
+              <thead>
+                <tr cdk-header-row *cdkHeaderRowDef="commandColumns"></tr>
+              </thead>
+              <tbody>
+                <tr cdk-row *cdkRowDef="let row; columns: commandColumns; let i = index"></tr>
+              </tbody>
+            </table>
+            <!-- Link -->
+            <div class="text-right">
+              <button [disabled]="!user.groups.includes('Admins')"  
+                  class="btn btn-primary" (click)="openNaked(commandLinkModal)">
+                Link Command to Compliance
               </button>
             </div>
           </ng-template>

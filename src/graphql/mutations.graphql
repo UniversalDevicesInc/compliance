@@ -45,6 +45,14 @@ mutation CreateDomain(
           }
           nextToken
         }
+        command {
+          items {
+            id
+            complianceId
+            commandId
+          }
+          nextToken
+        }
       }
       nextToken
     }
@@ -93,6 +101,14 @@ mutation UpdateDomain(
             id
             complianceId
             statusId
+          }
+          nextToken
+        }
+        command {
+          items {
+            id
+            complianceId
+            commandId
           }
           nextToken
         }
@@ -147,6 +163,14 @@ mutation DeleteDomain(
           }
           nextToken
         }
+        command {
+          items {
+            id
+            complianceId
+            commandId
+          }
+          nextToken
+        }
       }
       nextToken
     }
@@ -186,6 +210,9 @@ mutation CreateCompliance(
             nextToken
           }
           status {
+            nextToken
+          }
+          command {
             nextToken
           }
         }
@@ -235,6 +262,9 @@ mutation CreateCompliance(
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         status {
           id
@@ -248,6 +278,51 @@ mutation CreateCompliance(
             id
             name
             description
+          }
+        }
+      }
+      nextToken
+    }
+    command {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          createdAt
+          updatedAt
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+          command {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          params {
+            nextToken
           }
         }
       }
@@ -291,6 +366,9 @@ mutation UpdateCompliance(
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         nextToken
       }
@@ -338,6 +416,9 @@ mutation UpdateCompliance(
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         status {
           id
@@ -351,6 +432,51 @@ mutation UpdateCompliance(
             id
             name
             description
+          }
+        }
+      }
+      nextToken
+    }
+    command {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          createdAt
+          updatedAt
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+          command {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          params {
+            nextToken
           }
         }
       }
@@ -394,6 +520,9 @@ mutation DeleteCompliance(
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         nextToken
       }
@@ -441,6 +570,9 @@ mutation DeleteCompliance(
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         status {
           id
@@ -454,6 +586,51 @@ mutation DeleteCompliance(
             id
             name
             description
+          }
+        }
+      }
+      nextToken
+    }
+    command {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          createdAt
+          updatedAt
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+          command {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          params {
+            nextToken
           }
         }
       }
@@ -532,6 +709,31 @@ mutation CreateComplianceStatusLink(
             name
             description
             editorId
+          }
+        }
+        nextToken
+      }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
           }
         }
         nextToken
@@ -675,6 +877,31 @@ mutation UpdateComplianceStatusLink(
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     status {
       id
@@ -814,6 +1041,31 @@ mutation DeleteComplianceStatusLink(
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     status {
       id
@@ -911,6 +1163,9 @@ mutation CreateStatus(
             nextToken
           }
           status {
+            nextToken
+          }
+          command {
             nextToken
           }
         }
@@ -1012,6 +1267,9 @@ mutation UpdateStatus(
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         status {
           id
@@ -1109,6 +1367,9 @@ mutation DeleteStatus(
             nextToken
           }
           status {
+            nextToken
+          }
+          command {
             nextToken
           }
         }
@@ -1250,6 +1511,31 @@ mutation CreateComplianceCommandLink(
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     command {
       id
@@ -1276,47 +1562,23 @@ mutation CreateComplianceCommandLink(
             id
             name
             description
-            subValues
           }
         }
         nextToken
       }
-      editor {
-        id
-        name
-        description
-        status {
-          items {
-            id
-            name
-            description
-            editorId
-          }
-          nextToken
+      params {
+        items {
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
         }
-        ranges {
-          items {
-            id
-            name
-            description
-            editorId
-            nlsId
-            subset
-            min
-            max
-            step
-            uomId
-          }
-          nextToken
-        }
+        nextToken
       }
-      nls {
-        id
-        name
-        description
-        subValues
-      }
-      subValues
     }
   }
 }
@@ -1395,6 +1657,31 @@ mutation UpdateComplianceCommandLink(
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     command {
       id
@@ -1421,47 +1708,23 @@ mutation UpdateComplianceCommandLink(
             id
             name
             description
-            subValues
           }
         }
         nextToken
       }
-      editor {
-        id
-        name
-        description
-        status {
-          items {
-            id
-            name
-            description
-            editorId
-          }
-          nextToken
+      params {
+        items {
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
         }
-        ranges {
-          items {
-            id
-            name
-            description
-            editorId
-            nlsId
-            subset
-            min
-            max
-            step
-            uomId
-          }
-          nextToken
-        }
+        nextToken
       }
-      nls {
-        id
-        name
-        description
-        subValues
-      }
-      subValues
     }
   }
 }
@@ -1540,6 +1803,31 @@ mutation DeleteComplianceCommandLink(
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     command {
       id
@@ -1566,47 +1854,23 @@ mutation DeleteComplianceCommandLink(
             id
             name
             description
-            subValues
           }
         }
         nextToken
       }
-      editor {
-        id
-        name
-        description
-        status {
-          items {
-            id
-            name
-            description
-            editorId
-          }
-          nextToken
+      params {
+        items {
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
         }
-        ranges {
-          items {
-            id
-            name
-            description
-            editorId
-            nlsId
-            subset
-            min
-            max
-            step
-            uomId
-          }
-          nextToken
-        }
+        nextToken
       }
-      nls {
-        id
-        name
-        description
-        subValues
-      }
-      subValues
     }
   }
 }
@@ -1645,6 +1909,9 @@ mutation CreateCommand(
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         command {
           id
@@ -1653,72 +1920,26 @@ mutation CreateCommand(
           compliance {
             nextToken
           }
-          editor {
-            id
-            name
-            description
+          params {
+            nextToken
           }
-          nls {
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }
       nextToken
     }
-    editor {
-      id
-      name
-      description
-      status {
-        items {
-          id
-          name
-          description
-          compliance {
-            nextToken
-          }
-          editorId
-          editor {
-            id
-            name
-            description
-          }
-        }
-        nextToken
+    params {
+      items {
+        id
+        name
+        description
+        editorId
+        nlsId
+        commandId
+        init
+        optional
       }
-      ranges {
-        items {
-          id
-          name
-          description
-          editorId
-          nlsId
-          subset
-          min
-          max
-          step
-          uomId
-          uom {
-            id
-            name
-            description
-            subValues
-          }
-        }
-        nextToken
-      }
+      nextToken
     }
-    nls {
-      id
-      name
-      description
-      subValues
-    }
-    subValues
   }
 }
 mutation UpdateCommand(
@@ -1756,6 +1977,9 @@ mutation UpdateCommand(
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         command {
           id
@@ -1764,72 +1988,26 @@ mutation UpdateCommand(
           compliance {
             nextToken
           }
-          editor {
-            id
-            name
-            description
+          params {
+            nextToken
           }
-          nls {
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }
       nextToken
     }
-    editor {
-      id
-      name
-      description
-      status {
-        items {
-          id
-          name
-          description
-          compliance {
-            nextToken
-          }
-          editorId
-          editor {
-            id
-            name
-            description
-          }
-        }
-        nextToken
+    params {
+      items {
+        id
+        name
+        description
+        editorId
+        nlsId
+        commandId
+        init
+        optional
       }
-      ranges {
-        items {
-          id
-          name
-          description
-          editorId
-          nlsId
-          subset
-          min
-          max
-          step
-          uomId
-          uom {
-            id
-            name
-            description
-            subValues
-          }
-        }
-        nextToken
-      }
+      nextToken
     }
-    nls {
-      id
-      name
-      description
-      subValues
-    }
-    subValues
   }
 }
 mutation DeleteCommand(
@@ -1867,6 +2045,9 @@ mutation DeleteCommand(
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         command {
           id
@@ -1875,72 +2056,71 @@ mutation DeleteCommand(
           compliance {
             nextToken
           }
-          editor {
-            id
-            name
-            description
+          params {
+            nextToken
           }
-          nls {
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }
       nextToken
     }
-    editor {
-      id
-      name
-      description
-      status {
-        items {
-          id
-          name
-          description
-          compliance {
-            nextToken
-          }
-          editorId
-          editor {
-            id
-            name
-            description
-          }
-        }
-        nextToken
+    params {
+      items {
+        id
+        name
+        description
+        editorId
+        nlsId
+        commandId
+        init
+        optional
       }
-      ranges {
-        items {
-          id
-          name
-          description
-          editorId
-          nlsId
-          subset
-          min
-          max
-          step
-          uomId
-          uom {
-            id
-            name
-            description
-            subValues
-          }
-        }
-        nextToken
-      }
+      nextToken
     }
-    nls {
-      id
-      name
-      description
-      subValues
-    }
-    subValues
+  }
+}
+mutation CreateCommandparam(
+  $input: CreateCommandparamInput!
+  $condition: ModelCommandparamConditionInput
+) {
+  createCommandparam(input: $input, condition: $condition) {
+    id
+    name
+    description
+    editorId
+    nlsId
+    commandId
+    init
+    optional
+  }
+}
+mutation UpdateCommandparam(
+  $input: UpdateCommandparamInput!
+  $condition: ModelCommandparamConditionInput
+) {
+  updateCommandparam(input: $input, condition: $condition) {
+    id
+    name
+    description
+    editorId
+    nlsId
+    commandId
+    init
+    optional
+  }
+}
+mutation DeleteCommandparam(
+  $input: DeleteCommandparamInput!
+  $condition: ModelCommandparamConditionInput
+) {
+  deleteCommandparam(input: $input, condition: $condition) {
+    id
+    name
+    description
+    editorId
+    nlsId
+    commandId
+    init
+    optional
   }
 }
 mutation CreateEditor(

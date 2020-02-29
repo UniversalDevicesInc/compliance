@@ -42,6 +42,14 @@ query GetDomain($id: ID!) {
           }
           nextToken
         }
+        command {
+          items {
+            id
+            complianceId
+            commandId
+          }
+          nextToken
+        }
       }
       nextToken
     }
@@ -78,6 +86,9 @@ query ListDomains(
             nextToken
           }
           status {
+            nextToken
+          }
+          command {
             nextToken
           }
         }
@@ -118,6 +129,9 @@ query GetCompliance($id: ID!) {
             nextToken
           }
           status {
+            nextToken
+          }
+          command {
             nextToken
           }
         }
@@ -167,6 +181,9 @@ query GetCompliance($id: ID!) {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         status {
           id
@@ -180,6 +197,51 @@ query GetCompliance($id: ID!) {
             id
             name
             description
+          }
+        }
+      }
+      nextToken
+    }
+    command {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          createdAt
+          updatedAt
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+          command {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          params {
+            nextToken
           }
         }
       }
@@ -260,6 +322,31 @@ query ListCompliances(
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     nextToken
   }
@@ -294,6 +381,9 @@ query GetStatus($id: ID!) {
             nextToken
           }
           status {
+            nextToken
+          }
+          command {
             nextToken
           }
         }
@@ -462,6 +552,9 @@ query GetCommand($id: ID!) {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         command {
           id
@@ -470,72 +563,26 @@ query GetCommand($id: ID!) {
           compliance {
             nextToken
           }
-          editor {
-            id
-            name
-            description
+          params {
+            nextToken
           }
-          nls {
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }
       nextToken
     }
-    editor {
-      id
-      name
-      description
-      status {
-        items {
-          id
-          name
-          description
-          compliance {
-            nextToken
-          }
-          editorId
-          editor {
-            id
-            name
-            description
-          }
-        }
-        nextToken
+    params {
+      items {
+        id
+        name
+        description
+        editorId
+        nlsId
+        commandId
+        init
+        optional
       }
-      ranges {
-        items {
-          id
-          name
-          description
-          editorId
-          nlsId
-          subset
-          min
-          max
-          step
-          uomId
-          uom {
-            id
-            name
-            description
-            subValues
-          }
-        }
-        nextToken
-      }
+      nextToken
     }
-    nls {
-      id
-      name
-      description
-      subValues
-    }
-    subValues
   }
 }
 query ListCommands(
@@ -569,47 +616,54 @@ query ListCommands(
             id
             name
             description
-            subValues
           }
         }
         nextToken
       }
-      editor {
-        id
-        name
-        description
-        status {
-          items {
-            id
-            name
-            description
-            editorId
-          }
-          nextToken
+      params {
+        items {
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
         }
-        ranges {
-          items {
-            id
-            name
-            description
-            editorId
-            nlsId
-            subset
-            min
-            max
-            step
-            uomId
-          }
-          nextToken
-        }
+        nextToken
       }
-      nls {
-        id
-        name
-        description
-        subValues
-      }
-      subValues
+    }
+    nextToken
+  }
+}
+query GetCommandparam($id: ID!) {
+  getCommandparam(id: $id) {
+    id
+    name
+    description
+    editorId
+    nlsId
+    commandId
+    init
+    optional
+  }
+}
+query ListCommandparams(
+  $filter: ModelCommandparamFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCommandparams(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      editorId
+      nlsId
+      commandId
+      init
+      optional
     }
     nextToken
   }

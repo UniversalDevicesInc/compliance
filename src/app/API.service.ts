@@ -221,13 +221,11 @@ export type CreateCommandInput = {
   id?: string | null;
   name: string;
   description?: string | null;
-  subValues?: string | null;
 };
 
 export type ModelCommandConditionInput = {
   name?: ModelStringInput | null;
   description?: ModelStringInput | null;
-  subValues?: ModelStringInput | null;
   and?: Array<ModelCommandConditionInput | null> | null;
   or?: Array<ModelCommandConditionInput | null> | null;
   not?: ModelCommandConditionInput | null;
@@ -237,10 +235,55 @@ export type UpdateCommandInput = {
   id: string;
   name?: string | null;
   description?: string | null;
-  subValues?: string | null;
 };
 
 export type DeleteCommandInput = {
+  id?: string | null;
+};
+
+export type CreateCommandparamInput = {
+  id?: string | null;
+  name?: string | null;
+  description?: string | null;
+  editorId?: string | null;
+  nlsId?: string | null;
+  commandId?: string | null;
+  init?: string | null;
+  optional?: boolean | null;
+};
+
+export type ModelCommandparamConditionInput = {
+  name?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  editorId?: ModelIDInput | null;
+  nlsId?: ModelIDInput | null;
+  commandId?: ModelIDInput | null;
+  init?: ModelStringInput | null;
+  optional?: ModelBooleanInput | null;
+  and?: Array<ModelCommandparamConditionInput | null> | null;
+  or?: Array<ModelCommandparamConditionInput | null> | null;
+  not?: ModelCommandparamConditionInput | null;
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
+export type UpdateCommandparamInput = {
+  id: string;
+  name?: string | null;
+  description?: string | null;
+  editorId?: string | null;
+  nlsId?: string | null;
+  commandId?: string | null;
+  init?: string | null;
+  optional?: boolean | null;
+};
+
+export type DeleteCommandparamInput = {
   id?: string | null;
 };
 
@@ -460,10 +503,23 @@ export type ModelCommandFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
   description?: ModelStringInput | null;
-  subValues?: ModelStringInput | null;
   and?: Array<ModelCommandFilterInput | null> | null;
   or?: Array<ModelCommandFilterInput | null> | null;
   not?: ModelCommandFilterInput | null;
+};
+
+export type ModelCommandparamFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  editorId?: ModelIDInput | null;
+  nlsId?: ModelIDInput | null;
+  commandId?: ModelIDInput | null;
+  init?: ModelStringInput | null;
+  optional?: ModelBooleanInput | null;
+  and?: Array<ModelCommandparamFilterInput | null> | null;
+  or?: Array<ModelCommandparamFilterInput | null> | null;
+  not?: ModelCommandparamFilterInput | null;
 };
 
 export type ModelEditorFilterInput = {
@@ -573,6 +629,16 @@ export type CreateDomainMutation = {
         } | null> | null;
         nextToken: string | null;
       } | null;
+      command: {
+        __typename: "ModelComplianceCommandLinkConnection";
+        items: Array<{
+          __typename: "ComplianceCommandLink";
+          id: string;
+          complianceId: string;
+          commandId: string;
+        } | null> | null;
+        nextToken: string | null;
+      } | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -626,6 +692,16 @@ export type UpdateDomainMutation = {
           id: string;
           complianceId: string;
           statusId: string;
+        } | null> | null;
+        nextToken: string | null;
+      } | null;
+      command: {
+        __typename: "ModelComplianceCommandLinkConnection";
+        items: Array<{
+          __typename: "ComplianceCommandLink";
+          id: string;
+          complianceId: string;
+          commandId: string;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -685,6 +761,16 @@ export type DeleteDomainMutation = {
         } | null> | null;
         nextToken: string | null;
       } | null;
+      command: {
+        __typename: "ModelComplianceCommandLinkConnection";
+        items: Array<{
+          __typename: "ComplianceCommandLink";
+          id: string;
+          complianceId: string;
+          commandId: string;
+        } | null> | null;
+        nextToken: string | null;
+      } | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -727,6 +813,10 @@ export type CreateComplianceMutation = {
         } | null;
         status: {
           __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
       } | null> | null;
@@ -784,6 +874,10 @@ export type CreateComplianceMutation = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       status: {
         __typename: "Status";
@@ -800,6 +894,61 @@ export type CreateComplianceMutation = {
           id: string;
           name: string;
           description: string | null;
+        } | null;
+      };
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  command: {
+    __typename: "ModelComplianceCommandLinkConnection";
+    items: Array<{
+      __typename: "ComplianceCommandLink";
+      id: string;
+      complianceId: string;
+      commandId: string;
+      compliance: {
+        __typename: "Compliance";
+        id: string;
+        name: string;
+        description: string | null;
+        domainId: string;
+        domain: {
+          __typename: "Domain";
+          id: string;
+          name: string;
+          description: string | null;
+        } | null;
+        hint: string | null;
+        state: State;
+        author: string | null;
+        lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
+        complianceLogs: {
+          __typename: "ModelComplianceLogConnection";
+          nextToken: string | null;
+        } | null;
+        status: {
+          __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+      };
+      command: {
+        __typename: "Command";
+        id: string;
+        name: string;
+        description: string | null;
+        compliance: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
       };
     } | null> | null;
@@ -846,6 +995,10 @@ export type UpdateComplianceMutation = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -901,6 +1054,10 @@ export type UpdateComplianceMutation = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       status: {
         __typename: "Status";
@@ -917,6 +1074,61 @@ export type UpdateComplianceMutation = {
           id: string;
           name: string;
           description: string | null;
+        } | null;
+      };
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  command: {
+    __typename: "ModelComplianceCommandLinkConnection";
+    items: Array<{
+      __typename: "ComplianceCommandLink";
+      id: string;
+      complianceId: string;
+      commandId: string;
+      compliance: {
+        __typename: "Compliance";
+        id: string;
+        name: string;
+        description: string | null;
+        domainId: string;
+        domain: {
+          __typename: "Domain";
+          id: string;
+          name: string;
+          description: string | null;
+        } | null;
+        hint: string | null;
+        state: State;
+        author: string | null;
+        lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
+        complianceLogs: {
+          __typename: "ModelComplianceLogConnection";
+          nextToken: string | null;
+        } | null;
+        status: {
+          __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+      };
+      command: {
+        __typename: "Command";
+        id: string;
+        name: string;
+        description: string | null;
+        compliance: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
       };
     } | null> | null;
@@ -963,6 +1175,10 @@ export type DeleteComplianceMutation = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -1018,6 +1234,10 @@ export type DeleteComplianceMutation = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       status: {
         __typename: "Status";
@@ -1034,6 +1254,61 @@ export type DeleteComplianceMutation = {
           id: string;
           name: string;
           description: string | null;
+        } | null;
+      };
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  command: {
+    __typename: "ModelComplianceCommandLinkConnection";
+    items: Array<{
+      __typename: "ComplianceCommandLink";
+      id: string;
+      complianceId: string;
+      commandId: string;
+      compliance: {
+        __typename: "Compliance";
+        id: string;
+        name: string;
+        description: string | null;
+        domainId: string;
+        domain: {
+          __typename: "Domain";
+          id: string;
+          name: string;
+          description: string | null;
+        } | null;
+        hint: string | null;
+        state: State;
+        author: string | null;
+        lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
+        complianceLogs: {
+          __typename: "ModelComplianceLogConnection";
+          nextToken: string | null;
+        } | null;
+        status: {
+          __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+      };
+      command: {
+        __typename: "Command";
+        id: string;
+        name: string;
+        description: string | null;
+        compliance: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
       };
     } | null> | null;
@@ -1119,6 +1394,35 @@ export type CreateComplianceStatusLinkMutation = {
           name: string;
           description: string | null;
           editorId: string;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
         };
       } | null> | null;
       nextToken: string | null;
@@ -1279,6 +1583,35 @@ export type UpdateComplianceStatusLinkMutation = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   status: {
     __typename: "Status";
@@ -1435,6 +1768,35 @@ export type DeleteComplianceStatusLinkMutation = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   status: {
     __typename: "Status";
@@ -1545,6 +1907,10 @@ export type CreateStatusMutation = {
         } | null;
         status: {
           __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
       };
@@ -1660,6 +2026,10 @@ export type UpdateStatusMutation = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       status: {
         __typename: "Status";
@@ -1771,6 +2141,10 @@ export type DeleteStatusMutation = {
         } | null;
         status: {
           __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
       };
@@ -1930,6 +2304,35 @@ export type CreateComplianceCommandLinkMutation = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   command: {
     __typename: "Command";
@@ -1961,53 +2364,25 @@ export type CreateComplianceCommandLinkMutation = {
           id: string;
           name: string;
           description: string | null;
-          subValues: string | null;
         };
       } | null> | null;
       nextToken: string | null;
     } | null;
-    editor: {
-      __typename: "Editor";
-      id: string;
-      name: string;
-      description: string | null;
-      status: {
-        __typename: "ModelStatusConnection";
-        items: Array<{
-          __typename: "Status";
-          id: string;
-          name: string;
-          description: string | null;
-          editorId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
-      ranges: {
-        __typename: "ModelEditorrangeConnection";
-        items: Array<{
-          __typename: "Editorrange";
-          id: string;
-          name: string | null;
-          description: string | null;
-          editorId: string | null;
-          nlsId: string | null;
-          subset: string | null;
-          min: number | null;
-          max: number | null;
-          step: number | null;
-          uomId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
+    params: {
+      __typename: "ModelCommandparamConnection";
+      items: Array<{
+        __typename: "Commandparam";
+        id: string;
+        name: string | null;
+        description: string | null;
+        editorId: string | null;
+        nlsId: string | null;
+        commandId: string | null;
+        init: string | null;
+        optional: boolean | null;
+      } | null> | null;
+      nextToken: string | null;
     } | null;
-    nls: {
-      __typename: "Nls";
-      id: string;
-      name: string;
-      description: string | null;
-      subValues: string | null;
-    } | null;
-    subValues: string | null;
   };
 };
 
@@ -2093,6 +2468,35 @@ export type UpdateComplianceCommandLinkMutation = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   command: {
     __typename: "Command";
@@ -2124,53 +2528,25 @@ export type UpdateComplianceCommandLinkMutation = {
           id: string;
           name: string;
           description: string | null;
-          subValues: string | null;
         };
       } | null> | null;
       nextToken: string | null;
     } | null;
-    editor: {
-      __typename: "Editor";
-      id: string;
-      name: string;
-      description: string | null;
-      status: {
-        __typename: "ModelStatusConnection";
-        items: Array<{
-          __typename: "Status";
-          id: string;
-          name: string;
-          description: string | null;
-          editorId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
-      ranges: {
-        __typename: "ModelEditorrangeConnection";
-        items: Array<{
-          __typename: "Editorrange";
-          id: string;
-          name: string | null;
-          description: string | null;
-          editorId: string | null;
-          nlsId: string | null;
-          subset: string | null;
-          min: number | null;
-          max: number | null;
-          step: number | null;
-          uomId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
+    params: {
+      __typename: "ModelCommandparamConnection";
+      items: Array<{
+        __typename: "Commandparam";
+        id: string;
+        name: string | null;
+        description: string | null;
+        editorId: string | null;
+        nlsId: string | null;
+        commandId: string | null;
+        init: string | null;
+        optional: boolean | null;
+      } | null> | null;
+      nextToken: string | null;
     } | null;
-    nls: {
-      __typename: "Nls";
-      id: string;
-      name: string;
-      description: string | null;
-      subValues: string | null;
-    } | null;
-    subValues: string | null;
   };
 };
 
@@ -2256,6 +2632,35 @@ export type DeleteComplianceCommandLinkMutation = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   command: {
     __typename: "Command";
@@ -2287,53 +2692,25 @@ export type DeleteComplianceCommandLinkMutation = {
           id: string;
           name: string;
           description: string | null;
-          subValues: string | null;
         };
       } | null> | null;
       nextToken: string | null;
     } | null;
-    editor: {
-      __typename: "Editor";
-      id: string;
-      name: string;
-      description: string | null;
-      status: {
-        __typename: "ModelStatusConnection";
-        items: Array<{
-          __typename: "Status";
-          id: string;
-          name: string;
-          description: string | null;
-          editorId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
-      ranges: {
-        __typename: "ModelEditorrangeConnection";
-        items: Array<{
-          __typename: "Editorrange";
-          id: string;
-          name: string | null;
-          description: string | null;
-          editorId: string | null;
-          nlsId: string | null;
-          subset: string | null;
-          min: number | null;
-          max: number | null;
-          step: number | null;
-          uomId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
+    params: {
+      __typename: "ModelCommandparamConnection";
+      items: Array<{
+        __typename: "Commandparam";
+        id: string;
+        name: string | null;
+        description: string | null;
+        editorId: string | null;
+        nlsId: string | null;
+        commandId: string | null;
+        init: string | null;
+        optional: boolean | null;
+      } | null> | null;
+      nextToken: string | null;
     } | null;
-    nls: {
-      __typename: "Nls";
-      id: string;
-      name: string;
-      description: string | null;
-      subValues: string | null;
-    } | null;
-    subValues: string | null;
   };
 };
 
@@ -2375,6 +2752,10 @@ export type CreateCommandMutation = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       command: {
         __typename: "Command";
@@ -2385,83 +2766,29 @@ export type CreateCommandMutation = {
           __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-        subValues: string | null;
       };
     } | null> | null;
     nextToken: string | null;
   } | null;
-  editor: {
-    __typename: "Editor";
-    id: string;
-    name: string;
-    description: string | null;
-    status: {
-      __typename: "ModelStatusConnection";
-      items: Array<{
-        __typename: "Status";
-        id: string;
-        name: string;
-        description: string | null;
-        compliance: {
-          __typename: "ModelComplianceStatusLinkConnection";
-          nextToken: string | null;
-        } | null;
-        editorId: string;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
-    ranges: {
-      __typename: "ModelEditorrangeConnection";
-      items: Array<{
-        __typename: "Editorrange";
-        id: string;
-        name: string | null;
-        description: string | null;
-        editorId: string | null;
-        nlsId: string | null;
-        subset: string | null;
-        min: number | null;
-        max: number | null;
-        step: number | null;
-        uomId: string;
-        uom: {
-          __typename: "Uom";
-          id: string;
-          name: number;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
+  params: {
+    __typename: "ModelCommandparamConnection";
+    items: Array<{
+      __typename: "Commandparam";
+      id: string;
+      name: string | null;
+      description: string | null;
+      editorId: string | null;
+      nlsId: string | null;
+      commandId: string | null;
+      init: string | null;
+      optional: boolean | null;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
-  subValues: string | null;
 };
 
 export type UpdateCommandMutation = {
@@ -2502,6 +2829,10 @@ export type UpdateCommandMutation = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       command: {
         __typename: "Command";
@@ -2512,83 +2843,29 @@ export type UpdateCommandMutation = {
           __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-        subValues: string | null;
       };
     } | null> | null;
     nextToken: string | null;
   } | null;
-  editor: {
-    __typename: "Editor";
-    id: string;
-    name: string;
-    description: string | null;
-    status: {
-      __typename: "ModelStatusConnection";
-      items: Array<{
-        __typename: "Status";
-        id: string;
-        name: string;
-        description: string | null;
-        compliance: {
-          __typename: "ModelComplianceStatusLinkConnection";
-          nextToken: string | null;
-        } | null;
-        editorId: string;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
-    ranges: {
-      __typename: "ModelEditorrangeConnection";
-      items: Array<{
-        __typename: "Editorrange";
-        id: string;
-        name: string | null;
-        description: string | null;
-        editorId: string | null;
-        nlsId: string | null;
-        subset: string | null;
-        min: number | null;
-        max: number | null;
-        step: number | null;
-        uomId: string;
-        uom: {
-          __typename: "Uom";
-          id: string;
-          name: number;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
+  params: {
+    __typename: "ModelCommandparamConnection";
+    items: Array<{
+      __typename: "Commandparam";
+      id: string;
+      name: string | null;
+      description: string | null;
+      editorId: string | null;
+      nlsId: string | null;
+      commandId: string | null;
+      init: string | null;
+      optional: boolean | null;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
-  subValues: string | null;
 };
 
 export type DeleteCommandMutation = {
@@ -2629,6 +2906,10 @@ export type DeleteCommandMutation = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       command: {
         __typename: "Command";
@@ -2639,83 +2920,65 @@ export type DeleteCommandMutation = {
           __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-        subValues: string | null;
       };
     } | null> | null;
     nextToken: string | null;
   } | null;
-  editor: {
-    __typename: "Editor";
-    id: string;
-    name: string;
-    description: string | null;
-    status: {
-      __typename: "ModelStatusConnection";
-      items: Array<{
-        __typename: "Status";
-        id: string;
-        name: string;
-        description: string | null;
-        compliance: {
-          __typename: "ModelComplianceStatusLinkConnection";
-          nextToken: string | null;
-        } | null;
-        editorId: string;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
-    ranges: {
-      __typename: "ModelEditorrangeConnection";
-      items: Array<{
-        __typename: "Editorrange";
-        id: string;
-        name: string | null;
-        description: string | null;
-        editorId: string | null;
-        nlsId: string | null;
-        subset: string | null;
-        min: number | null;
-        max: number | null;
-        step: number | null;
-        uomId: string;
-        uom: {
-          __typename: "Uom";
-          id: string;
-          name: number;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
+  params: {
+    __typename: "ModelCommandparamConnection";
+    items: Array<{
+      __typename: "Commandparam";
+      id: string;
+      name: string | null;
+      description: string | null;
+      editorId: string | null;
+      nlsId: string | null;
+      commandId: string | null;
+      init: string | null;
+      optional: boolean | null;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
-  subValues: string | null;
+};
+
+export type CreateCommandparamMutation = {
+  __typename: "Commandparam";
+  id: string;
+  name: string | null;
+  description: string | null;
+  editorId: string | null;
+  nlsId: string | null;
+  commandId: string | null;
+  init: string | null;
+  optional: boolean | null;
+};
+
+export type UpdateCommandparamMutation = {
+  __typename: "Commandparam";
+  id: string;
+  name: string | null;
+  description: string | null;
+  editorId: string | null;
+  nlsId: string | null;
+  commandId: string | null;
+  init: string | null;
+  optional: boolean | null;
+};
+
+export type DeleteCommandparamMutation = {
+  __typename: "Commandparam";
+  id: string;
+  name: string | null;
+  description: string | null;
+  editorId: string | null;
+  nlsId: string | null;
+  commandId: string | null;
+  init: string | null;
+  optional: boolean | null;
 };
 
 export type CreateEditorMutation = {
@@ -3273,6 +3536,16 @@ export type GetDomainQuery = {
         } | null> | null;
         nextToken: string | null;
       } | null;
+      command: {
+        __typename: "ModelComplianceCommandLinkConnection";
+        items: Array<{
+          __typename: "ComplianceCommandLink";
+          id: string;
+          complianceId: string;
+          commandId: string;
+        } | null> | null;
+        nextToken: string | null;
+      } | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -3311,6 +3584,10 @@ export type ListDomainsQuery = {
         } | null;
         status: {
           __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
       } | null> | null;
@@ -3357,6 +3634,10 @@ export type GetComplianceQuery = {
         } | null;
         status: {
           __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
       } | null> | null;
@@ -3414,6 +3695,10 @@ export type GetComplianceQuery = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       status: {
         __typename: "Status";
@@ -3430,6 +3715,61 @@ export type GetComplianceQuery = {
           id: string;
           name: string;
           description: string | null;
+        } | null;
+      };
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  command: {
+    __typename: "ModelComplianceCommandLinkConnection";
+    items: Array<{
+      __typename: "ComplianceCommandLink";
+      id: string;
+      complianceId: string;
+      commandId: string;
+      compliance: {
+        __typename: "Compliance";
+        id: string;
+        name: string;
+        description: string | null;
+        domainId: string;
+        domain: {
+          __typename: "Domain";
+          id: string;
+          name: string;
+          description: string | null;
+        } | null;
+        hint: string | null;
+        state: State;
+        author: string | null;
+        lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
+        complianceLogs: {
+          __typename: "ModelComplianceLogConnection";
+          nextToken: string | null;
+        } | null;
+        status: {
+          __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+      };
+      command: {
+        __typename: "Command";
+        id: string;
+        name: string;
+        description: string | null;
+        compliance: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
       };
     } | null> | null;
@@ -3516,6 +3856,35 @@ export type ListCompliancesQuery = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   } | null> | null;
   nextToken: string | null;
 };
@@ -3556,6 +3925,10 @@ export type GetStatusQuery = {
         } | null;
         status: {
           __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
       };
@@ -3747,6 +4120,10 @@ export type GetCommandQuery = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       command: {
         __typename: "Command";
@@ -3757,83 +4134,29 @@ export type GetCommandQuery = {
           __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-        subValues: string | null;
       };
     } | null> | null;
     nextToken: string | null;
   } | null;
-  editor: {
-    __typename: "Editor";
-    id: string;
-    name: string;
-    description: string | null;
-    status: {
-      __typename: "ModelStatusConnection";
-      items: Array<{
-        __typename: "Status";
-        id: string;
-        name: string;
-        description: string | null;
-        compliance: {
-          __typename: "ModelComplianceStatusLinkConnection";
-          nextToken: string | null;
-        } | null;
-        editorId: string;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
-    ranges: {
-      __typename: "ModelEditorrangeConnection";
-      items: Array<{
-        __typename: "Editorrange";
-        id: string;
-        name: string | null;
-        description: string | null;
-        editorId: string | null;
-        nlsId: string | null;
-        subset: string | null;
-        min: number | null;
-        max: number | null;
-        step: number | null;
-        uomId: string;
-        uom: {
-          __typename: "Uom";
-          id: string;
-          name: number;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
+  params: {
+    __typename: "ModelCommandparamConnection";
+    items: Array<{
+      __typename: "Commandparam";
+      id: string;
+      name: string | null;
+      description: string | null;
+      editorId: string | null;
+      nlsId: string | null;
+      commandId: string | null;
+      init: string | null;
+      optional: boolean | null;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
-  subValues: string | null;
 };
 
 export type ListCommandsQuery = {
@@ -3868,53 +4191,53 @@ export type ListCommandsQuery = {
           id: string;
           name: string;
           description: string | null;
-          subValues: string | null;
         };
       } | null> | null;
       nextToken: string | null;
     } | null;
-    editor: {
-      __typename: "Editor";
-      id: string;
-      name: string;
-      description: string | null;
-      status: {
-        __typename: "ModelStatusConnection";
-        items: Array<{
-          __typename: "Status";
-          id: string;
-          name: string;
-          description: string | null;
-          editorId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
-      ranges: {
-        __typename: "ModelEditorrangeConnection";
-        items: Array<{
-          __typename: "Editorrange";
-          id: string;
-          name: string | null;
-          description: string | null;
-          editorId: string | null;
-          nlsId: string | null;
-          subset: string | null;
-          min: number | null;
-          max: number | null;
-          step: number | null;
-          uomId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
+    params: {
+      __typename: "ModelCommandparamConnection";
+      items: Array<{
+        __typename: "Commandparam";
+        id: string;
+        name: string | null;
+        description: string | null;
+        editorId: string | null;
+        nlsId: string | null;
+        commandId: string | null;
+        init: string | null;
+        optional: boolean | null;
+      } | null> | null;
+      nextToken: string | null;
     } | null;
-    nls: {
-      __typename: "Nls";
-      id: string;
-      name: string;
-      description: string | null;
-      subValues: string | null;
-    } | null;
-    subValues: string | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetCommandparamQuery = {
+  __typename: "Commandparam";
+  id: string;
+  name: string | null;
+  description: string | null;
+  editorId: string | null;
+  nlsId: string | null;
+  commandId: string | null;
+  init: string | null;
+  optional: boolean | null;
+};
+
+export type ListCommandparamsQuery = {
+  __typename: "ModelCommandparamConnection";
+  items: Array<{
+    __typename: "Commandparam";
+    id: string;
+    name: string | null;
+    description: string | null;
+    editorId: string | null;
+    nlsId: string | null;
+    commandId: string | null;
+    init: string | null;
+    optional: boolean | null;
   } | null> | null;
   nextToken: string | null;
 };
@@ -4297,6 +4620,16 @@ export type OnCreateDomainSubscription = {
         } | null> | null;
         nextToken: string | null;
       } | null;
+      command: {
+        __typename: "ModelComplianceCommandLinkConnection";
+        items: Array<{
+          __typename: "ComplianceCommandLink";
+          id: string;
+          complianceId: string;
+          commandId: string;
+        } | null> | null;
+        nextToken: string | null;
+      } | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -4350,6 +4683,16 @@ export type OnUpdateDomainSubscription = {
           id: string;
           complianceId: string;
           statusId: string;
+        } | null> | null;
+        nextToken: string | null;
+      } | null;
+      command: {
+        __typename: "ModelComplianceCommandLinkConnection";
+        items: Array<{
+          __typename: "ComplianceCommandLink";
+          id: string;
+          complianceId: string;
+          commandId: string;
         } | null> | null;
         nextToken: string | null;
       } | null;
@@ -4409,6 +4752,16 @@ export type OnDeleteDomainSubscription = {
         } | null> | null;
         nextToken: string | null;
       } | null;
+      command: {
+        __typename: "ModelComplianceCommandLinkConnection";
+        items: Array<{
+          __typename: "ComplianceCommandLink";
+          id: string;
+          complianceId: string;
+          commandId: string;
+        } | null> | null;
+        nextToken: string | null;
+      } | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
@@ -4451,6 +4804,10 @@ export type OnCreateComplianceSubscription = {
         } | null;
         status: {
           __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
       } | null> | null;
@@ -4508,6 +4865,10 @@ export type OnCreateComplianceSubscription = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       status: {
         __typename: "Status";
@@ -4524,6 +4885,61 @@ export type OnCreateComplianceSubscription = {
           id: string;
           name: string;
           description: string | null;
+        } | null;
+      };
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  command: {
+    __typename: "ModelComplianceCommandLinkConnection";
+    items: Array<{
+      __typename: "ComplianceCommandLink";
+      id: string;
+      complianceId: string;
+      commandId: string;
+      compliance: {
+        __typename: "Compliance";
+        id: string;
+        name: string;
+        description: string | null;
+        domainId: string;
+        domain: {
+          __typename: "Domain";
+          id: string;
+          name: string;
+          description: string | null;
+        } | null;
+        hint: string | null;
+        state: State;
+        author: string | null;
+        lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
+        complianceLogs: {
+          __typename: "ModelComplianceLogConnection";
+          nextToken: string | null;
+        } | null;
+        status: {
+          __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+      };
+      command: {
+        __typename: "Command";
+        id: string;
+        name: string;
+        description: string | null;
+        compliance: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
       };
     } | null> | null;
@@ -4570,6 +4986,10 @@ export type OnUpdateComplianceSubscription = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -4625,6 +5045,10 @@ export type OnUpdateComplianceSubscription = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       status: {
         __typename: "Status";
@@ -4641,6 +5065,61 @@ export type OnUpdateComplianceSubscription = {
           id: string;
           name: string;
           description: string | null;
+        } | null;
+      };
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  command: {
+    __typename: "ModelComplianceCommandLinkConnection";
+    items: Array<{
+      __typename: "ComplianceCommandLink";
+      id: string;
+      complianceId: string;
+      commandId: string;
+      compliance: {
+        __typename: "Compliance";
+        id: string;
+        name: string;
+        description: string | null;
+        domainId: string;
+        domain: {
+          __typename: "Domain";
+          id: string;
+          name: string;
+          description: string | null;
+        } | null;
+        hint: string | null;
+        state: State;
+        author: string | null;
+        lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
+        complianceLogs: {
+          __typename: "ModelComplianceLogConnection";
+          nextToken: string | null;
+        } | null;
+        status: {
+          __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+      };
+      command: {
+        __typename: "Command";
+        id: string;
+        name: string;
+        description: string | null;
+        compliance: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
       };
     } | null> | null;
@@ -4687,6 +5166,10 @@ export type OnDeleteComplianceSubscription = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       } | null> | null;
       nextToken: string | null;
     } | null;
@@ -4742,6 +5225,10 @@ export type OnDeleteComplianceSubscription = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       status: {
         __typename: "Status";
@@ -4758,6 +5245,61 @@ export type OnDeleteComplianceSubscription = {
           id: string;
           name: string;
           description: string | null;
+        } | null;
+      };
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  command: {
+    __typename: "ModelComplianceCommandLinkConnection";
+    items: Array<{
+      __typename: "ComplianceCommandLink";
+      id: string;
+      complianceId: string;
+      commandId: string;
+      compliance: {
+        __typename: "Compliance";
+        id: string;
+        name: string;
+        description: string | null;
+        domainId: string;
+        domain: {
+          __typename: "Domain";
+          id: string;
+          name: string;
+          description: string | null;
+        } | null;
+        hint: string | null;
+        state: State;
+        author: string | null;
+        lastModifiedBy: string | null;
+        createdAt: string | null;
+        updatedAt: string | null;
+        complianceLogs: {
+          __typename: "ModelComplianceLogConnection";
+          nextToken: string | null;
+        } | null;
+        status: {
+          __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+      };
+      command: {
+        __typename: "Command";
+        id: string;
+        name: string;
+        description: string | null;
+        compliance: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
       };
     } | null> | null;
@@ -4843,6 +5385,35 @@ export type OnCreateComplianceStatusLinkSubscription = {
           name: string;
           description: string | null;
           editorId: string;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
         };
       } | null> | null;
       nextToken: string | null;
@@ -5003,6 +5574,35 @@ export type OnUpdateComplianceStatusLinkSubscription = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   status: {
     __typename: "Status";
@@ -5159,6 +5759,35 @@ export type OnDeleteComplianceStatusLinkSubscription = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   status: {
     __typename: "Status";
@@ -5269,6 +5898,10 @@ export type OnCreateStatusSubscription = {
         } | null;
         status: {
           __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
       };
@@ -5384,6 +6017,10 @@ export type OnUpdateStatusSubscription = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       status: {
         __typename: "Status";
@@ -5495,6 +6132,10 @@ export type OnDeleteStatusSubscription = {
         } | null;
         status: {
           __typename: "ModelComplianceStatusLinkConnection";
+          nextToken: string | null;
+        } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
       };
@@ -5654,6 +6295,35 @@ export type OnCreateComplianceCommandLinkSubscription = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   command: {
     __typename: "Command";
@@ -5685,53 +6355,25 @@ export type OnCreateComplianceCommandLinkSubscription = {
           id: string;
           name: string;
           description: string | null;
-          subValues: string | null;
         };
       } | null> | null;
       nextToken: string | null;
     } | null;
-    editor: {
-      __typename: "Editor";
-      id: string;
-      name: string;
-      description: string | null;
-      status: {
-        __typename: "ModelStatusConnection";
-        items: Array<{
-          __typename: "Status";
-          id: string;
-          name: string;
-          description: string | null;
-          editorId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
-      ranges: {
-        __typename: "ModelEditorrangeConnection";
-        items: Array<{
-          __typename: "Editorrange";
-          id: string;
-          name: string | null;
-          description: string | null;
-          editorId: string | null;
-          nlsId: string | null;
-          subset: string | null;
-          min: number | null;
-          max: number | null;
-          step: number | null;
-          uomId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
+    params: {
+      __typename: "ModelCommandparamConnection";
+      items: Array<{
+        __typename: "Commandparam";
+        id: string;
+        name: string | null;
+        description: string | null;
+        editorId: string | null;
+        nlsId: string | null;
+        commandId: string | null;
+        init: string | null;
+        optional: boolean | null;
+      } | null> | null;
+      nextToken: string | null;
     } | null;
-    nls: {
-      __typename: "Nls";
-      id: string;
-      name: string;
-      description: string | null;
-      subValues: string | null;
-    } | null;
-    subValues: string | null;
   };
 };
 
@@ -5817,6 +6459,35 @@ export type OnUpdateComplianceCommandLinkSubscription = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   command: {
     __typename: "Command";
@@ -5848,53 +6519,25 @@ export type OnUpdateComplianceCommandLinkSubscription = {
           id: string;
           name: string;
           description: string | null;
-          subValues: string | null;
         };
       } | null> | null;
       nextToken: string | null;
     } | null;
-    editor: {
-      __typename: "Editor";
-      id: string;
-      name: string;
-      description: string | null;
-      status: {
-        __typename: "ModelStatusConnection";
-        items: Array<{
-          __typename: "Status";
-          id: string;
-          name: string;
-          description: string | null;
-          editorId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
-      ranges: {
-        __typename: "ModelEditorrangeConnection";
-        items: Array<{
-          __typename: "Editorrange";
-          id: string;
-          name: string | null;
-          description: string | null;
-          editorId: string | null;
-          nlsId: string | null;
-          subset: string | null;
-          min: number | null;
-          max: number | null;
-          step: number | null;
-          uomId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
+    params: {
+      __typename: "ModelCommandparamConnection";
+      items: Array<{
+        __typename: "Commandparam";
+        id: string;
+        name: string | null;
+        description: string | null;
+        editorId: string | null;
+        nlsId: string | null;
+        commandId: string | null;
+        init: string | null;
+        optional: boolean | null;
+      } | null> | null;
+      nextToken: string | null;
     } | null;
-    nls: {
-      __typename: "Nls";
-      id: string;
-      name: string;
-      description: string | null;
-      subValues: string | null;
-    } | null;
-    subValues: string | null;
   };
 };
 
@@ -5980,6 +6623,35 @@ export type OnDeleteComplianceCommandLinkSubscription = {
       } | null> | null;
       nextToken: string | null;
     } | null;
+    command: {
+      __typename: "ModelComplianceCommandLinkConnection";
+      items: Array<{
+        __typename: "ComplianceCommandLink";
+        id: string;
+        complianceId: string;
+        commandId: string;
+        compliance: {
+          __typename: "Compliance";
+          id: string;
+          name: string;
+          description: string | null;
+          domainId: string;
+          hint: string | null;
+          state: State;
+          author: string | null;
+          lastModifiedBy: string | null;
+          createdAt: string | null;
+          updatedAt: string | null;
+        };
+        command: {
+          __typename: "Command";
+          id: string;
+          name: string;
+          description: string | null;
+        };
+      } | null> | null;
+      nextToken: string | null;
+    } | null;
   };
   command: {
     __typename: "Command";
@@ -6011,53 +6683,25 @@ export type OnDeleteComplianceCommandLinkSubscription = {
           id: string;
           name: string;
           description: string | null;
-          subValues: string | null;
         };
       } | null> | null;
       nextToken: string | null;
     } | null;
-    editor: {
-      __typename: "Editor";
-      id: string;
-      name: string;
-      description: string | null;
-      status: {
-        __typename: "ModelStatusConnection";
-        items: Array<{
-          __typename: "Status";
-          id: string;
-          name: string;
-          description: string | null;
-          editorId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
-      ranges: {
-        __typename: "ModelEditorrangeConnection";
-        items: Array<{
-          __typename: "Editorrange";
-          id: string;
-          name: string | null;
-          description: string | null;
-          editorId: string | null;
-          nlsId: string | null;
-          subset: string | null;
-          min: number | null;
-          max: number | null;
-          step: number | null;
-          uomId: string;
-        } | null> | null;
-        nextToken: string | null;
-      } | null;
+    params: {
+      __typename: "ModelCommandparamConnection";
+      items: Array<{
+        __typename: "Commandparam";
+        id: string;
+        name: string | null;
+        description: string | null;
+        editorId: string | null;
+        nlsId: string | null;
+        commandId: string | null;
+        init: string | null;
+        optional: boolean | null;
+      } | null> | null;
+      nextToken: string | null;
     } | null;
-    nls: {
-      __typename: "Nls";
-      id: string;
-      name: string;
-      description: string | null;
-      subValues: string | null;
-    } | null;
-    subValues: string | null;
   };
 };
 
@@ -6099,6 +6743,10 @@ export type OnCreateCommandSubscription = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       command: {
         __typename: "Command";
@@ -6109,83 +6757,29 @@ export type OnCreateCommandSubscription = {
           __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-        subValues: string | null;
       };
     } | null> | null;
     nextToken: string | null;
   } | null;
-  editor: {
-    __typename: "Editor";
-    id: string;
-    name: string;
-    description: string | null;
-    status: {
-      __typename: "ModelStatusConnection";
-      items: Array<{
-        __typename: "Status";
-        id: string;
-        name: string;
-        description: string | null;
-        compliance: {
-          __typename: "ModelComplianceStatusLinkConnection";
-          nextToken: string | null;
-        } | null;
-        editorId: string;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
-    ranges: {
-      __typename: "ModelEditorrangeConnection";
-      items: Array<{
-        __typename: "Editorrange";
-        id: string;
-        name: string | null;
-        description: string | null;
-        editorId: string | null;
-        nlsId: string | null;
-        subset: string | null;
-        min: number | null;
-        max: number | null;
-        step: number | null;
-        uomId: string;
-        uom: {
-          __typename: "Uom";
-          id: string;
-          name: number;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
+  params: {
+    __typename: "ModelCommandparamConnection";
+    items: Array<{
+      __typename: "Commandparam";
+      id: string;
+      name: string | null;
+      description: string | null;
+      editorId: string | null;
+      nlsId: string | null;
+      commandId: string | null;
+      init: string | null;
+      optional: boolean | null;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
-  subValues: string | null;
 };
 
 export type OnUpdateCommandSubscription = {
@@ -6226,6 +6820,10 @@ export type OnUpdateCommandSubscription = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       command: {
         __typename: "Command";
@@ -6236,83 +6834,29 @@ export type OnUpdateCommandSubscription = {
           __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-        subValues: string | null;
       };
     } | null> | null;
     nextToken: string | null;
   } | null;
-  editor: {
-    __typename: "Editor";
-    id: string;
-    name: string;
-    description: string | null;
-    status: {
-      __typename: "ModelStatusConnection";
-      items: Array<{
-        __typename: "Status";
-        id: string;
-        name: string;
-        description: string | null;
-        compliance: {
-          __typename: "ModelComplianceStatusLinkConnection";
-          nextToken: string | null;
-        } | null;
-        editorId: string;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
-    ranges: {
-      __typename: "ModelEditorrangeConnection";
-      items: Array<{
-        __typename: "Editorrange";
-        id: string;
-        name: string | null;
-        description: string | null;
-        editorId: string | null;
-        nlsId: string | null;
-        subset: string | null;
-        min: number | null;
-        max: number | null;
-        step: number | null;
-        uomId: string;
-        uom: {
-          __typename: "Uom";
-          id: string;
-          name: number;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
+  params: {
+    __typename: "ModelCommandparamConnection";
+    items: Array<{
+      __typename: "Commandparam";
+      id: string;
+      name: string | null;
+      description: string | null;
+      editorId: string | null;
+      nlsId: string | null;
+      commandId: string | null;
+      init: string | null;
+      optional: boolean | null;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
-  subValues: string | null;
 };
 
 export type OnDeleteCommandSubscription = {
@@ -6353,6 +6897,10 @@ export type OnDeleteCommandSubscription = {
           __typename: "ModelComplianceStatusLinkConnection";
           nextToken: string | null;
         } | null;
+        command: {
+          __typename: "ModelComplianceCommandLinkConnection";
+          nextToken: string | null;
+        } | null;
       };
       command: {
         __typename: "Command";
@@ -6363,83 +6911,65 @@ export type OnDeleteCommandSubscription = {
           __typename: "ModelComplianceCommandLinkConnection";
           nextToken: string | null;
         } | null;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
+        params: {
+          __typename: "ModelCommandparamConnection";
+          nextToken: string | null;
         } | null;
-        nls: {
-          __typename: "Nls";
-          id: string;
-          name: string;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-        subValues: string | null;
       };
     } | null> | null;
     nextToken: string | null;
   } | null;
-  editor: {
-    __typename: "Editor";
-    id: string;
-    name: string;
-    description: string | null;
-    status: {
-      __typename: "ModelStatusConnection";
-      items: Array<{
-        __typename: "Status";
-        id: string;
-        name: string;
-        description: string | null;
-        compliance: {
-          __typename: "ModelComplianceStatusLinkConnection";
-          nextToken: string | null;
-        } | null;
-        editorId: string;
-        editor: {
-          __typename: "Editor";
-          id: string;
-          name: string;
-          description: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
-    ranges: {
-      __typename: "ModelEditorrangeConnection";
-      items: Array<{
-        __typename: "Editorrange";
-        id: string;
-        name: string | null;
-        description: string | null;
-        editorId: string | null;
-        nlsId: string | null;
-        subset: string | null;
-        min: number | null;
-        max: number | null;
-        step: number | null;
-        uomId: string;
-        uom: {
-          __typename: "Uom";
-          id: string;
-          name: number;
-          description: string | null;
-          subValues: string | null;
-        } | null;
-      } | null> | null;
-      nextToken: string | null;
-    } | null;
+  params: {
+    __typename: "ModelCommandparamConnection";
+    items: Array<{
+      __typename: "Commandparam";
+      id: string;
+      name: string | null;
+      description: string | null;
+      editorId: string | null;
+      nlsId: string | null;
+      commandId: string | null;
+      init: string | null;
+      optional: boolean | null;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
-  nls: {
-    __typename: "Nls";
-    id: string;
-    name: string;
-    description: string | null;
-    subValues: string | null;
-  } | null;
-  subValues: string | null;
+};
+
+export type OnCreateCommandparamSubscription = {
+  __typename: "Commandparam";
+  id: string;
+  name: string | null;
+  description: string | null;
+  editorId: string | null;
+  nlsId: string | null;
+  commandId: string | null;
+  init: string | null;
+  optional: boolean | null;
+};
+
+export type OnUpdateCommandparamSubscription = {
+  __typename: "Commandparam";
+  id: string;
+  name: string | null;
+  description: string | null;
+  editorId: string | null;
+  nlsId: string | null;
+  commandId: string | null;
+  init: string | null;
+  optional: boolean | null;
+};
+
+export type OnDeleteCommandparamSubscription = {
+  __typename: "Commandparam";
+  id: string;
+  name: string | null;
+  description: string | null;
+  editorId: string | null;
+  nlsId: string | null;
+  commandId: string | null;
+  init: string | null;
+  optional: boolean | null;
 };
 
 export type OnCreateEditorSubscription = {
@@ -7006,6 +7536,16 @@ export class APIService {
                 }
                 nextToken
               }
+              command {
+                __typename
+                items {
+                  __typename
+                  id
+                  complianceId
+                  commandId
+                }
+                nextToken
+              }
             }
             nextToken
           }
@@ -7075,6 +7615,16 @@ export class APIService {
                   id
                   complianceId
                   statusId
+                }
+                nextToken
+              }
+              command {
+                __typename
+                items {
+                  __typename
+                  id
+                  complianceId
+                  commandId
                 }
                 nextToken
               }
@@ -7150,6 +7700,16 @@ export class APIService {
                 }
                 nextToken
               }
+              command {
+                __typename
+                items {
+                  __typename
+                  id
+                  complianceId
+                  commandId
+                }
+                nextToken
+              }
             }
             nextToken
           }
@@ -7210,6 +7770,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               nextToken
             }
@@ -7265,6 +7829,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               status {
                 __typename
@@ -7281,6 +7849,61 @@ export class APIService {
                   id
                   name
                   description
+                }
+              }
+            }
+            nextToken
+          }
+          command {
+            __typename
+            items {
+              __typename
+              id
+              complianceId
+              commandId
+              compliance {
+                __typename
+                id
+                name
+                description
+                domainId
+                domain {
+                  __typename
+                  id
+                  name
+                  description
+                }
+                hint
+                state
+                author
+                lastModifiedBy
+                createdAt
+                updatedAt
+                complianceLogs {
+                  __typename
+                  nextToken
+                }
+                status {
+                  __typename
+                  nextToken
+                }
+                command {
+                  __typename
+                  nextToken
+                }
+              }
+              command {
+                __typename
+                id
+                name
+                description
+                compliance {
+                  __typename
+                  nextToken
+                }
+                params {
+                  __typename
+                  nextToken
                 }
               }
             }
@@ -7343,6 +7966,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               nextToken
             }
@@ -7398,6 +8025,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               status {
                 __typename
@@ -7414,6 +8045,61 @@ export class APIService {
                   id
                   name
                   description
+                }
+              }
+            }
+            nextToken
+          }
+          command {
+            __typename
+            items {
+              __typename
+              id
+              complianceId
+              commandId
+              compliance {
+                __typename
+                id
+                name
+                description
+                domainId
+                domain {
+                  __typename
+                  id
+                  name
+                  description
+                }
+                hint
+                state
+                author
+                lastModifiedBy
+                createdAt
+                updatedAt
+                complianceLogs {
+                  __typename
+                  nextToken
+                }
+                status {
+                  __typename
+                  nextToken
+                }
+                command {
+                  __typename
+                  nextToken
+                }
+              }
+              command {
+                __typename
+                id
+                name
+                description
+                compliance {
+                  __typename
+                  nextToken
+                }
+                params {
+                  __typename
+                  nextToken
                 }
               }
             }
@@ -7476,6 +8162,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               nextToken
             }
@@ -7531,6 +8221,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               status {
                 __typename
@@ -7547,6 +8241,61 @@ export class APIService {
                   id
                   name
                   description
+                }
+              }
+            }
+            nextToken
+          }
+          command {
+            __typename
+            items {
+              __typename
+              id
+              complianceId
+              commandId
+              compliance {
+                __typename
+                id
+                name
+                description
+                domainId
+                domain {
+                  __typename
+                  id
+                  name
+                  description
+                }
+                hint
+                state
+                author
+                lastModifiedBy
+                createdAt
+                updatedAt
+                complianceLogs {
+                  __typename
+                  nextToken
+                }
+                status {
+                  __typename
+                  nextToken
+                }
+                command {
+                  __typename
+                  nextToken
+                }
+              }
+              command {
+                __typename
+                id
+                name
+                description
+                compliance {
+                  __typename
+                  nextToken
+                }
+                params {
+                  __typename
+                  nextToken
                 }
               }
             }
@@ -7648,6 +8397,35 @@ export class APIService {
                   name
                   description
                   editorId
+                }
+              }
+              nextToken
+            }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
                 }
               }
               nextToken
@@ -7826,6 +8604,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           status {
             __typename
@@ -8000,6 +8807,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           status {
             __typename
@@ -8127,6 +8963,10 @@ export class APIService {
                   nextToken
                 }
                 status {
+                  __typename
+                  nextToken
+                }
+                command {
                   __typename
                   nextToken
                 }
@@ -8259,6 +9099,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               status {
                 __typename
@@ -8385,6 +9229,10 @@ export class APIService {
                   nextToken
                 }
                 status {
+                  __typename
+                  nextToken
+                }
+                command {
                   __typename
                   nextToken
                 }
@@ -8561,6 +9409,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           command {
             __typename
@@ -8592,53 +9469,25 @@ export class APIService {
                   id
                   name
                   description
-                  subValues
                 }
               }
               nextToken
             }
-            editor {
+            params {
               __typename
-              id
-              name
-              description
-              status {
+              items {
                 __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                }
-                nextToken
+                id
+                name
+                description
+                editorId
+                nlsId
+                commandId
+                init
+                optional
               }
-              ranges {
-                __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                  nlsId
-                  subset
-                  min
-                  max
-                  step
-                  uomId
-                }
-                nextToken
-              }
+              nextToken
             }
-            nls {
-              __typename
-              id
-              name
-              description
-              subValues
-            }
-            subValues
           }
         }
       }`;
@@ -8742,6 +9591,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           command {
             __typename
@@ -8773,53 +9651,25 @@ export class APIService {
                   id
                   name
                   description
-                  subValues
                 }
               }
               nextToken
             }
-            editor {
+            params {
               __typename
-              id
-              name
-              description
-              status {
+              items {
                 __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                }
-                nextToken
+                id
+                name
+                description
+                editorId
+                nlsId
+                commandId
+                init
+                optional
               }
-              ranges {
-                __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                  nlsId
-                  subset
-                  min
-                  max
-                  step
-                  uomId
-                }
-                nextToken
-              }
+              nextToken
             }
-            nls {
-              __typename
-              id
-              name
-              description
-              subValues
-            }
-            subValues
           }
         }
       }`;
@@ -8923,6 +9773,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           command {
             __typename
@@ -8954,53 +9833,25 @@ export class APIService {
                   id
                   name
                   description
-                  subValues
                 }
               }
               nextToken
             }
-            editor {
+            params {
               __typename
-              id
-              name
-              description
-              status {
+              items {
                 __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                }
-                nextToken
+                id
+                name
+                description
+                editorId
+                nlsId
+                commandId
+                init
+                optional
               }
-              ranges {
-                __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                  nlsId
-                  subset
-                  min
-                  max
-                  step
-                  uomId
-                }
-                nextToken
-              }
+              nextToken
             }
-            nls {
-              __typename
-              id
-              name
-              description
-              subValues
-            }
-            subValues
           }
         }
       }`;
@@ -9060,6 +9911,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               command {
                 __typename
@@ -9070,83 +9925,29 @@ export class APIService {
                   __typename
                   nextToken
                 }
-                editor {
+                params {
                   __typename
-                  id
-                  name
-                  description
+                  nextToken
                 }
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-                subValues
               }
             }
             nextToken
           }
-          editor {
+          params {
             __typename
-            id
-            name
-            description
-            status {
+            items {
               __typename
-              items {
-                __typename
-                id
-                name
-                description
-                compliance {
-                  __typename
-                  nextToken
-                }
-                editorId
-                editor {
-                  __typename
-                  id
-                  name
-                  description
-                }
-              }
-              nextToken
+              id
+              name
+              description
+              editorId
+              nlsId
+              commandId
+              init
+              optional
             }
-            ranges {
-              __typename
-              items {
-                __typename
-                id
-                name
-                description
-                editorId
-                nlsId
-                subset
-                min
-                max
-                step
-                uomId
-                uom {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-              }
-              nextToken
-            }
+            nextToken
           }
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -9203,6 +10004,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               command {
                 __typename
@@ -9213,83 +10018,29 @@ export class APIService {
                   __typename
                   nextToken
                 }
-                editor {
+                params {
                   __typename
-                  id
-                  name
-                  description
+                  nextToken
                 }
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-                subValues
               }
             }
             nextToken
           }
-          editor {
+          params {
             __typename
-            id
-            name
-            description
-            status {
+            items {
               __typename
-              items {
-                __typename
-                id
-                name
-                description
-                compliance {
-                  __typename
-                  nextToken
-                }
-                editorId
-                editor {
-                  __typename
-                  id
-                  name
-                  description
-                }
-              }
-              nextToken
+              id
+              name
+              description
+              editorId
+              nlsId
+              commandId
+              init
+              optional
             }
-            ranges {
-              __typename
-              items {
-                __typename
-                id
-                name
-                description
-                editorId
-                nlsId
-                subset
-                min
-                max
-                step
-                uomId
-                uom {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-              }
-              nextToken
-            }
+            nextToken
           }
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -9346,6 +10097,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               command {
                 __typename
@@ -9356,83 +10111,29 @@ export class APIService {
                   __typename
                   nextToken
                 }
-                editor {
+                params {
                   __typename
-                  id
-                  name
-                  description
+                  nextToken
                 }
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-                subValues
               }
             }
             nextToken
           }
-          editor {
+          params {
             __typename
-            id
-            name
-            description
-            status {
+            items {
               __typename
-              items {
-                __typename
-                id
-                name
-                description
-                compliance {
-                  __typename
-                  nextToken
-                }
-                editorId
-                editor {
-                  __typename
-                  id
-                  name
-                  description
-                }
-              }
-              nextToken
+              id
+              name
+              description
+              editorId
+              nlsId
+              commandId
+              init
+              optional
             }
-            ranges {
-              __typename
-              items {
-                __typename
-                id
-                name
-                description
-                editorId
-                nlsId
-                subset
-                min
-                max
-                step
-                uomId
-                uom {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-              }
-              nextToken
-            }
+            nextToken
           }
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -9445,6 +10146,90 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteCommandMutation>response.data.deleteCommand;
+  }
+  async CreateCommandparam(
+    input: CreateCommandparamInput,
+    condition?: ModelCommandparamConditionInput
+  ): Promise<CreateCommandparamMutation> {
+    const statement = `mutation CreateCommandparam($input: CreateCommandparamInput!, $condition: ModelCommandparamConditionInput) {
+        createCommandparam(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateCommandparamMutation>response.data.createCommandparam;
+  }
+  async UpdateCommandparam(
+    input: UpdateCommandparamInput,
+    condition?: ModelCommandparamConditionInput
+  ): Promise<UpdateCommandparamMutation> {
+    const statement = `mutation UpdateCommandparam($input: UpdateCommandparamInput!, $condition: ModelCommandparamConditionInput) {
+        updateCommandparam(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateCommandparamMutation>response.data.updateCommandparam;
+  }
+  async DeleteCommandparam(
+    input: DeleteCommandparamInput,
+    condition?: ModelCommandparamConditionInput
+  ): Promise<DeleteCommandparamMutation> {
+    const statement = `mutation DeleteCommandparam($input: DeleteCommandparamInput!, $condition: ModelCommandparamConditionInput) {
+        deleteCommandparam(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteCommandparamMutation>response.data.deleteCommandparam;
   }
   async CreateEditor(
     input: CreateEditorInput,
@@ -10243,6 +11028,16 @@ export class APIService {
                 }
                 nextToken
               }
+              command {
+                __typename
+                items {
+                  __typename
+                  id
+                  complianceId
+                  commandId
+                }
+                nextToken
+              }
             }
             nextToken
           }
@@ -10294,6 +11089,10 @@ export class APIService {
                   nextToken
                 }
                 status {
+                  __typename
+                  nextToken
+                }
+                command {
                   __typename
                   nextToken
                 }
@@ -10360,6 +11159,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               nextToken
             }
@@ -10415,6 +11218,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               status {
                 __typename
@@ -10431,6 +11238,61 @@ export class APIService {
                   id
                   name
                   description
+                }
+              }
+            }
+            nextToken
+          }
+          command {
+            __typename
+            items {
+              __typename
+              id
+              complianceId
+              commandId
+              compliance {
+                __typename
+                id
+                name
+                description
+                domainId
+                domain {
+                  __typename
+                  id
+                  name
+                  description
+                }
+                hint
+                state
+                author
+                lastModifiedBy
+                createdAt
+                updatedAt
+                complianceLogs {
+                  __typename
+                  nextToken
+                }
+                status {
+                  __typename
+                  nextToken
+                }
+                command {
+                  __typename
+                  nextToken
+                }
+              }
+              command {
+                __typename
+                id
+                name
+                description
+                compliance {
+                  __typename
+                  nextToken
+                }
+                params {
+                  __typename
+                  nextToken
                 }
               }
             }
@@ -10531,6 +11393,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           nextToken
         }
@@ -10587,6 +11478,10 @@ export class APIService {
                   nextToken
                 }
                 status {
+                  __typename
+                  nextToken
+                }
+                command {
                   __typename
                   nextToken
                 }
@@ -10810,6 +11705,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               command {
                 __typename
@@ -10820,83 +11719,29 @@ export class APIService {
                   __typename
                   nextToken
                 }
-                editor {
+                params {
                   __typename
-                  id
-                  name
-                  description
+                  nextToken
                 }
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-                subValues
               }
             }
             nextToken
           }
-          editor {
+          params {
             __typename
-            id
-            name
-            description
-            status {
+            items {
               __typename
-              items {
-                __typename
-                id
-                name
-                description
-                compliance {
-                  __typename
-                  nextToken
-                }
-                editorId
-                editor {
-                  __typename
-                  id
-                  name
-                  description
-                }
-              }
-              nextToken
+              id
+              name
+              description
+              editorId
+              nlsId
+              commandId
+              init
+              optional
             }
-            ranges {
-              __typename
-              items {
-                __typename
-                id
-                name
-                description
-                editorId
-                nlsId
-                subset
-                min
-                max
-                step
-                uomId
-                uom {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-              }
-              nextToken
-            }
+            nextToken
           }
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -10945,53 +11790,25 @@ export class APIService {
                   id
                   name
                   description
-                  subValues
                 }
               }
               nextToken
             }
-            editor {
+            params {
               __typename
-              id
-              name
-              description
-              status {
+              items {
                 __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                }
-                nextToken
+                id
+                name
+                description
+                editorId
+                nlsId
+                commandId
+                init
+                optional
               }
-              ranges {
-                __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                  nlsId
-                  subset
-                  min
-                  max
-                  step
-                  uomId
-                }
-                nextToken
-              }
+              nextToken
             }
-            nls {
-              __typename
-              id
-              name
-              description
-              subValues
-            }
-            subValues
           }
           nextToken
         }
@@ -11010,6 +11827,65 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListCommandsQuery>response.data.listCommands;
+  }
+  async GetCommandparam(id: string): Promise<GetCommandparamQuery> {
+    const statement = `query GetCommandparam($id: ID!) {
+        getCommandparam(id: $id) {
+          __typename
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetCommandparamQuery>response.data.getCommandparam;
+  }
+  async ListCommandparams(
+    filter?: ModelCommandparamFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListCommandparamsQuery> {
+    const statement = `query ListCommandparams($filter: ModelCommandparamFilterInput, $limit: Int, $nextToken: String) {
+        listCommandparams(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            name
+            description
+            editorId
+            nlsId
+            commandId
+            init
+            optional
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListCommandparamsQuery>response.data.listCommandparams;
   }
   async GetEditor(id: string): Promise<GetEditorQuery> {
     const statement = `query GetEditor($id: ID!) {
@@ -11547,6 +12423,16 @@ export class APIService {
                 }
                 nextToken
               }
+              command {
+                __typename
+                items {
+                  __typename
+                  id
+                  complianceId
+                  commandId
+                }
+                nextToken
+              }
             }
             nextToken
           }
@@ -11606,6 +12492,16 @@ export class APIService {
                   id
                   complianceId
                   statusId
+                }
+                nextToken
+              }
+              command {
+                __typename
+                items {
+                  __typename
+                  id
+                  complianceId
+                  commandId
                 }
                 nextToken
               }
@@ -11671,6 +12567,16 @@ export class APIService {
                 }
                 nextToken
               }
+              command {
+                __typename
+                items {
+                  __typename
+                  id
+                  complianceId
+                  commandId
+                }
+                nextToken
+              }
             }
             nextToken
           }
@@ -11720,6 +12626,10 @@ export class APIService {
                   nextToken
                 }
                 status {
+                  __typename
+                  nextToken
+                }
+                command {
                   __typename
                   nextToken
                 }
@@ -11778,6 +12688,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               status {
                 __typename
@@ -11794,6 +12708,61 @@ export class APIService {
                   id
                   name
                   description
+                }
+              }
+            }
+            nextToken
+          }
+          command {
+            __typename
+            items {
+              __typename
+              id
+              complianceId
+              commandId
+              compliance {
+                __typename
+                id
+                name
+                description
+                domainId
+                domain {
+                  __typename
+                  id
+                  name
+                  description
+                }
+                hint
+                state
+                author
+                lastModifiedBy
+                createdAt
+                updatedAt
+                complianceLogs {
+                  __typename
+                  nextToken
+                }
+                status {
+                  __typename
+                  nextToken
+                }
+                command {
+                  __typename
+                  nextToken
+                }
+              }
+              command {
+                __typename
+                id
+                name
+                description
+                compliance {
+                  __typename
+                  nextToken
+                }
+                params {
+                  __typename
+                  nextToken
                 }
               }
             }
@@ -11848,6 +12817,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               nextToken
             }
@@ -11903,6 +12876,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               status {
                 __typename
@@ -11919,6 +12896,61 @@ export class APIService {
                   id
                   name
                   description
+                }
+              }
+            }
+            nextToken
+          }
+          command {
+            __typename
+            items {
+              __typename
+              id
+              complianceId
+              commandId
+              compliance {
+                __typename
+                id
+                name
+                description
+                domainId
+                domain {
+                  __typename
+                  id
+                  name
+                  description
+                }
+                hint
+                state
+                author
+                lastModifiedBy
+                createdAt
+                updatedAt
+                complianceLogs {
+                  __typename
+                  nextToken
+                }
+                status {
+                  __typename
+                  nextToken
+                }
+                command {
+                  __typename
+                  nextToken
+                }
+              }
+              command {
+                __typename
+                id
+                name
+                description
+                compliance {
+                  __typename
+                  nextToken
+                }
+                params {
+                  __typename
+                  nextToken
                 }
               }
             }
@@ -11973,6 +13005,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               nextToken
             }
@@ -12028,6 +13064,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               status {
                 __typename
@@ -12044,6 +13084,61 @@ export class APIService {
                   id
                   name
                   description
+                }
+              }
+            }
+            nextToken
+          }
+          command {
+            __typename
+            items {
+              __typename
+              id
+              complianceId
+              commandId
+              compliance {
+                __typename
+                id
+                name
+                description
+                domainId
+                domain {
+                  __typename
+                  id
+                  name
+                  description
+                }
+                hint
+                state
+                author
+                lastModifiedBy
+                createdAt
+                updatedAt
+                complianceLogs {
+                  __typename
+                  nextToken
+                }
+                status {
+                  __typename
+                  nextToken
+                }
+                command {
+                  __typename
+                  nextToken
+                }
+              }
+              command {
+                __typename
+                id
+                name
+                description
+                compliance {
+                  __typename
+                  nextToken
+                }
+                params {
+                  __typename
+                  nextToken
                 }
               }
             }
@@ -12137,6 +13232,35 @@ export class APIService {
                   name
                   description
                   editorId
+                }
+              }
+              nextToken
+            }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
                 }
               }
               nextToken
@@ -12305,6 +13429,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           status {
             __typename
@@ -12469,6 +13622,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           status {
             __typename
@@ -12584,6 +13766,10 @@ export class APIService {
                   nextToken
                 }
                 status {
+                  __typename
+                  nextToken
+                }
+                command {
                   __typename
                   nextToken
                 }
@@ -12706,6 +13892,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               status {
                 __typename
@@ -12822,6 +14012,10 @@ export class APIService {
                   nextToken
                 }
                 status {
+                  __typename
+                  nextToken
+                }
+                command {
                   __typename
                   nextToken
                 }
@@ -12990,6 +14184,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           command {
             __typename
@@ -13021,53 +14244,25 @@ export class APIService {
                   id
                   name
                   description
-                  subValues
                 }
               }
               nextToken
             }
-            editor {
+            params {
               __typename
-              id
-              name
-              description
-              status {
+              items {
                 __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                }
-                nextToken
+                id
+                name
+                description
+                editorId
+                nlsId
+                commandId
+                init
+                optional
               }
-              ranges {
-                __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                  nlsId
-                  subset
-                  min
-                  max
-                  step
-                  uomId
-                }
-                nextToken
-              }
+              nextToken
             }
-            nls {
-              __typename
-              id
-              name
-              description
-              subValues
-            }
-            subValues
           }
         }
       }`
@@ -13161,6 +14356,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           command {
             __typename
@@ -13192,53 +14416,25 @@ export class APIService {
                   id
                   name
                   description
-                  subValues
                 }
               }
               nextToken
             }
-            editor {
+            params {
               __typename
-              id
-              name
-              description
-              status {
+              items {
                 __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                }
-                nextToken
+                id
+                name
+                description
+                editorId
+                nlsId
+                commandId
+                init
+                optional
               }
-              ranges {
-                __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                  nlsId
-                  subset
-                  min
-                  max
-                  step
-                  uomId
-                }
-                nextToken
-              }
+              nextToken
             }
-            nls {
-              __typename
-              id
-              name
-              description
-              subValues
-            }
-            subValues
           }
         }
       }`
@@ -13332,6 +14528,35 @@ export class APIService {
               }
               nextToken
             }
+            command {
+              __typename
+              items {
+                __typename
+                id
+                complianceId
+                commandId
+                compliance {
+                  __typename
+                  id
+                  name
+                  description
+                  domainId
+                  hint
+                  state
+                  author
+                  lastModifiedBy
+                  createdAt
+                  updatedAt
+                }
+                command {
+                  __typename
+                  id
+                  name
+                  description
+                }
+              }
+              nextToken
+            }
           }
           command {
             __typename
@@ -13363,53 +14588,25 @@ export class APIService {
                   id
                   name
                   description
-                  subValues
                 }
               }
               nextToken
             }
-            editor {
+            params {
               __typename
-              id
-              name
-              description
-              status {
+              items {
                 __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                }
-                nextToken
+                id
+                name
+                description
+                editorId
+                nlsId
+                commandId
+                init
+                optional
               }
-              ranges {
-                __typename
-                items {
-                  __typename
-                  id
-                  name
-                  description
-                  editorId
-                  nlsId
-                  subset
-                  min
-                  max
-                  step
-                  uomId
-                }
-                nextToken
-              }
+              nextToken
             }
-            nls {
-              __typename
-              id
-              name
-              description
-              subValues
-            }
-            subValues
           }
         }
       }`
@@ -13459,6 +14656,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               command {
                 __typename
@@ -13469,83 +14670,29 @@ export class APIService {
                   __typename
                   nextToken
                 }
-                editor {
+                params {
                   __typename
-                  id
-                  name
-                  description
+                  nextToken
                 }
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-                subValues
               }
             }
             nextToken
           }
-          editor {
+          params {
             __typename
-            id
-            name
-            description
-            status {
+            items {
               __typename
-              items {
-                __typename
-                id
-                name
-                description
-                compliance {
-                  __typename
-                  nextToken
-                }
-                editorId
-                editor {
-                  __typename
-                  id
-                  name
-                  description
-                }
-              }
-              nextToken
+              id
+              name
+              description
+              editorId
+              nlsId
+              commandId
+              init
+              optional
             }
-            ranges {
-              __typename
-              items {
-                __typename
-                id
-                name
-                description
-                editorId
-                nlsId
-                subset
-                min
-                max
-                step
-                uomId
-                uom {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-              }
-              nextToken
-            }
+            nextToken
           }
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }`
     )
@@ -13594,6 +14741,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               command {
                 __typename
@@ -13604,83 +14755,29 @@ export class APIService {
                   __typename
                   nextToken
                 }
-                editor {
+                params {
                   __typename
-                  id
-                  name
-                  description
+                  nextToken
                 }
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-                subValues
               }
             }
             nextToken
           }
-          editor {
+          params {
             __typename
-            id
-            name
-            description
-            status {
+            items {
               __typename
-              items {
-                __typename
-                id
-                name
-                description
-                compliance {
-                  __typename
-                  nextToken
-                }
-                editorId
-                editor {
-                  __typename
-                  id
-                  name
-                  description
-                }
-              }
-              nextToken
+              id
+              name
+              description
+              editorId
+              nlsId
+              commandId
+              init
+              optional
             }
-            ranges {
-              __typename
-              items {
-                __typename
-                id
-                name
-                description
-                editorId
-                nlsId
-                subset
-                min
-                max
-                step
-                uomId
-                uom {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-              }
-              nextToken
-            }
+            nextToken
           }
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }`
     )
@@ -13729,6 +14826,10 @@ export class APIService {
                   __typename
                   nextToken
                 }
+                command {
+                  __typename
+                  nextToken
+                }
               }
               command {
                 __typename
@@ -13739,87 +14840,93 @@ export class APIService {
                   __typename
                   nextToken
                 }
-                editor {
+                params {
                   __typename
-                  id
-                  name
-                  description
+                  nextToken
                 }
-                nls {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-                subValues
               }
             }
             nextToken
           }
-          editor {
+          params {
             __typename
-            id
-            name
-            description
-            status {
+            items {
               __typename
-              items {
-                __typename
-                id
-                name
-                description
-                compliance {
-                  __typename
-                  nextToken
-                }
-                editorId
-                editor {
-                  __typename
-                  id
-                  name
-                  description
-                }
-              }
-              nextToken
+              id
+              name
+              description
+              editorId
+              nlsId
+              commandId
+              init
+              optional
             }
-            ranges {
-              __typename
-              items {
-                __typename
-                id
-                name
-                description
-                editorId
-                nlsId
-                subset
-                min
-                max
-                step
-                uomId
-                uom {
-                  __typename
-                  id
-                  name
-                  description
-                  subValues
-                }
-              }
-              nextToken
-            }
+            nextToken
           }
-          nls {
-            __typename
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }`
     )
   ) as Observable<OnDeleteCommandSubscription>;
+
+  OnCreateCommandparamListener: Observable<
+    OnCreateCommandparamSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateCommandparam {
+        onCreateCommandparam {
+          __typename
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
+        }
+      }`
+    )
+  ) as Observable<OnCreateCommandparamSubscription>;
+
+  OnUpdateCommandparamListener: Observable<
+    OnUpdateCommandparamSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateCommandparam {
+        onUpdateCommandparam {
+          __typename
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
+        }
+      }`
+    )
+  ) as Observable<OnUpdateCommandparamSubscription>;
+
+  OnDeleteCommandparamListener: Observable<
+    OnDeleteCommandparamSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteCommandparam {
+        onDeleteCommandparam {
+          __typename
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
+        }
+      }`
+    )
+  ) as Observable<OnDeleteCommandparamSubscription>;
 
   OnCreateEditorListener: Observable<OnCreateEditorSubscription> = API.graphql(
     graphqlOperation(

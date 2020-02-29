@@ -42,6 +42,14 @@ subscription OnCreateDomain {
           }
           nextToken
         }
+        command {
+          items {
+            id
+            complianceId
+            commandId
+          }
+          nextToken
+        }
       }
       nextToken
     }
@@ -87,6 +95,14 @@ subscription OnUpdateDomain {
             id
             complianceId
             statusId
+          }
+          nextToken
+        }
+        command {
+          items {
+            id
+            complianceId
+            commandId
           }
           nextToken
         }
@@ -138,6 +154,14 @@ subscription OnDeleteDomain {
           }
           nextToken
         }
+        command {
+          items {
+            id
+            complianceId
+            commandId
+          }
+          nextToken
+        }
       }
       nextToken
     }
@@ -174,6 +198,9 @@ subscription OnCreateCompliance {
             nextToken
           }
           status {
+            nextToken
+          }
+          command {
             nextToken
           }
         }
@@ -223,6 +250,9 @@ subscription OnCreateCompliance {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         status {
           id
@@ -236,6 +266,51 @@ subscription OnCreateCompliance {
             id
             name
             description
+          }
+        }
+      }
+      nextToken
+    }
+    command {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          createdAt
+          updatedAt
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+          command {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          params {
+            nextToken
           }
         }
       }
@@ -276,6 +351,9 @@ subscription OnUpdateCompliance {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         nextToken
       }
@@ -323,6 +401,9 @@ subscription OnUpdateCompliance {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         status {
           id
@@ -336,6 +417,51 @@ subscription OnUpdateCompliance {
             id
             name
             description
+          }
+        }
+      }
+      nextToken
+    }
+    command {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          createdAt
+          updatedAt
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+          command {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          params {
+            nextToken
           }
         }
       }
@@ -376,6 +502,9 @@ subscription OnDeleteCompliance {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         nextToken
       }
@@ -423,6 +552,9 @@ subscription OnDeleteCompliance {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         status {
           id
@@ -436,6 +568,51 @@ subscription OnDeleteCompliance {
             id
             name
             description
+          }
+        }
+      }
+      nextToken
+    }
+    command {
+      items {
+        id
+        complianceId
+        commandId
+        compliance {
+          id
+          name
+          description
+          domainId
+          domain {
+            id
+            name
+            description
+          }
+          hint
+          state
+          author
+          lastModifiedBy
+          createdAt
+          updatedAt
+          complianceLogs {
+            nextToken
+          }
+          status {
+            nextToken
+          }
+          command {
+            nextToken
+          }
+        }
+        command {
+          id
+          name
+          description
+          compliance {
+            nextToken
+          }
+          params {
+            nextToken
           }
         }
       }
@@ -511,6 +688,31 @@ subscription OnCreateComplianceStatusLink {
             name
             description
             editorId
+          }
+        }
+        nextToken
+      }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
           }
         }
         nextToken
@@ -651,6 +853,31 @@ subscription OnUpdateComplianceStatusLink {
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     status {
       id
@@ -787,6 +1014,31 @@ subscription OnDeleteComplianceStatusLink {
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     status {
       id
@@ -881,6 +1133,9 @@ subscription OnCreateStatus {
             nextToken
           }
           status {
+            nextToken
+          }
+          command {
             nextToken
           }
         }
@@ -979,6 +1234,9 @@ subscription OnUpdateStatus {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         status {
           id
@@ -1073,6 +1331,9 @@ subscription OnDeleteStatus {
             nextToken
           }
           status {
+            nextToken
+          }
+          command {
             nextToken
           }
         }
@@ -1211,6 +1472,31 @@ subscription OnCreateComplianceCommandLink {
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     command {
       id
@@ -1237,47 +1523,23 @@ subscription OnCreateComplianceCommandLink {
             id
             name
             description
-            subValues
           }
         }
         nextToken
       }
-      editor {
-        id
-        name
-        description
-        status {
-          items {
-            id
-            name
-            description
-            editorId
-          }
-          nextToken
+      params {
+        items {
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
         }
-        ranges {
-          items {
-            id
-            name
-            description
-            editorId
-            nlsId
-            subset
-            min
-            max
-            step
-            uomId
-          }
-          nextToken
-        }
+        nextToken
       }
-      nls {
-        id
-        name
-        description
-        subValues
-      }
-      subValues
     }
   }
 }
@@ -1353,6 +1615,31 @@ subscription OnUpdateComplianceCommandLink {
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     command {
       id
@@ -1379,47 +1666,23 @@ subscription OnUpdateComplianceCommandLink {
             id
             name
             description
-            subValues
           }
         }
         nextToken
       }
-      editor {
-        id
-        name
-        description
-        status {
-          items {
-            id
-            name
-            description
-            editorId
-          }
-          nextToken
+      params {
+        items {
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
         }
-        ranges {
-          items {
-            id
-            name
-            description
-            editorId
-            nlsId
-            subset
-            min
-            max
-            step
-            uomId
-          }
-          nextToken
-        }
+        nextToken
       }
-      nls {
-        id
-        name
-        description
-        subValues
-      }
-      subValues
     }
   }
 }
@@ -1495,6 +1758,31 @@ subscription OnDeleteComplianceCommandLink {
         }
         nextToken
       }
+      command {
+        items {
+          id
+          complianceId
+          commandId
+          compliance {
+            id
+            name
+            description
+            domainId
+            hint
+            state
+            author
+            lastModifiedBy
+            createdAt
+            updatedAt
+          }
+          command {
+            id
+            name
+            description
+          }
+        }
+        nextToken
+      }
     }
     command {
       id
@@ -1521,47 +1809,23 @@ subscription OnDeleteComplianceCommandLink {
             id
             name
             description
-            subValues
           }
         }
         nextToken
       }
-      editor {
-        id
-        name
-        description
-        status {
-          items {
-            id
-            name
-            description
-            editorId
-          }
-          nextToken
+      params {
+        items {
+          id
+          name
+          description
+          editorId
+          nlsId
+          commandId
+          init
+          optional
         }
-        ranges {
-          items {
-            id
-            name
-            description
-            editorId
-            nlsId
-            subset
-            min
-            max
-            step
-            uomId
-          }
-          nextToken
-        }
+        nextToken
       }
-      nls {
-        id
-        name
-        description
-        subValues
-      }
-      subValues
     }
   }
 }
@@ -1597,6 +1861,9 @@ subscription OnCreateCommand {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         command {
           id
@@ -1605,72 +1872,26 @@ subscription OnCreateCommand {
           compliance {
             nextToken
           }
-          editor {
-            id
-            name
-            description
+          params {
+            nextToken
           }
-          nls {
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }
       nextToken
     }
-    editor {
-      id
-      name
-      description
-      status {
-        items {
-          id
-          name
-          description
-          compliance {
-            nextToken
-          }
-          editorId
-          editor {
-            id
-            name
-            description
-          }
-        }
-        nextToken
+    params {
+      items {
+        id
+        name
+        description
+        editorId
+        nlsId
+        commandId
+        init
+        optional
       }
-      ranges {
-        items {
-          id
-          name
-          description
-          editorId
-          nlsId
-          subset
-          min
-          max
-          step
-          uomId
-          uom {
-            id
-            name
-            description
-            subValues
-          }
-        }
-        nextToken
-      }
+      nextToken
     }
-    nls {
-      id
-      name
-      description
-      subValues
-    }
-    subValues
   }
 }
 subscription OnUpdateCommand {
@@ -1705,6 +1926,9 @@ subscription OnUpdateCommand {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         command {
           id
@@ -1713,72 +1937,26 @@ subscription OnUpdateCommand {
           compliance {
             nextToken
           }
-          editor {
-            id
-            name
-            description
+          params {
+            nextToken
           }
-          nls {
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }
       nextToken
     }
-    editor {
-      id
-      name
-      description
-      status {
-        items {
-          id
-          name
-          description
-          compliance {
-            nextToken
-          }
-          editorId
-          editor {
-            id
-            name
-            description
-          }
-        }
-        nextToken
+    params {
+      items {
+        id
+        name
+        description
+        editorId
+        nlsId
+        commandId
+        init
+        optional
       }
-      ranges {
-        items {
-          id
-          name
-          description
-          editorId
-          nlsId
-          subset
-          min
-          max
-          step
-          uomId
-          uom {
-            id
-            name
-            description
-            subValues
-          }
-        }
-        nextToken
-      }
+      nextToken
     }
-    nls {
-      id
-      name
-      description
-      subValues
-    }
-    subValues
   }
 }
 subscription OnDeleteCommand {
@@ -1813,6 +1991,9 @@ subscription OnDeleteCommand {
           status {
             nextToken
           }
+          command {
+            nextToken
+          }
         }
         command {
           id
@@ -1821,72 +2002,62 @@ subscription OnDeleteCommand {
           compliance {
             nextToken
           }
-          editor {
-            id
-            name
-            description
+          params {
+            nextToken
           }
-          nls {
-            id
-            name
-            description
-            subValues
-          }
-          subValues
         }
       }
       nextToken
     }
-    editor {
-      id
-      name
-      description
-      status {
-        items {
-          id
-          name
-          description
-          compliance {
-            nextToken
-          }
-          editorId
-          editor {
-            id
-            name
-            description
-          }
-        }
-        nextToken
+    params {
+      items {
+        id
+        name
+        description
+        editorId
+        nlsId
+        commandId
+        init
+        optional
       }
-      ranges {
-        items {
-          id
-          name
-          description
-          editorId
-          nlsId
-          subset
-          min
-          max
-          step
-          uomId
-          uom {
-            id
-            name
-            description
-            subValues
-          }
-        }
-        nextToken
-      }
+      nextToken
     }
-    nls {
-      id
-      name
-      description
-      subValues
-    }
-    subValues
+  }
+}
+subscription OnCreateCommandparam {
+  onCreateCommandparam {
+    id
+    name
+    description
+    editorId
+    nlsId
+    commandId
+    init
+    optional
+  }
+}
+subscription OnUpdateCommandparam {
+  onUpdateCommandparam {
+    id
+    name
+    description
+    editorId
+    nlsId
+    commandId
+    init
+    optional
+  }
+}
+subscription OnDeleteCommandparam {
+  onDeleteCommandparam {
+    id
+    name
+    description
+    editorId
+    nlsId
+    commandId
+    init
+    optional
   }
 }
 subscription OnCreateEditor {

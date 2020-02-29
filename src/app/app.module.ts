@@ -27,6 +27,7 @@ import { EditorrangeComponent } from './components/types/editorrange/editorrange
 import { NlsComponent } from './components/types/nls/nls.component';
 import { UomComponent } from './components/types/uom/uom.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { CommandparamComponent } from './components/types/commandparam/commandparam.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     UomComponent,
     EditorrangeComponent,
     FilterPipe,
+    CommandparamComponent,
   ],
   imports: [
     BrowserModule,

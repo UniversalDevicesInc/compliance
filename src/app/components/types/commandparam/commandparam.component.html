@@ -1,7 +1,7 @@
 <div *ngIf="ds.dataLoaded$ | async; else loading" style="width:100%">
   <div *ngIf="authService.user$ | async as user" class="container-fluid">
     <!-- Title -->
-    <h2 align="center" class="text-white">Status</h2>
+    <h2 align="center" class="text-white">Command Params</h2>
     <!-- Accordion Panel -->
     <ngb-accordion #acc="ngbAccordion" activeIds="parent">
       <ngb-panel id="parent">
@@ -66,6 +66,25 @@
                 {{element.description}}
               </td>
             </ng-container>
+            <!-- Command -->
+            <ng-container cdkColumnDef="command">
+              <th cdk-header-cell *cdkHeaderCellDef 
+                (click)="adjustSort('command')" class="p-2 flex-fill">
+                Command
+                <span *ngIf="sortKey$.value === 'command'">
+                  {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                </span>
+              </th>
+              <td cdk-cell *cdkCellDef="let element">
+                <div *ngIf="element.commandId">
+                  <a [routerLink]="['/command']" [queryParams]="{search: element.commandId}">
+                    <ng-container *ngFor="let command of ds.command$ | async | filter: element.commandId, 'id'">
+                      {{command['name']}}
+                    </ng-container>
+                  </a>
+                </div>
+              </td>
+            </ng-container>           
             <!-- Editor -->
             <ng-container cdkColumnDef="editor">
               <th cdk-header-cell *cdkHeaderCellDef 
@@ -84,7 +103,52 @@
                   </a>
                 </div>
               </td>
-            </ng-container>     
+            </ng-container>            
+            <!-- Nls -->
+            <ng-container cdkColumnDef="nls">
+              <th cdk-header-cell *cdkHeaderCellDef class="p-2 flex-fill"
+                  (click)="adjustSort('nls')" >
+                Nls
+                <span *ngIf="sortKey$.value === 'nls'">
+                  {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                </span>
+              </th>
+              <td cdk-cell *cdkCellDef="let element">
+                <div *ngIf="element.nlsId">
+                  <a [routerLink]="['/nls']" [queryParams]="{search: element.nlsId}">
+                    <ng-container *ngFor="let nls of ds.nls$ | async | filter: element.nlsId, 'id'">
+                      {{nls['name']}}
+                    </ng-container>
+                  </a>
+                </div>
+              </td>
+            </ng-container>   
+            <!-- Init -->
+            <ng-container cdkColumnDef="init">
+              <th cdk-header-cell *cdkHeaderCellDef 
+                (click)="adjustSort('init')" class="w-20 p-2">
+                Init
+                <span *ngIf="sortKey$.value === 'init'">
+                  {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                </span>
+              </th>
+              <td cdk-cell *cdkCellDef="let element">
+                {{element.init}}
+              </td>
+            </ng-container>
+            <!-- Optional -->
+            <ng-container cdkColumnDef="optional">
+              <th cdk-header-cell *cdkHeaderCellDef 
+                (click)="adjustSort('optional')" class="w-20 p-2">
+                Optional?
+                <span *ngIf="sortKey$.value === 'optional'">
+                  {{ sortDirection$.value === 'asc' ? '↥' : '↧' }}
+                </span>
+              </th>
+              <td cdk-cell *cdkCellDef="let element">
+                {{element.optional}}
+              </td>
+            </ng-container>
             <!-- Edit -->
             <ng-container cdkColumnDef="edit">
               <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Edit</th>
@@ -99,7 +163,7 @@
             <ng-container cdkColumnDef="delete" class="w-10 p-2">
               <th cdk-header-cell *cdkHeaderCellDef class="text-center p-2 flex-fill">Delete</th>
               <td class="text-center" cdk-cell *cdkCellDef="let element">
-                <button [disabled]="!user.groups.includes('Admins') || element['id'] === 'ecc625a7-c7d5-4f8e-8225-0d529e423c39'" type="button" 
+                <button [disabled]="!user.groups.includes('Admins') || element.id === 'ecc625a7-c7d5-4f8e-8225-0d529e423c39'" type="button" 
                   class="btn btn-danger" (click)="open('delete', deleteModal, element)">
                     Delete
                 </button>              
@@ -154,15 +218,57 @@
           <input class="form-control" type="text" formControlName="description">
         </div>
       </div>
+      <!-- Command -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Command</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" formControlName="commandId">
+            <option [value]=null>None</option>
+            <option *ngFor="let cmd of ds.command$ | async" [value]="cmd.id">
+              {{cmd['name']}}({{cmd['description']}})
+            </option>
+          </select>
+        </div>
+      </div>
       <!-- Editor -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Editor</label>
         <div class="col-sm-9 d-flex flex-column">
           <select class="form-control" formControlName="editorId">
             <option [value]=null>None</option>
-            <option *ngFor="let editor of ds.editor$ | async" [value]="editor['id']">
+            <option *ngFor="let editor of ds.editor$ | async" [value]="editor.id">
               {{editor['name']}}
             </option>
+          </select>
+        </div>
+      </div>
+      <!-- Nls -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nls</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" formControlName="nlsId">
+            <option [value]=null>None</option>
+            <option *ngFor="let nls of ds.nls$ | async" [value]="nls.id">
+              {{nls['name']}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- Init -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Init</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <input class="form-control mb-2" type="text" formControlName="init"
+              placeholder="Init Value">
+        </div>
+      </div>
+      <!-- Optional -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Optional</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" formControlName="optional">
+            <option [value]=true>True</option>
+            <option [value]=false>False</option>
           </select>
         </div>
       </div>
@@ -200,15 +306,57 @@
           <input class="form-control" type="text" formControlName="description">
         </div>
       </div>
+      <!-- Command -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Command</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" formControlName="commandId">
+            <option [value]=null>None</option>
+            <option *ngFor="let cmd of ds.command$ | async" [value]="cmd.id">
+              {{cmd['name']}}({{cmd['description']}})
+            </option>
+          </select>
+        </div>
+      </div>
       <!-- Editor -->
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Editor</label>
         <div class="col-sm-9 d-flex flex-column">
           <select class="form-control" formControlName="editorId">
             <option [value]=null>None</option>
-            <option *ngFor="let editor of ds.editor$ | async" [value]="editor['id']">
+            <option *ngFor="let editor of ds.editor$ | async" [value]="editor.id">
               {{editor['name']}}
             </option>
+          </select>
+        </div>
+      </div>
+      <!-- Nls -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nls</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" formControlName="nlsId">
+            <option [value]=null>None</option>
+            <option *ngFor="let nls of ds.nls$ | async" [value]="nls.id">
+              {{nls['name']}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- Init -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Init</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <input class="form-control mb-2" type="text" formControlName="init"
+              placeholder="Init Value">
+        </div>
+      </div>
+      <!-- Optional -->
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Optional</label>
+        <div class="col-sm-9 d-flex flex-column">
+          <select class="form-control" formControlName="optional">
+            <option [value]=true>True</option>
+            <option [value]=false>False</option>
           </select>
         </div>
       </div>
